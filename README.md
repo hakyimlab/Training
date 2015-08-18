@@ -32,7 +32,6 @@ Training Resources
 
 ### Cheatsheets
 
-	
 ### Account setup
 
 - Tarbell
