@@ -30,6 +30,10 @@ Training Resources
 - [Rocker](http://dirk.eddelbuettel.com/papers/useR2015_docker.pdf)
 - [Machine learning mlr](http://mlr-org.github.io/mlr-tutorial/release/html/)
 
+### Useful links
+
+- [Jeff Leek's Github page](https://github.com/jtleek)
+
 ### Cheatsheets
 
 ### Account setup
