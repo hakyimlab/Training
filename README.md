@@ -7,19 +7,18 @@ Training Resources
 
 - You certify that you will properly protect research data following the user code of conduct and that you will not copy protected data from the systems provided to any other mediums, such as your portable computer, removable devices, USB drives, non certified cloud systems, web-based storage systems, etc.
 
-- Get CITI training
+- Get CITI training [link](https://www.citiprogram.org)
 	- Basics of Health Privacy
 	- Responsible Conduct of Research (RCR) Basic
 	- Human Subjects Research – Biomedical
 	- Basics of Information Security
 	- Conflict of Interest
 
-- crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
-
 - Github
 
 ### Recommended Training Material
 
+- crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
 
 ### Recommended Bibliography
 
