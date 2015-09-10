@@ -21,7 +21,7 @@ Training Resources
 - Crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
 - Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats)
 - Data Science Track Coursera 
-	- The Data Scientist’s Toolbox [link](https://www.coursera.org/course/datascitoolbox
+	- The Data Scientist’s Toolbox [link](https://www.coursera.org/course/datascitoolbox)
 	- R Programming [link](https://www.coursera.org/course/rprog)
 	- Getting and Cleaning Data [link](https://www.coursera.org/course/getdata)
 	- Exploratory Data Analysis [link](https://www.coursera.org/course/exdata)
