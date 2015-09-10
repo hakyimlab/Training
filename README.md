@@ -20,13 +20,24 @@ Training Resources
 
 - Crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
 - Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats)
-- Introduction to Genomic Technologies [link](https://www.coursera.org/course/genintro)
-- Bioconductor for Genomic Data Science [link](https://www.coursera.org/course/genbioconductor)
-- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/course/gencommand)
-- The New Genetics [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
+- Data Science Track Coursera 
+	- The Data Scientist’s Toolbox [link](https://www.coursera.org/course/datascitoolbox
+	- R Programming [link](https://www.coursera.org/course/rprog)
+	- Getting and Cleaning Data [link](https://www.coursera.org/course/getdata)
+	- Exploratory Data Analysis [link](https://www.coursera.org/course/exdata)
+	- Practical Machine Learning [link](https://www.coursera.org/course/predmachlearn)
+	- Statistical Inference [link](https://www.coursera.org/course/statinference)
+	- Reproducible Research [link](https://www.coursera.org/course/repdata)
+- Python for Genomic Data Science [link](https://www.coursera.org/course/genpython)
+
 
 ### Suggested Training Material
-[link] Command Line Tools for Genomic Data Science
+
+- Introduction to Genomic Technologies [link](https://www.coursera.org/course/genintro)
+- The New Genetics [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
+- Bioconductor for Genomic Data Science [link](https://www.coursera.org/course/genbioconductor)
+- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/course/gencommand)
+
 
 ### Recommended Bibliography
 
