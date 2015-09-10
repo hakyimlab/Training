@@ -20,6 +20,13 @@ Training Resources
 
 - Crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
 - Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats)
+- Introduction to Genomic Technologies [link](https://www.coursera.org/course/genintro)
+- Bioconductor for Genomic Data Science [link](https://www.coursera.org/course/genbioconductor)
+- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/course/gencommand)
+- The New Genetics [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
+
+### Suggested Training Material
+[link] Command Line Tools for Genomic Data Science
 
 ### Recommended Bibliography
 
