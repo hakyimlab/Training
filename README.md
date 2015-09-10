@@ -18,7 +18,8 @@ Training Resources
 
 ### Recommended Training Material
 
-- crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
+- Crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
+- Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats)
 
 ### Recommended Bibliography
 
