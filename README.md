@@ -40,7 +40,30 @@ Training Resources
 	- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/course/gencommand)
 
 
-### Recommended Bibliography
+### Recommended Reading
+
+Gamazon ER, Wheeler HE, Shah KP, Mozaffari SV, Aquino-Michaels K, Carroll RJ, Eyler AE, Denny JC, Nicolae DL, Cox NJ, Im HK: A gene-based association method for mapping traits using reference transcriptome data. Nat Genet 2015:1–10.
+
+GTEx Consortium: The Genotype-Tissue Expression (GTEx) pilot analysis: multitissue gene regulation in humans. Science 2015, 348:648–660.
+
+The 1000 Genomes Consortium: An integrated map of genetic variation from 1,092 human genomes. Nature 2013, 490:56–65.
+
+Albert FW, Kruglyak L: The role of regulatory variation in complex traits and disease. Nat Rev Genet 2015, 16:197–212.
+
+Marchini J, Howie B: Genotype imputation for genome-wide association studies. Nat Rev Genet 2010, 11:499–511.
+
+Wheeler HE, Aquino-Michaels K, Gamazon ER, Trubetskoy VV, Dolan ME, Huang RS, Cox NJ, Im HK: Poly-Omic Prediction of Complex Traits: OmicKriging. Genetic epidemiology 2014.
+
+## Suggested Reading
+
+Melé M, Ferreira PG, Reverter F, DeLuca DS, Monlong J, Sammeth M, Young TR, Goldmann JM, Pervouchine DD, Sullivan TJ, Johnson R, Segrè AV, Djebali S, Niarchou A, GTEx Consortium, Wright FA, Lappalainen T, Calvo M, Getz G, Dermitzakis ET, Ardlie KG, Guigó R: The human transcriptome across tissues and individuals. Science 2015, 348:660–665.
+
+Im HK, Gamazon ER, Nicolae DL, Cox NJ: On sharing quantitative trait GWAS results in an era of multiple-omics data and the limits of genomic privacy. Am J Hum Genet 2012, 90:591–598.
+
+Gusev A, Lee SH, Trynka G, Finucane H, Vilhjálmsson BJ, Xu H, Zang C, Ripke S, Bulik-Sullivan B, Stahl E, Consortium SWGOTPG, Neale BM, Corvin A, Walters JTR, Farh K-H, Holmans PA, Lee P, Collier DA, Huang H, Pers TH, Agartz I, Agerbo E, Albus M, Alexander M, Amin F, Bacanu SA, Begemann M, Belliveau RA Jr, Bene J, Bergen SE, et al.: Partitioning Heritability of Regulatory and Cell-Type-Specific Variants across 11 Common Diseases. The American Journal of Human Genetics 2014, 95:535–552.
+
+Gurdasani D et al.: The African Genome Variation Project shapes medical genetics in Africa. Nature 2015, 517:327–332.
+1000 Genomes Publications [link](http://www.nature.com/nature/focus/1000genomes/)
 
 
 ### R Tutorials
