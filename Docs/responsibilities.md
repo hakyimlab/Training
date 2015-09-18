@@ -1,4 +1,4 @@
-### Mission and philosophy of the lab
+### Mission and Philosophy of the Lab
 
 Our lab develops computational and analytical infrastructure to sift through large amounts of genomic, clinical, environmental data with the goal of answering biomedical questions and making discoveries that can be translated into improving the health of people.
 
@@ -49,7 +49,7 @@ My responsibilities to you are to
 
 Your responsibilities are to
 
-- conduct research projects
+- develop and conduct research projects
 - participate in weekly lab meetings
 - present progress in work-in-progress lab meetings
 - meet regularly to discuss progress (at least weekly)
@@ -90,7 +90,7 @@ Your responsibilities are to
 - be available in the lab/office for a minimum pre-arranged set of hours to facilitate interactions
 - maintain regular communication (slack preferred, email, etc)
 
-### To apply for a position
+### To Apply for a Position
 If you are excited about the research we do in our lab ([check out here](https://imlab.uchicago.edu)) and you have the drive to make things happen, send me (haky at uchicago dot edu)
 - a page cover letter describing your background, career goals, and how they fit the mission of my lab
 - your CV
