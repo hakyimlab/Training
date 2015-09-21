@@ -15,6 +15,7 @@ Training Resources
 	- Conflict of Interest
 
 - Github
+- High Performance Computing Cluster at the UoC [link](https://biocore.cri.uchicago.edu/training/CRI_training_Feb_2015_Intro_HPC.pdf)
 
 ### Recommended Training Material
 
