@@ -16,7 +16,7 @@ Training Resources
 - Reproducible Research [link](http://kbroman.org/steps2rr/)
 - Github [link](http://kbroman.org/github_tutorial/)
 - High Performance Computing Cluster at the UoC [link](https://biocore.cri.uchicago.edu/training/CRI_training_Feb_2015_Intro_HPC.pdf)
-- Basics of R [link]
+- Learning basiss of R [link](https://www.rstudio.com/resources/training/online-learning/)
 - Free 4 hr intro to R [link](https://www.datacamp.com/courses/free-introduction-to-r)
 
 ### Recommended Training Material
