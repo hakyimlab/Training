@@ -14,7 +14,8 @@ Training Resources
 	- Basics of Information Security
 	- Conflict of Interest
 
-- Github
+- Reproducible Research [link](http://kbroman.org/steps2rr/)
+- Github [link](http://kbroman.org/github_tutorial/)
 - High Performance Computing Cluster at the UoC [link](https://biocore.cri.uchicago.edu/training/CRI_training_Feb_2015_Intro_HPC.pdf)
 
 ### Recommended Training Material
