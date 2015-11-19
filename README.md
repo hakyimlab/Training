@@ -16,6 +16,8 @@ Training Resources
 - Reproducible Research [link](http://kbroman.org/steps2rr/)
 - Github [link](http://kbroman.org/github_tutorial/)
 - High Performance Computing Cluster at the UoC [link](https://biocore.cri.uchicago.edu/training/CRI_training_Feb_2015_Intro_HPC.pdf)
+- Basics of R [link]
+- Free 4 hr intro to R [link](https://www.datacamp.com/courses/free-introduction-to-r)
 
 ### Recommended Training Material
 
@@ -67,7 +69,7 @@ Gusev A, Lee SH, Trynka G, Finucane H, Vilhjálmsson BJ, Xu H, Zang C, Ripke S, 
 Gurdasani D et al.: The African Genome Variation Project shapes medical genetics in Africa. Nature 2015, 517:327–332.
 
 
-### R Tutorials
+### Additional R Tutorials
 - [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
 - [RHadoop](https://github.com/andrie/RHadoop-tutorial/)
 - [Rocker](http://dirk.eddelbuettel.com/papers/useR2015_docker.pdf)
@@ -75,9 +77,15 @@ Gurdasani D et al.: The African Genome Variation Project shapes medical genetics
 
 ### Useful links
 
+- [Karl Broman's Tutorials](http://kbroman.org/pages/tutorials.html)
 - [Jeff Leek's Github page](https://github.com/jtleek)
 
 ### Cheatsheets
+
+- R Studio's cheatsheets [link](https://www.rstudio.com/resources/cheatsheets/)
+	- Data Wrangling [download](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+	- R Markdown [download](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+  	- Data visualization [download](https://www.rstudio.com/wp-content/uploads/2015/11/ggplot2-cheatsheet.pdf)
 
 ### Account setup
 
