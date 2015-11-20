@@ -20,6 +20,7 @@ Training Resources
 	- Hands on 4hr intro to R [link](https://www.datacamp.com/courses/free-introduction-to-r)
 	- Data Manipulation in R with dplyr [link](https://www.datacamp.com/courses/dplyr-data-manipulation-r-tutorial)
 	- Data Visualization in R [link](https://www.datacamp.com/courses/ggvis-data-visualization-r-tutorial)
+	- Hadley's R Style [link](http://adv-r.had.co.nz/Style.html)
 
 ### Recommended Training Material
 
