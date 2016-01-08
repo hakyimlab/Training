@@ -52,8 +52,9 @@ Gamazon ER, Wheeler HE, Shah KP, Mozaffari SV, Aquino-Michaels K, Carroll RJ, Ey
 
 GTEx Consortium: The Genotype-Tissue Expression (GTEx) pilot analysis: multitissue gene regulation in humans. Science 2015, 348:648–660.
 
-The 1000 Genomes Consortium: An integrated map of genetic variation from 1,092 human genomes. Nature 2013, 490:56–65.
-1000 Genomes Publications [link](http://www.nature.com/nature/focus/1000genomes/)
+
+
+The 1000 Genomes Consortium: A global reference for human genetic variation [link](http://www.nature.com/doifinder/10.1038/nature15393)
 
 Albert FW, Kruglyak L: The role of regulatory variation in complex traits and disease. Nat Rev Genet 2015, 16:197–212.
 
