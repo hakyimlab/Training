@@ -13,6 +13,7 @@ Training Resources
 	- Human Subjects Research – Biomedical
 	- Basics of Information Security
 	- Conflict of Interest
+
 - Reproducible Research [link](http://kbroman.org/steps2rr/)
 - Github [link](http://kbroman.org/github_tutorial/), [flow](https://guides.github.com/introduction/flow/)
 - High Performance Computing Cluster at the UoC [link](https://biocore.cri.uchicago.edu/training/CRI_training_Feb_2015_Intro_HPC.pdf)
@@ -64,14 +65,13 @@ Wheeler HE, Aquino-Michaels K, Gamazon ER, Trubetskoy VV, Dolan ME, Huang RS, Co
 
 ## Suggested Reading
 
-Melé M, Ferreira PG, Reverter F, DeLuca DS, Monlong J, Sammeth M, Young TR, Goldmann JM, Pervouchine DD, Sullivan TJ, Johnson R, Segrè AV, Djebali S, Niarchou A, GTEx Consortium, Wright FA, Lappalainen T, Calvo M, Getz G, Dermitzakis ET, Ardlie KG, Guigó R: The human transcriptome across tissues and individuals. Science 2015, 348:660–665.
-
 Im HK, Gamazon ER, Nicolae DL, Cox NJ: On sharing quantitative trait GWAS results in an era of multiple-omics data and the limits of genomic privacy. Am J Hum Genet 2012, 90:591–598.
 
 Gusev A, Lee SH, Trynka G, Finucane H, Vilhjálmsson BJ, Xu H, Zang C, Ripke S, Bulik-Sullivan B, Stahl E, Consortium SWGOTPG, Neale BM, Corvin A, Walters JTR, Farh K-H, Holmans PA, Lee P, Collier DA, Huang H, Pers TH, Agartz I, Agerbo E, Albus M, Alexander M, Amin F, Bacanu SA, Begemann M, Belliveau RA Jr, Bene J, Bergen SE, et al.: Partitioning Heritability of Regulatory and Cell-Type-Specific Variants across 11 Common Diseases. The American Journal of Human Genetics 2014, 95:535–552.
 
-Gurdasani D et al.: The African Genome Variation Project shapes medical genetics in Africa. Nature 2015, 517:327–332.
+Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 202:377–379.
 
+Vilhjálmsson BJ, Yang J, Finucane HK, Gusev A, Lindstrom S, Genovese G, Bhatia G, Do R, Hayeck T, Won H-H, Consortium SWGOTPG, Ripke S, Neale BM, Corvin A, Walters JTR, Farh K-H, Holmans PA, Lee P, Bulik-Sullivan B, Collier DA, Huang H, Pers TH, Agartz I, Agerbo E, Albus M, Alexander M, Amin F, Bacanu SA, Begemann M, Belliveau RA Jr, et al.: Modeling Linkage Disequilibrium Increases Accuracy of Polygenic Risk Scores. The American Journal of Human Genetics 2015, 97:576–592.
 
 ### Additional R Tutorials
 - [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
