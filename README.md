@@ -37,6 +37,7 @@ Training Resources
 		- Statistical Inference [link](https://www.coursera.org/course/statinference)
 		- Reproducible Research [link](https://www.coursera.org/course/repdata)
 	- Python for Genomic Data Science [link](https://www.coursera.org/course/genpython)
+- Uchicago CRI Workshop Tutorials [link](https://wiki.uchicago.edu/display/CRIwksp/Home)
 
 
 ### Suggested Training Material
