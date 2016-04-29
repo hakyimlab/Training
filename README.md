@@ -54,9 +54,11 @@ Gamazon ER, Wheeler HE, Shah KP, Mozaffari SV, Aquino-Michaels K, Carroll RJ, Ey
 
 GTEx Consortium: The Genotype-Tissue Expression (GTEx) pilot analysis: multitissue gene regulation in humans. Science 2015, 348:648–660.
 
-
-
 The 1000 Genomes Consortium: A global reference for human genetic variation [link](http://www.nature.com/doifinder/10.1038/nature15393)
+
+Kundaje A, Meuleman W, Ernst J, Bilenky M, Yen A, Heravi-Moussavi A, et al. Integrative analysis of 111 reference human epigenomes. Nature. 2015;518:317–30. 
+
+Li YI, van de Geijn B, Raj A, Knowles DA, Petti AA, Golan D, et al. RNA splicing is a primary link between genetic variation and disease. Science. American Association for the Advancement of Science; 2016;352:600–4. 
 
 Albert FW, Kruglyak L: The role of regulatory variation in complex traits and disease. Nat Rev Genet 2015, 16:197–212.
 
@@ -64,15 +66,13 @@ Marchini J, Howie B: Genotype imputation for genome-wide association studies. Na
 
 Wheeler HE, Aquino-Michaels K, Gamazon ER, Trubetskoy VV, Dolan ME, Huang RS, Cox NJ, Im HK: Poly-Omic Prediction of Complex Traits: OmicKriging. Genetic epidemiology 2014.
 
-## Suggested Reading
-
 Im HK, Gamazon ER, Nicolae DL, Cox NJ: On sharing quantitative trait GWAS results in an era of multiple-omics data and the limits of genomic privacy. Am J Hum Genet 2012, 90:591–598.
 
 Gusev A, Lee SH, Trynka G, Finucane H, Vilhjálmsson BJ, Xu H, Zang C, Ripke S, Bulik-Sullivan B, Stahl E, Consortium SWGOTPG, Neale BM, Corvin A, Walters JTR, Farh K-H, Holmans PA, Lee P, Collier DA, Huang H, Pers TH, Agartz I, Agerbo E, Albus M, Alexander M, Amin F, Bacanu SA, Begemann M, Belliveau RA Jr, Bene J, Bergen SE, et al.: Partitioning Heritability of Regulatory and Cell-Type-Specific Variants across 11 Common Diseases. The American Journal of Human Genetics 2014, 95:535–552.
 
 Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 202:377–379.
 
-Vilhjálmsson BJ, Yang J, Finucane HK, Gusev A, Lindstrom S, Genovese G, Bhatia G, Do R, Hayeck T, Won H-H, Consortium SWGOTPG, Ripke S, Neale BM, Corvin A, Walters JTR, Farh K-H, Holmans PA, Lee P, Bulik-Sullivan B, Collier DA, Huang H, Pers TH, Agartz I, Agerbo E, Albus M, Alexander M, Amin F, Bacanu SA, Begemann M, Belliveau RA Jr, et al.: Modeling Linkage Disequilibrium Increases Accuracy of Polygenic Risk Scores. The American Journal of Human Genetics 2015, 97:576–592.
+
 
 ### Additional R Tutorials
 - [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
