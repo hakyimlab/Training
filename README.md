@@ -26,26 +26,30 @@ Training Resources
 ### Recommended Training Material
 
 - Crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
-- Coursera courses (these can be taken for free)
-	- Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats) 
-	- Data Science Track Coursera 
-		- The Data Scientist’s Toolbox [link](https://www.coursera.org/course/datascitoolbox)
-		- R Programming [link](https://www.coursera.org/course/rprog)
-		- Getting and Cleaning Data [link](https://www.coursera.org/course/getdata)
-		- Exploratory Data Analysis [link](https://www.coursera.org/course/exdata)
-		- Practical Machine Learning [link](https://www.coursera.org/course/predmachlearn)
-		- Statistical Inference [link](https://www.coursera.org/course/statinference)
-		- Reproducible Research [link](https://www.coursera.org/course/repdata)
-	- Python for Genomic Data Science [link](https://www.coursera.org/course/genpython)
-- Uchicago CRI Workshop Tutorials [link](https://wiki.uchicago.edu/display/CRIwksp/Home)
 
-
-### Suggested Training Material
 - Coursera courses (these can be taken for free)
 	- Introduction to Genomic Technologies [link](https://www.coursera.org/course/genintro)
-	- The New Genetics [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
-	- Bioconductor for Genomic Data Science [link](https://www.coursera.org/course/genbioconductor)
-	- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/course/gencommand)
+	- Genomic Data Science with Galaxy
+	- Python for Genomic Data Science [link](https://www.coursera.org/course/genpython)
+	- Algorithms for DNA Sequencing
+	- Command Line Tools for Genomic Data Science
+	- Bioconductor for Genomic Data Science
+	- Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats) 
+
+- Uchicago CRI Workshop Tutorials [link](https://wiki.uchicago.edu/display/CRIwksp/Home)
+
+### Suggested Training Material
+
+- The New Genetics [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
+
+- Data Science Track Coursera 
+	- The Data Scientist’s Toolbox [link](https://www.coursera.org/course/datascitoolbox)
+	- R Programming [link](https://www.coursera.org/course/rprog)
+	- Getting and Cleaning Data [link](https://www.coursera.org/course/getdata)
+	- Exploratory Data Analysis [link](https://www.coursera.org/course/exdata)
+	- Practical Machine Learning [link](https://www.coursera.org/course/predmachlearn)
+	- Statistical Inference [link](https://www.coursera.org/course/statinference)
+	- Reproducible Research [link](https://www.coursera.org/course/repdata)
 
 
 ### Recommended Reading
@@ -71,8 +75,6 @@ Im HK, Gamazon ER, Nicolae DL, Cox NJ: On sharing quantitative trait GWAS result
 Gusev A, Lee SH, Trynka G, Finucane H, Vilhjálmsson BJ, Xu H, Zang C, Ripke S, Bulik-Sullivan B, Stahl E, Consortium SWGOTPG, Neale BM, Corvin A, Walters JTR, Farh K-H, Holmans PA, Lee P, Collier DA, Huang H, Pers TH, Agartz I, Agerbo E, Albus M, Alexander M, Amin F, Bacanu SA, Begemann M, Belliveau RA Jr, Bene J, Bergen SE, et al.: Partitioning Heritability of Regulatory and Cell-Type-Specific Variants across 11 Common Diseases. The American Journal of Human Genetics 2014, 95:535–552.
 
 Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 202:377–379.
-
-
 
 ### Additional R Tutorials
 - [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
