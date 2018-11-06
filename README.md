@@ -15,6 +15,7 @@ Training Resources
 	- Conflict of Interest
 
 - Reproducible Research [link](http://kbroman.org/steps2rr/)
+- Data Science Course [link](https://rafalab.github.io/dsbook/introduction.html)
 - Github [link](http://kbroman.org/github_tutorial/), [flow](https://guides.github.com/introduction/flow/)
 - High Performance Computing Cluster at the UoC [link](https://biocore.cri.uchicago.edu/training/CRI_training_Feb_2015_Intro_HPC.pdf)
 - Learning basics of R [link](https://www.rstudio.com/resources/training/online-learning/)
