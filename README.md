@@ -45,6 +45,8 @@ Training Resources
 
 - BigQuery tutorials [link](https://cloud.google.com/bigquery/docs/tutorials)
 
+- Google Cloud training document [link](https://docs.google.com/document/d/1z35R9uZ2iDo-Fp1ImUMBIKvcUunBTUp1ZmAXZF2Hf48/edit?usp=sharing)
+
 ### Suggested Training Material
 
 - The New Genetics [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
