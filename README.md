@@ -30,7 +30,7 @@ Training Resources
 
 ### Recommended Training Material
 
-- Crash course in genomics [link](http://web.stanford.edu/class/stats366/exs/CrashCourseBiology.html)
+- Intro to genomics [link](https://www.big-bio.org/)
 
 - Coursera courses (these can be taken for free)
 	- Introduction to Genomic Technologies [link](https://www.coursera.org/course/genintro)
