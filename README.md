@@ -90,6 +90,7 @@ Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 20
 - [Rocker](http://dirk.eddelbuettel.com/papers/useR2015_docker.pdf)
 - [Machine learning mlr](https://mlr.mlr-org.com/index.html)
 - [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
+- [Enloc-coloc comparison](https://hakyimlab.github.io/gtex-gwas-hki/enloc-coloc-comparison-2.html)
 - More DataCamp courses
 	- Introduction to the Tidyverse [link](https://www.datacamp.com/courses/introduction-to-the-tidyverse)
 	- Importing data in R [link](https://www.datacamp.com/courses/importing-data-in-r-part-1)
