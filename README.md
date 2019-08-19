@@ -42,7 +42,7 @@ Training Resources
 	- Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats) 
 
 - Uchicago CRI Workshop Tutorials [link](https://cri.uchicago.edu/seminar-series/)
-	- Intro to CRI [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
+	- Intro to Gardner [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
 
 - BigQuery tutorials [link](https://cloud.google.com/bigquery/docs/tutorials)
 
