@@ -1,7 +1,7 @@
 Training Resources
 -----------------
 
-# Mandatory Onboarding Steps for New Members
+# Mandatory Onboarding Steps
 
 - There are a few mandatory onboarding steps for new lab members, and they are listed on the Im Lab Onboarding Document.
 
@@ -25,12 +25,26 @@ We work with many different tools, on many different projects. So the training r
 
 
 # GitHub
+We use GitHub to store and organize our code. There is a introduction [here](http://kbroman.org/github_tutorial/). If you are curious about when one would use certain GitHub features, look at this  [link](https://guides.github.com/introduction/flow/) which describes 'GitHub flow'.
 
 # Introduction to Data Science
+Some introductory materials give you an introduction to Git, Python, R, and machine learning topics all at once!
+- Basics of Unix, Github, and Python/R [link](https://software-carpentry.org/lessons/)
 
 ## Machine Learning and Statistics
+- An introduction to machine learning problems and model metrics: [link](https://rafalab.github.io/dsbook/introduction-to-machine-learning.html)
+- We work fairly heavily with the generalized linear model, so it may be good to brush up on it:
+    - [Generalized Linear Models](https://towardsdatascience.com/generalized-linear-models-8738ae0fb97d)
+    - [Wikipedia](https://en.wikipedia.org/wiki/Generalized_linear_model)
+    
 ## Python
 ## R
+- Hands on 4hr intro to R (DataCamp course) [link](https://www.datacamp.com/courses/free-introduction-to-r)
+- R Studio's cheatsheets: [link](https://www.rstudio.com/resources/cheatsheets/)
+- Data Manipulation in R with dplyr [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
+- Data Visualization in R with ggplot2 [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
+- Statistical modeling in R [link](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
+- Hadley's R Style [link](http://adv-r.had.co.nz/Style.html)
 ## Unix
 
 # Genomics
@@ -46,18 +60,26 @@ We work with many different tools, on many different projects. So the training r
 # Computational Resources
 
 ## CRI Gardner
-
+Gardner is a large high-performance computing cluster and data storage system. We use it to run computation and store data. The lab's group folder is located at `/gpfs/data/im-lab/`
+- UChicago CRI Workshop Tutorials: CRI does a seminar series each academic year. Here you can find the schedule: [link](https://cri.uchicago.edu/seminar-series/)
+- Intro to Gardner: this is a good explanation of what Gardner does, and why a high-performance computing cluster is important to bioinformatics: [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
 ## Bionimbus PDC
-
+Bionimbus Protected Data Cloud is a storage/computation resource where the lab is alotted a certain amount of processors and storage, and we store and compute on virtual machines. If you'll be working on Bioinimbus, make sure to begin your application(s) quickly because the process has multiple steps.
+- [Documentation](https://www.opensciencedatacloud.org/support/pdc.html) 
 ## BigQuery
 
 # Miscellaneous
 
 
 - Read [genomic data user code of conduct](https://osp.od.nih.gov/wp-content/uploads/Genomic_Data_User_Code_of_Conduct.pdf)
+- Reproducible Research [link](http://kbroman.org/steps2rr/)
 
-- You certify that you will properly protect research data following the user code of conduct and that you will not copy protected data from the systems provided to any other mediums, such as your portable computer, removable devices, USB drives, non certified cloud systems, web-based storage systems, etc.
+- Data Science Course [link](https://rafalab.github.io/dsbook/introduction.html)
 
+- High Performance Computing Cluster at the UoC [link](https://rcc.uchicago.edu/resources/high-performance-computing)
+	- RCC training schedule [link](https://rcc.uchicago.edu/support-and-services/workshops-and-training)
+	- Request account [link](https://rcc.uchicago.edu/accounts-allocations/request-account)
+	
 - Get CITI training [link](https://www.citiprogram.org)
 	- Basics of Health Privacy
 	- Responsible Conduct of Research (RCR) Basic
@@ -65,19 +87,8 @@ We work with many different tools, on many different projects. So the training r
 	- Basics of Information Security
 	- Conflict of Interest
 
-- Reproducible Research [link](http://kbroman.org/steps2rr/)
-- Basics of Unix, Github, and Python/R [link](https://software-carpentry.org/lessons/)
-- Data Science Course [link](https://rafalab.github.io/dsbook/introduction.html)
-- Github [link](http://kbroman.org/github_tutorial/), [flow](https://guides.github.com/introduction/flow/)
-- High Performance Computing Cluster at the UoC [link](https://rcc.uchicago.edu/resources/high-performance-computing)
-	- RCC training schedule [link](https://rcc.uchicago.edu/support-and-services/workshops-and-training)
-	- Request account [link](https://rcc.uchicago.edu/accounts-allocations/request-account)
-- Learning basics of R [link](https://www.rstudio.com/resources/training/online-learning/)
-	- Hands on 4hr intro to R [link](https://www.datacamp.com/courses/free-introduction-to-r)
-	- Data Manipulation in R with dplyr [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
-	- Data Visualization in R with ggplot2 [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
-	- Statistical modeling in R [link](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
-	- Hadley's R Style [link](http://adv-r.had.co.nz/Style.html)
+
+
 
 ### Recommended Training Material
 
@@ -92,8 +103,7 @@ We work with many different tools, on many different projects. So the training r
 	- Bioconductor for Genomic Data Science
 	- Statistics for Genomic Data Science [link](https://www.coursera.org/course/genstats) 
 
-- Uchicago CRI Workshop Tutorials [link](https://cri.uchicago.edu/seminar-series/)
-	- Intro to Gardner [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
+
 
 - BigQuery tutorials [link](https://cloud.google.com/bigquery/docs/tutorials)
 
@@ -159,30 +169,30 @@ Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 20
 
 ### Cheatsheets
 
-- R Studio's cheatsheets [link](https://www.rstudio.com/resources/cheatsheets/)
+
 	- Data Wrangling [download](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 	- R Markdown [download](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
   	- Data visualization [download](https://www.rstudio.com/wp-content/uploads/2015/11/ggplot2-cheatsheet.pdf)
 
-### Account setup
+<!--### Account setup-->
 
-- Tarbell
-- Github
-- Open Science Data Cloud
-- Slack
-- AWS
-- Google Cloud
+<!--- Tarbell-->
+<!--- Github-->
+<!--- Open Science Data Cloud-->
+<!--- Slack-->
+<!--- AWS-->
+<!--- Google Cloud-->
 
-### Contractors
+<!--### Contractors-->
 
 
-Open payoneer (if no US account available)
+<!--Open payoneer (if no US account available)-->
 
-Fill out forms 
+<!--Fill out forms -->
 
-- [US Individuals](https://www.dropbox.com/sh/2h3xmmxkn2i1tvy/AAADYYRsHwtO8JPJ37_dHKUTa?dl=0)
-- [Foreign Individuals](https://www.dropbox.com/sh/8eb5c21kc8ezlbn/AACe7caz-p0vbhBplzA2I4PCa?dl=0)
+<!--- [US Individuals](https://www.dropbox.com/sh/2h3xmmxkn2i1tvy/AAADYYRsHwtO8JPJ37_dHKUTa?dl=0)-->
+<!--- [Foreign Individuals](https://www.dropbox.com/sh/8eb5c21kc8ezlbn/AACe7caz-p0vbhBplzA2I4PCa?dl=0)-->
 
-### Volunteers
+<!--### Volunteers-->
 
-Forms [link](https://www.dropbox.com/sh/k1qakuofx6pbi91/AAC-e0gnNImYTUlHqGryyXjJa?dl=0)
+<!--Forms [link](https://www.dropbox.com/sh/k1qakuofx6pbi91/AAC-e0gnNImYTUlHqGryyXjJa?dl=0)-->
