@@ -1,7 +1,58 @@
 Training Resources
 -----------------
 
-### Mandatory Training for New Members
+# Mandatory Onboarding Steps for New Members
+
+- There are a few mandatory onboarding steps for new lab members, and they are listed on the Im Lab Onboarding Document.
+
+# Training Resource Groups
+We work with many different tools, on many different projects. So the training resources are organized into functional groups. You may want to skip reading the material in some groups, and it may be worthwhile to spend a long time with other groups. 
+- [GitHub](#github)
+- [Introduction to Data Science](#introduction-to-data-science)
+    - [Machine Learning and Statistics](#machine-learning-and-statistics)
+    - [Python](#python)
+    - [R](#r)
+    - [Unix](#unix)
+- [Genomics](#genomics)
+    - [Introduction to Genomics](#introduction-to-genomics)
+    - [Lab-Specific Genomics Papers](#lab-specific-genomics-papers)
+- [WorkflowR](#workflowr)
+- [Computational Resources](#Computational-resources)
+    - [CRI Gardner](#cri-garnder)
+    - [Bionimbus PDC](#bionimbu-pdc)
+    - [BigQuery](#bigquery)
+- [Miscellaneous](#Miscellaneous)
+
+
+# GitHub
+
+# Introduction to Data Science
+
+## Machine Learning and Statistics
+## Python
+## R
+## Unix
+
+# Genomics
+
+## Introduction to Genomics
+
+- Intro to genomics videos [link](https://www.big-bio.org/)
+
+## Lab-Specific Genomics Papers
+
+# WorkflowR
+
+# Computational Resources
+
+## CRI Gardner
+
+## Bionimbus PDC
+
+## BigQuery
+
+# Miscellaneous
+
 
 - Read [genomic data user code of conduct](https://osp.od.nih.gov/wp-content/uploads/Genomic_Data_User_Code_of_Conduct.pdf)
 
@@ -30,7 +81,7 @@ Training Resources
 
 ### Recommended Training Material
 
-- Intro to genomics [link](https://www.big-bio.org/)
+
 
 - Coursera courses (these can be taken for free)
 	- Introduction to Genomic Technologies [link](https://www.coursera.org/course/genintro)
