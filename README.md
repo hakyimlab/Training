@@ -16,7 +16,7 @@ We work with many different tools, on many different projects. So the training r
 - [Genomics](#genomics)
     - [Introduction to Genomics](#introduction-to-genomics)
     - [Lab-Specific Genomics Papers](#lab-specific-genomics-papers)
-- [WorkflowR](#workflowr)
+- [Workflowr](#workflowr)
 - [Computational Resources](#Computational-resources)
     - [CRI Gardner](#cri-garnder)
     - [Bionimbus PDC](#bionimbu-pdc)
@@ -41,10 +41,13 @@ Some introductory materials give you an introduction to Git, Python, R, and mach
 ## R
 - Hands on 4hr intro to R (DataCamp course) [link](https://www.datacamp.com/courses/free-introduction-to-r)
 - R Studio's cheatsheets: [link](https://www.rstudio.com/resources/cheatsheets/)
-- Data Manipulation in R with dplyr [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
-- Data Visualization in R with ggplot2 [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
+
 - Statistical modeling in R [link](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
 - Hadley's R Style [link](http://adv-r.had.co.nz/Style.html)
+#### R Packages 
+- Data Manipulation in R with dplyr [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
+- Data Visualization in R with ggplot2 [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
+- Modeling with data in the Tidyverse [link](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
 ## Unix
 
 # Genomics
@@ -55,7 +58,14 @@ Some introductory materials give you an introduction to Git, Python, R, and mach
 
 ## Lab-Specific Genomics Papers
 
-# WorkflowR
+Gamazon ER, Wheeler HE, Shah KP, Mozaffari SV, Aquino-Michaels K, Carroll RJ, Eyler AE, Denny JC, Nicolae DL, Cox NJ, Im HK: A gene-based association method for mapping traits using reference transcriptome data. Nat Genet 2015:1–10.
+
+There is a soon-to-be-released summary paper for the GTEx consortium project. Because it's not public, we can't link to it here. Ask a lab member to forward it to you!
+
+# Workflowr
+Workflowr integrates R and GitHub to make scientific projects easier, more organized, and more reproducible.
+
+- [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
 
 # Computational Resources
 
@@ -147,17 +157,17 @@ Finucane HK, Reshef YA, Anttila V, Slowikowski K, Gusev A, Byrnes A, et al. Heri
 Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 202:377–379.
 
 ### Additional R Tutorials
-- [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+
 - [RHadoop](https://github.com/andrie/RHadoop-tutorial/)
-- [Rocker](http://dirk.eddelbuettel.com/papers/useR2015_docker.pdf)
+- [Docker](http://dirk.eddelbuettel.com/papers/useR2015_docker.pdf)
 - [Machine learning mlr](https://mlr.mlr-org.com/index.html)
-- [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
+
 - [Enloc-coloc comparison](https://hakyimlab.github.io/gtex-gwas-hki/enloc-coloc-comparison-2.html)
 - More DataCamp courses
 	- Introduction to the Tidyverse [link](https://www.datacamp.com/courses/introduction-to-the-tidyverse)
 	- Importing data in R [link](https://www.datacamp.com/courses/importing-data-in-r-part-1)
 	- Cleaning data in R [link](https://www.datacamp.com/courses/cleaning-data-in-r)
-	- Modeling with data in the Tidyverse [link](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
+
 	- Introduction to bioconductor [link](https://www.datacamp.com/courses/introduction-to-bioconductor)
 	- Single-cell RNA-seq workflows in R [link](https://www.datacamp.com/courses/single-cell-rna-seq-workflows-in-r)
 
