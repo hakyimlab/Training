@@ -18,7 +18,7 @@ We work with many different tools, on many different projects. So the training r
     - [Introduction to Genomics](#introduction-to-genomics)
     - [Lab-Specific Genomics Papers](#lab-specific-genomics-papers)
 - [Computational Resources](#Computational-resources)
-    - [CRI Gardner](#cri-garnder)
+    - [CRI Gardner](#cri-gardner)
     - [Bionimbus PDC](#bionimbu-pdc)
     - [BigQuery](#bigquery)
 - [Miscellaneous](#Miscellaneous)
@@ -118,7 +118,7 @@ Gardner is a large high-performance computing cluster and data storage system. W
 - UChicago CRI Workshop Tutorials: CRI does a seminar series each academic year. Here you can find the schedule: [link](https://cri.uchicago.edu/seminar-series/)
 - Intro to Gardner: this is a good explanation of what Gardner does, and why a high-performance computing cluster is important to bioinformatics: [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
 ##### Job submission and management
-- Gardner uses [Torque](https://en.wikipedia.org/wiki/TORQUE) as its job scheduler, which means that the submission types are [PBS]() files.
+- Gardner uses [Torque](https://en.wikipedia.org/wiki/TORQUE) as its job scheduler, which means that the submission types are [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) files.
 - Here's a [cheatsheet](https://www.weizmann.ac.il/chemistry/sites/chemistry/files/uploads/pbs-professional-cheat-sheet.pdf) for PBS commands.
 - A short, incomplete list of commands that may help when using PBS:
     - To submit a job, `qsub <path to whatever job file>`. It will print to the console the `job_id`, which is often useful for searching the queue and finding logs.
