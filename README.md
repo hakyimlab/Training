@@ -65,7 +65,10 @@ Some introductory materials give you an introduction to Git, Python, R, and mach
 - R Markdown [download pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 - Data visualization [download pdf](https://www.rstudio.com/wp-content/uploads/2015/11/ggplot2-cheatsheet.pdf)
 ### Unix
-We welcome any unix training materials that you might suggest! CRI Gardner and most of the Bionimbus virtual machines all run on Linux, so we use the command line a lot.
+CRI Gardner and most of the Bionimbus virtual machines all run on Linux, so we use the command line a lot.
+- If you haven't used a bash command line before, here is a good place to start: [link](https://programminghistorian.org/en/lessons/intro-to-bash)
+- This is a great cheatsheet for using the command line and shell scripting, including flow control and function declaration: [link](https://devhints.io/bash)
+- Knowledge of some bash commands can go a long way. Comfort with `grep`, `awk`, `sed`, and `xargs` might go a long way.
 # Workflowr
 Workflowr integrates R and GitHub to make scientific projects easier, more organized, and more reproducible.
 - [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
@@ -114,6 +117,16 @@ Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 20
 Gardner is a large high-performance computing cluster and data storage system. We use it to run computation and store data. The lab's group folder is located at `/gpfs/data/im-lab/`
 - UChicago CRI Workshop Tutorials: CRI does a seminar series each academic year. Here you can find the schedule: [link](https://cri.uchicago.edu/seminar-series/)
 - Intro to Gardner: this is a good explanation of what Gardner does, and why a high-performance computing cluster is important to bioinformatics: [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
+##### Job submission and management
+- Gardner uses [Torque](https://en.wikipedia.org/wiki/TORQUE) as its job scheduler, which means that the submission types are [PBS]() files.
+- Here's a [cheatsheet](https://www.weizmann.ac.il/chemistry/sites/chemistry/files/uploads/pbs-professional-cheat-sheet.pdf) for PBS commands.
+- A short, incomplete list of commands that may help when using PBS:
+    - To submit a job, `qsub <path to whatever job file>`. It will print to the console the `job_id`, which is often useful for searching the queue and finding logs.
+    - To view the status of your jobs, `qstat`
+    - To delete a job, `qdel <job_id>`
+    - Gardner has a few different queues to which you can submit jobs. Knowing the resources alotted to jobs in each queue can help. Jobs will be submitted faster if you request fewer resources. You can use `qstat -q` to list all queues with current usage statistics, and you can use `qstat -Qf <queue name>` for details on the resources.
+    - `qstat | grep Q` will list only queued jobs, and if you're submitting a bunch of them, `qstat | grep Q | wc -l` will count the jobs in the queue.
+    - Hopefully this doesn't happen, but if you need to cancel all of your queued jobs, run `qselect -s Q | xargs qdel`.
 ### Bionimbus PDC
 Bionimbus Protected Data Cloud is a storage/computation resource where the lab is alotted a certain amount of processors and storage, and we store and compute on virtual machines. If you'll be working on Bioinimbus, make sure to begin your application(s) quickly because the process has multiple steps.
 - [Documentation](https://www.opensciencedatacloud.org/support/pdc.html) 
