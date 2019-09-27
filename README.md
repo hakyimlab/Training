@@ -20,6 +20,7 @@ We work with many different tools, on many different projects. So the training r
 - [Computational Resources](#Computational-resources)
     - [CRI Gardner](#cri-gardner)
     - [Bionimbus PDC](#bionimbu-pdc)
+    - [Easy ssh Access](#easy-ssh-access)
     - [BigQuery](#bigquery)
 - [Miscellaneous](#Miscellaneous)
 
@@ -127,12 +128,41 @@ Gardner is a large high-performance computing cluster and data storage system. W
     - Gardner has a few different queues to which you can submit jobs. Knowing the resources alotted to jobs in each queue can help. Jobs will be submitted faster if you request fewer resources. You can use `qstat -q` to list all queues with current usage statistics, and you can use `qstat -Qf <queue name>` for details on the resources.
     - `qstat | grep Q` will list only queued jobs, and if you're submitting a bunch of them, `qstat | grep Q | wc -l` will count the jobs in the queue.
     - Hopefully this doesn't happen, but if you need to cancel all of your queued jobs, run `qselect -s Q | xargs qdel`.
+##### Mounting Gardner File System
+- On MacOS: from Finder, click 'Go', then 'connect to server', then connect to `smb://prfs.cri.uchicago.edu/im-lab`
+- On Linux: mounting via `sftp://cri-syncmon.cri.uchicago.edu/gpfs/data/im-lab` has worked for us in the past.
 ### Bionimbus PDC
 Bionimbus Protected Data Cloud is a storage/computation resource where the lab is alotted a certain amount of processors and storage, and we store and compute on virtual machines. If you'll be working on Bioinimbus, make sure to begin your application(s) quickly because the process has multiple steps.
 - [Documentation](https://www.opensciencedatacloud.org/support/pdc.html) 
+### Easy ssh Access
+For both Gardner and Bionimbus, you'll be working through ssh tunnels a good deal, so it will pay off to configure your ssh settings once and not have to fill in passwords all the time.
+
+First, to avoid having to enter a password at each login, generate and forward an ssh keypair. The forwarding part often requires cutting and pasting your public key into the file at `~/.ssh/authorized_keys` on the host you are trying to access. To get this to work, you may have to add keys to the [ssh-agent](https://en.wikipedia.org/wiki/Ssh-agent) on your machine. 
+
+If you work on Bionimbus, you will likely have to ssh into one host, and then perform another ssh into the virtual machine from there. This can be performed in one command via the `~/.ssh/config` file. You'll probably have to do something like this:
+```
+$ ssh username@host_1
+username@host_1 $ ssh username@host_2
+username@host_2 $ 
+```
+In that case, then on your local machine, in the `~/.ssh/config` file, you want to add 
+```
+Host host_1
+ Hostname host_1
+ User username
+ IdentityFile <absolute path to secret key>
+
+Host host_2
+ HostName host_2
+ User username
+ IdentityFile <absolute path to secret key>
+ ProxyCommand ssh -q -A host_1 -W %h:%p
+```
+Then the command `ssh host_2` should get you right where you want to go.
 ### BigQuery
 - BigQuery tutorials [link](https://cloud.google.com/bigquery/docs/tutorials)
 - Google Cloud training document [link](https://docs.google.com/document/d/1z35R9uZ2iDo-Fp1ImUMBIKvcUunBTUp1ZmAXZF2Hf48/edit?usp=sharing)
+- To do uploads from CRI to BigQuery, you will need to install the Google Cloud SDK [link](https://cloud.google.com/sdk/docs/quickstart-linux)
 
 # Miscellaneous
 
