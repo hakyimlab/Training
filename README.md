@@ -128,6 +128,13 @@ Gardner is a large high-performance computing cluster and data storage system. W
     - Gardner has a few different queues to which you can submit jobs. Knowing the resources alotted to jobs in each queue can help. Jobs will be submitted faster if you request fewer resources. You can use `qstat -q` to list all queues with current usage statistics, and you can use `qstat -Qf <queue name>` for details on the resources.
     - `qstat | grep Q` will list only queued jobs, and if you're submitting a bunch of them, `qstat | grep Q | wc -l` will count the jobs in the queue.
     - Hopefully this doesn't happen, but if you need to cancel all of your queued jobs, run `qselect -s Q | xargs qdel`.
+- If you need to run a long file submission, like a python script that submits jobs for hours, you don't have to keep a terminal window open to continue the process if you use `screen`. Here are the steps I used: 
+  ```
+  $ ssh gardner
+  [cri-gardner-in001] $ screen
+  [cri-gardner-in001] $ <the command you wanted to run>
+  ```
+  - The important thing is to exit the screen by `ctrl+a d`. Then you should see a message `[detached]`
 ##### Mounting Gardner File System
 - On MacOS: from Finder, click 'Go', then 'connect to server', then connect to `smb://prfs.cri.uchicago.edu/im-lab`
 - On Linux: mounting via `sftp://cri-syncmon.cri.uchicago.edu/gpfs/data/im-lab` has worked for us in the past.
@@ -148,7 +155,7 @@ username@host_2 $
 In that case, then on your local machine, in the `~/.ssh/config` file, you want to add 
 ```
 Host host_1
- Hostname host_1
+ HostName host_1
  User username
  IdentityFile <absolute path to secret key>
 
