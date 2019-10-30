@@ -1,0 +1,127 @@
+Lab 6: Matrix-eQTL and PrediXcan
+========================================================
+  *Created by Charles Washington III & Jiamao Zheng*
+  
+Matrix eQTL was developed to create a computationally less burdensome analysis for eQTL identification, a process important for understanding the biological basis for the effects of genetic variation. Compared to other existing tools for QTL analysis, Matrix eQTL is orders of magnitude faster in analysis due to specific preprocessing and its use of large matrix operations for the computationally difficult aspects of the system. Another boon for Matrix eQTL is that it can be used in R (as a package) and is thus formatted to work easily with many other programs for RNAseq data.
+
+PrediXcan is a gene-based association method that directly tests the molecular mechanisms through which genetic variation affects a phenotype. As discussed in class, PrediXcan estimates gene expression data from an individual's genotype data and a reference set (similar in concept to imputation) and can thus correlate this "imputed" gene expression data with specific phenotypes. Like Matrix eQTL, PrediXcan is made efficient through specific preprocessing of data and can be implemented through R (as well as a bash script for this lab).
+
+By the end of the lab you should be able to:
+
+- **Understand the types of files required for Matrix eQTL and PrediXcan**  
+- **Interpret the results of Matrix eQTL and PrediXcan analysis**  
+
+**A few important notes**: As noted above, both Matrix eQTL and PrediXcan can be run in R. Much of this lab involves you running the Rscripts (created by Jiamao Zheng from Haky's group) provided in the Lab6_materials directory on the cluster. Unfortunately, there are a couple of errors that prevent the scripts from being guaranteed to run on each person's computer in their current form. However, we were able to tinker with them enough so that the lab can be run completely on the cluster. If you follow this lab, you should have few, if any, problems. For those of you with more experience in R, you can modify the scripts so they will run directly in R on your computer. Either way some of the files generated from these analyses are quite large. Not only will some scripts take some time to run, but I also suggest you store the output files in your long term storage directories on the cluster (/project2/hgen47100). Lastly, given the size of some of these files and our limited storage on the cluster, I ask that you first remove any unused files from previous labs. Also, please remove the output files for this lab from the cluster once you no longer need them.
+
+Section 1: Matrix eQTL
+------------------------------
+
+### *1.1: Files and Preparing R on cluster*
+
+First, you need to **COPY the Lab6_materials.zip file from the /project2/hgen47100 directory to your directory on the cluster and unzip it**. Please don't work in this directory or modify until you have moved it to your directory as it contains files that everyone needs to use. Don't move the files within this directory around as the scripts within depend on the current organization.
+
+Next, we need to prepare R on the cluster for the scripts we'll be running. This just involves installing packages needed to run our Rscripts.
+
+```{r, eval=FALSE}
+module load R/3.4.3
+R                                    #opens R
+install.packages('data.table')
+install.packages('dplyr')
+install.packages('tidyr')
+install.packages('ggplot2')
+install.packages('ggpmisc')
+install.packages('MatrixEQTL')
+q()                                 #closes R
+```
+
+### *1.2: Pre-processing for Matrix eQTL*
+Now that R is prepared, navigate to the /src directory where the Rscripts are located. **Run the pre-processing for Matrix eQTL.**
+
+```{r, eval = FALSE}
+Rscript prepare_inputs_for_matrix-eqtl.r
+```
+
+The Rscript above takes the following input files from the /datasets directory: gencode.v12.annotation.gtf.gz (gene annotation file), geuvadis.annot.txt.gz (SNP annotation information), GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz (normalized gene expression data), geuvadis.snps.txt.gz (genotype data). Output of this pre-processing is located in the /inputs/for_matrix-eqtl directory.
+
+*Problem 1*
+
+Why are each of the above four input files important for running an analysis with Matrix eQTL? (Hint: What is the goal of Matrix eQTL? Are there categories for the results?)
+
+*Problem 2*
+
+If we were looking at all gene-SNP pairs, this analysis would take about 10 hours to complete. Obviously, that is unfeasible for this lab and we had to limit our scope. We could have either limited the number of genes or the number of SNPs we examine for this lab exercise. Using your knowledge of R (and abilities to search R documentation), describe how you can determine which it was. Did we limit the number of genes or SNPs? (Hint: look at the sections labeled '# snp' and '# gene expression' in the prepare_inputs_for_matrix-eqtl.r file).
+
+*Problem 3*
+
+Using the output files generated from the script above, how many genes are we examining for our analysis? How many SNPs? What's our sample size?
+
+### *1.3: Running Matrix eQTL*
+With the pre-processing done, we can now run Matrix eQTL. Assuming you previously installed the MatrixEQTL package in R (section 1.1), we simply need to **run the run_matrix-eqtl.r script.**
+
+```{r, eval = FALSE}
+Rscript run_matrix-eqtl.r
+```
+
+This Rscript takes our files created in 1.2 as input and places the resulting output files in the /results/eqtls directory. 
+
+*Problem 4*
+
+How many eQTLs were identified for the gene AFAP1L2? Provide the script you used to determine this (consult previous lab commands for assistance with this, if necessary).
+
+*Problem 5*
+
+Provide the qqplot created from the script. Looking at our output files, how many cis-eQTLs vs trans-eQTLs did we find in our analysis (combined across all genes)? Is this what we might naively expect? What could result in such a high number of QTLs? Hints: 1) Only basic QC has been applied to SNPs used in the analysis (see Plink lab section 1.5.1 for more) & 2) Open up the output files and compare the statstics for groups of QTLs.
+
+
+Section 2: PrediXcan
+------------------------------
+
+### *2.1: Pre-processing for PrediXcan*
+Navigate to the /src directory and **run the Rscript for genearting the input files for the PrediXcan analysis.**
+
+```{r, eval = FALSE}
+Rscript prepare_inputs_for_predixcan.r
+```
+
+This script takes the SNP and SNP annotation files (in this lab we're using the same ones as from our Matrix eQTL example above) from the /datasets directory to make new input files (/inputs/for_predixcan directory).
+
+*Problem 6*
+
+Examining the prepare_inputs_for_predixcan.r script and seeing its resulting files, what do you think the section "# prepare genotype files (split 1 to 22)" is doing? Why might it be important (or at least efficient) to do this?
+
+### *2.2: Running PrediXcan*
+Now we're going to run PrediXcan using the input files generated in 2.1. We'll **run PrediXcan from the run_predixcan.sh script** that has been provided in the /src directory. However, we first must **load Python** as that bash script utilizes it.
+
+```{r, eval=FALSE}
+module load python/2.7.12
+bash run_predixcan.sh
+```
+
+This script creates predicted gene expression data for our samples in the /results/predixcan_results directory.
+
+*Problem 7*
+
+Examining the run_predixcan bash script, we can see that it calls for the chromosome and sample files that we created in section 2.1. However, it also calls for another file in the /datasets directory called "gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db". Given your knowledge of what the other input files are and of the PrediXcan method in general, what do you think this new file is and why is it important?
+
+### *2.2: PrediXcan Correlation*
+Now that we have the predicted gene expression data for our samples, we can compare them to actual transcriptome data that exists for these same individuals. **Run the run_correlation.R script in the /src directory**:
+
+```{r, eval=FALSE}
+Rscript run_correlation.r
+```
+
+This script will create correlation plots for each gene as well as a summary document detailing the results of all correlation tests (located at the /results/correlations directory).
+
+*Problem 8*
+
+Similar to our exercise with Matrix eQTL, we are not creating correaltions for all genes in the genome due to time and storage space concerns. What line in the **run_correlation.R** script limits the number of genes we're doing correlations on? How many genes are we observing correlations for in this lab?
+
+*Problem 9*
+
+What gene demonstrates the greatest amount of correlation between observed and predicted gene expression in our sample? Provide the correlation plot for it.
+
+References
+----------------------------
+**Andrey A. Shabalin (2012).** Matrix eQTL: ultra fast eQTL analysis via large matrix operations. *Bioinformatics.* 28(10): 1353-8.
+
+**E.R. Gamazon, H.E. Wheeler, K.P. Shah, S.V. Mozaffari, K. Aquino-Michaels, R.J. Carroll, A.E. Eyler, J.C. Denny, GTEx Consortium, D.L. Nicolae, N.J. Cox, H.K. Im (2015).** A gene-based association method for mapping traits using reference trasncriptome data. *Nature Genetics.* 47(9): 1091-8.

@@ -1,0 +1,318 @@
+---
+output: html_document
+---
+Lab 2: Genome-Wide Association Studies (GWAS) with PLINK
+========================================================
+*Created by Max Winston, modified by Charles Washington III*  
+
+This lab section is dedicated to learning how to manipulate the appropriate files in a command-line program named **PLINK** to run whole-genome association and population-based linkage analysis. By the end of this lab, you should be able to: 
+
+- **Modify PED and BED files for GWAS**
+- **Generate summary statistics for PLINK files**
+- **Identify SNPs associated with both discrete and continuous phenotypes (GWAS)**
+- **Remove genetic structure from dataset to avoid spurious SNP identification**
+- **Articulate importance of critical input values for PLINK** 
+
+Section 1: The Basics of PLINK
+------------------------------------------------
+
+### *1.1: Basic Commands and Options*  
+
+PLINK is a comprehensive program with an enormous range of functionalities and options. We will introduce some basic commands here to get you started, but inevitably, you will want to visit the PLINK documentation (Purcell, 2010; available on the Canvas site). It is well-organized, and specifically, you may need to visit the Appendix (A.1: Options), where Purcell lists every possible option, ordered by type of analysis. For our purposes, the following commands will suffice. 
+
+Command         |       Description
+-----------     |   --------------------------------------------
+**make-bed**    |   Converts a PED file to a BED file.
+**missing**     |   Generates summary statistics on missing data.
+**freq**        |   Generates summary statistics on allele frequencies.
+**assoc**       |   Runs a basic genome-wide association analysis (on discrete or continuous trait).
+**model**       |   Runs a variety of genotypic association models.
+**cluster**     |   Perform complete linkage clustering of individuals on autosomal SNPs.  
+**script**      |   Allows to take all options and commands from a script instead of directly on command line.
+
+
+In addition to the commands which generate files on their own, the following basic options are important in almost every run of PLINK. In any analysis it is important to choose limits and thresholds for your study, and report these values in the manuscript. Often you may want to use many values to explore whether the perceived association or relationship is robust to your *a priori* limits.
+
+Option         |       Description
+-----------    |   ------------------------------------------
+**mind**       |   Upper limit for number of SNPs missing for individual.
+**geno**       |   Upper limit for number of individuals missing at a given SNP.
+**hwe**        |   Lower limit for deviation from Hardy-Weinberg Equilibrium (unit = p-value).
+**maf**        |   Lower limit for Minor Allele Frequency (MAF).
+**chr**        |   Limits to a single chromosome.
+**within**     |   Allows for stratified analysis.
+**adjust**     |   Gives a number of adjusted significance values for an association.
+
+
+### *1.2: PLINK syntax*
+
+PLINK syntax follows basic Unix style commands seen in Lab 1. However, one notable element of the syntax is that PLINK generally takes the root of a file name. For example, one of the first steps in PLINK is to make a BED file from a PED file. In such an example, a command could be: 
+
+```{r, eval=FALSE}
+
+plink --file g_data --make-bed --out g_data_out
+
+```
+
+Here, we are calling the PLINK command and providing the root for the input file *"g_data.ped"*, commanding PLINK to make a BED file (*"--make-bed"*), and naming an output root *"g_data_out.bed"*.
+
+### *1.3: PED files*
+It is helpful to know the correct format for PED files in case you want to troubleshoot or design an automated script to modify an existing PED file. All PED files are white-space (space or tab) delimited files, arranged so that the **first six columns** are mandatory: 
+
+- **1) Family ID**
+- **2) Individual ID**
+- **3) Paternal ID**
+- **4) Maternal ID**
+- **5) Sex** (1 = male, 2 = female; other = unknown)
+- **6) Phenotype**
+
+All IDs are alphanumeric, and a PED file must have only 1 phenotype in the sixth column, and may be quantitative or qualitative. **Every column after the first six are genotypes**, which should be biallelic and can be represented by numbers or letters (1,2,3,4 or A,T,G,C), as long as 0 is not used (this is default for missing data). Therefore, the number of columns in any PED file is equal to the number of SNPs (genotypic data) plus the leading six columns. 
+
+Although BED files (binary PED files) are often used for analyses to reduce computational time, they are much harder to work with since they are in binary format, and thus generally modifications are made to PED files and then they are then converted to BED files using the command in Section 1.2.
+
+### *1.4: Basic Operations (HapMap Example)*  
+
+#### *1.4.1: Download and unzip dataset. Access PLINK.*
+To begin, we will start with the dataset included with the standard PLINK download. This dataset includes randomly selected genotypes (~80,000 autosomal SNPs) from 89 Asian HapMap individuals. In order to download this data for this lab, **navigate to your home directory on the cluster, and use the following command to download the zipfile**:
+
+```{r, eval=FALSE}
+
+curl zzz.bwh.harvard.edu/plink/hapmap1.zip > hapmap1.zip
+
+```
+
+**Next, create a new directory, unzip the file you downloaded, and place the contents in that directory.** If you have trouble doing this, refer to some of the basic commands from Lab 1. 
+
+You should note that this file is a .zip file rather than a .tar file. **As such you should use the unzip command instead of the tar command to access the contents.**
+
+```{r, eval=FALSE}
+
+unzip hapmap1.zip
+
+```
+
+Now that we have our dataset, we need to access PLINK, the software we'll be using for this lab. Last week we download the program we needed from the internet, but this week we'll be accessing the program directly from the cluster. Clusters, particularily those that service genetics and genomic research at institutions, often come with many programs built in. These programs are available to all users and prevents them from needing to download multiple programs to their individual machines. **View the versions of Plink available to you and load the specified version of Plink.**
+
+- **1) Look at the programs available for you to load**
+- **2) Specifically look at the version of plink available to you**
+- **3) Load the current version of plink for you to use**
+
+```{r, eval=FALSE}
+
+module avail                   ##Step 1
+module avail plink             ##Step 2
+module load plink/1.07         ##Step 3
+
+```
+
+Note that we are using an older version of Plink than we have available (v1.07 rather than v1.90). This is because of a few bugs in the newer version of Plink that would complicate our lab session. However, one of the downsides of using an older version for Plink is that anytime you use the *plink* command, the program will try to connect you to the internet for an update, which will take quite a long time. To get around this all our *plink* commands will use the *--noweb* flag to prevent this attempt to connect to the internet. 
+
+#### *1.4.2: Converting PED files to BED files*
+
+Now that you have access to Plink, this next command will convert the example hapmap1 PED file to a BED file. Make sure these commnads are entered in the same directory where the hapmap files are located. Note that once you have converted to a BED file, the input command becomes *bfile* instead of *file*. **Type the following to convert your PED to a BED file**:
+
+```{r, eval=FALSE}
+
+plink --noweb --file hapmap1 --make-bed --out hapmap1
+
+```
+
+This command should have converted your input file (*hapmap1.ped*) into a binary PED file (*hapmap1.bed*). **Check for the new file by looking through your directory**. You may notice that there are now two other types of files in the directory (*hapmap1.bim* and *hapmap1.fam*). The .bim file is a revised mapping file and the .fam file is the first six columns of the PED file. Although it is fine to extract data from these files, do not edit them manually. 
+  
+#### *1.4.3: Generating statistics on missing data*  
+  
+Often, datasets may have missing data, and it is helpful to know some general statistics on this missing data. To generate these stats, **type the following**:
+
+```{r, eval=FALSE}
+
+plink --noweb --bfile hapmap1 --missing --out miss_stat
+
+```
+
+This command will create *miss_stat.lmiss* and *miss_stat.imiss* files, summarizing the per SNP and per individual rates of missing data, respectively. **Open these files in a text editor in Terminal to check formatting**.
+
+*Problem 1*  
+What are the columns for the two files generated (.lmiss & .imiss)?
+
+**Try the following command to get some basic summary data on the files**:
+
+```{r, eval=FALSE}
+
+wc miss_stat.imiss
+
+```
+
+*Problem 2*  
+What do the different numbers returned from the command above correspond to (*hint: man*)? How many SNPs are in this dataset? 
+
+#### *1.4.4: Generating statistics on allele frequencies*
+For most analyses it is important to know the minor allele frequencies (MAF) for any individual SNP, as you may want to restrict the analysis to SNPs with MAF above a particular value. **To generate a file with all SNPs and the MAF, type the following command**:
+
+
+```{r, eval=FALSE}
+
+plink --noweb --bfile hapmap1 --freq --out freq_stat
+
+```
+
+*Problem 3*  
+What are the different columns in the file generated (*freq_stat.frq*)? What do you think they mean?
+
+### *1.5: Using PLINK options to modify input files*  
+
+#### *1.5.1: Basic quality control*
+There are a number of options within PLINK to modify your input files for your desired analysis. Four of the most common options for quality control are (1) removing individuals with high missingness (*--mind*), (2) removing SNPs with low MAF (*--maf*), (3) removing SNPs with high missingness (*--geno*), and (4) removing SNPs that deviate significantly from Hardy-Weinberg Equilibrium (*--hwe*). 
+
+Although you can modify these options however you like, let's apply some reasonable cut-offs to the HapMap dataset. **Try the following command to apply our quality control**: 
+
+```{r, eval=FALSE}
+
+plink --noweb --file hapmap1 --make-bed --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out hapmap1_QC1
+
+```
+
+*Problem 4*  
+Given your knowledge of the options and PLINK syntax, translate the above command into a description of our quality control.
+
+*Problem 5*  
+Use the commands learned in Section 1.4 to generate statistics on missing data and allele frequencies for *hapmap1_QC1*. Make sure not to name them the same thing as the previously generated statistic files. How are the files generated from *hapmap1* and *hapmap1_QC1* different? Are the number of individuals the same after our quality control? The number of SNPs?
+
+#### *1.5.2: User-directed quality control*
+Sometimes rather than setting simple threshold values, the user may want to provide a specific list of SNPs or individuals to use or to exclude. For SNPs, it is possible to exclude SNPs specified in a list (--exclude), or only use those SNPs in the list (--extract). For individuals, it is possible to remove individuals specified in a list (--remove), or only use those individuals in the list (--keep). It is important to note that the file should be a simple text file, with the name of a single SNP on each line. 
+
+We'll use the badSNPs text file that was uploaded to the Lab 2 module section on Canvas. You'll need to move this file to your directory on the cluster. Mac users can use the scp command to move the file from their local environment to the cluster by identifying the pathways for both (works like the mv command). Windows users (Mac users can as well) will need to use a FTP client such as FileZilla. Open FileZilla and enter the host, username, password, and port fields and then connect (these are the same as you use to access PuTTy). You'll then view a simple interface where you can navigate your local environment on the left and the cluster on the right. You can simply drag and drop files/directories between the two sides. Make sure that you place the badSNPs text file in the directory with your other files for this lab. **Using a list of questionable SNPs (badSNPS.txt) we can remove them from our dataset**:
+
+```{r, eval=FALSE}
+
+plink --noweb --file hapmap1 --make-bed --exclude badSNPs.txt --mind 0.05 --maf 0.01 --geno 0.05 --hwe 0.05 --out hapmap1_QC2
+
+```
+
+*Problem 6*  
+Generate statistics for this new BED file. How many SNPs are there in the *hapmap1_QC2* dataset?  
+
+### *1.6: Running basic associations*
+After quality control, most frequently you will run some sort of association on your trimmed dataset. In our HapMap1 dataset, the phenotype embedded in the *hapmap1_QC2* file (let's call it *Disease XXX*) was actually generated to specifically associate with a particular genetic variant (*rs2222162*) in a probabilistic framework. Let's see if we can find it with a basic association test. **Basic association tests can easily be run with the following command**: 
+
+```{r, eval=FALSE}
+
+plink --noweb --bfile hapmap1_QC2 --assoc --out assoc_QC2
+
+```
+
+Now that we have generated our association file *assoc_QC2*, let's use some of our Unix commands we learned in Lab 1 to manipulate this file. **Follow the command below to list the top ten associated SNPs in our new association file**:
+
+```{r, eval=FALSE}
+
+sort --key=9 -nr assoc_QC2.assoc | head
+
+```
+This command should print the top ten SNPs on the screen. 
+
+*Problem 7*  
+Is the particular genetic variant (*rs2222162*) in the top ten associated SNPs? Does it have the most significant association? 
+
+*Problem 8*  
+Use commands we know to take this list and write it into a text file named *top_ten_assoc_QC2.txt*.
+
+Other types of association, such as logistic regression, can be run just as easily.  **Run an association using logistic regression with the following command**:
+
+```{r, eval=FALSE}
+
+plink --noweb --bfile hapmap1_QC2 --logistic --out log_assoc_QC2
+
+```
+
+*Problem 9*  
+Observe the top ten SNPs in *log_assoc_QC2*. How do they compare to those from *assoc_QC2*?
+
+### *1.7: Manhattan plots*
+Manhattan plots are one of the most common ways of visualizing GWAS results, and are simple scatter plots where the x-axis gives the genomic coordinates and the y-axis gives the negative log of the p-value for an individual SNP. Because of the vast number of the points (SNPs), it kind of resembles the Manhattan skyline, thus the name. Although there are a number of different ways to create a Manhattan plot, today we will just use the plotting packages we have already introduced. There are also other popular packages for making Manhattan plots in R (i.e. "*qqman*"). **Open R Studio, change your working directory to where the assoc_QC2.assoc file from the Canvas folder is stored, and try the following commands**:
+
+```{r}
+library(ggplot2)                                            ## Load package
+setwd("C:/Users/Charles/Desktop")                           ## Set working directory
+assoc_QC2 <- read.table("assoc_QC2.assoc",header=TRUE)       ## Read in data
+assoc_QC2 <- subset(assoc_QC2, P != "NA")                    ## Trim data
+assoc_QC2$SNP <- as.character(assoc_QC2$SNP)                 ## Change SNP column to correct format
+
+#Reads appropriate data for plotting into object 'manhattan'
+manhattan <- ggplot(assoc_QC2, aes(BP,-log(P),group=factor(CHR),color=factor(CHR)))  
+
+#Sets the bonferroni-corrected threshold
+bonferroni <- -log(0.05/length(assoc_QC2$P))
+
+#Sets a color scheme for the chromosomes w/ hex codes, these can also be coded with plaintext names (i.e. "red")
+our_colors <- c("#FF0000", "#a6cee3","#0000FF","#1f78b4", "#00FF00","#b2df8a","#33a02c","#fb9a99","#91003f","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928","#d95f0e","#377eb8","#4d4d4d","#999999","#dd1c77","#542788","#c994c7")
+
+#Plots the data with all the aesthetic and plotting options
+manhattan + geom_point(aes(size=0.5,alpha=0.05)) + scale_y_continuous(limits=c(0,15)) + geom_hline(yintercept=bonferroni, lty=2) + xlab("SNP Position (Chromosomes Ordered 1-22)") + ylab("Association Significance (-ln(p-value))") + scale_colour_manual(values = our_colors)
+
+
+```
+
+Here we have produced a Manhattan plot, with colors of the dots (SNPs) indicating the appropriate chromosomes. We have also plotted a dotted line which is a threshold for signifance after multiple-testing correction. The multiple-correction procedure we have used here is the **Bonferroni correction**, which is the most conservative in terms of avoiding false positives, which is why none of the SNPs are significant.
+
+
+Section 2: Running a Case-Control GWAS
+------------------------------------------------
+
+One of the most common uses of GWAS is to explore putative associations for disease. In this section we will practice our skills with PLINK using a dataset with SNPs in a 20Mb region from a case-control GWAS of a binary phenotype (>5,000 cases and controls). The first step will be to **download the small GWAS file set from the Canvas site (bed/bim/fam files), as well as the file containing covariates obtained from principal components analysis (PCA). These are in the PLINK_files folder on Canvas Move these files from your local environment onto the cluster so you can use them in Plink**.
+
+### *2.1: Preliminary Quality Control*  
+Your first task is to use PLINK to remove SNPs with low call rates (>5% missingness), deviation from Hardy-Weinberg equilibrium (p < 0.001), and low minor allele frequency (MAF < 0.05). **Create a script to run this analysis using the tools we have learned in Section 1**.
+
+*Problem 10*  
+Provide the script you used. How many SNPs, in total, were removed and how many are left? 
+
+### *2.2: Logistic Regression*  
+**Test associations for this chromosome using logistic regression (--logistic) using the "--adjust" flag to conduct adjustments for multiple testing**. No phenotype file needs to be specified because case-control status is in the .fam file, **but make sure to add this code to your script file.**  
+
+*Problem 11*  
+Look through the most significant SNPs in the logistic association results file. What is the most significant SNP? What is the p-value? (Make sure you look at the *.assoc.logistic.adjusted* file's Bonferroni-corrected value (BONF) as this gives you the corrected significance). 
+
+**Now run the same command adjusting for five principal components (PCs) representing ancestry using the "--covar" flag for the 5 ancestral PC file and the "--hide-covar" flag**. Don't worry too much about correcting for ancestry using PCs, we will get into much more detail on this in a later lab. 
+
+*Problem 12*  
+What is the most significant SNP now? What is the p-value?
+
+*Problem 13*  
+Are the results the same from Problem 11 and Problem 12? Did correcting for ancestry do anything?
+
+*Problem 14*
+Make two Manhattan plots by importing the two *.assoc.logistic* files (not the adjusted versions) into R and using some of the code above (you'll need to move them from the cluster to your local environment). Keep in mind that the length of the file is different from the previous Manhattan plot, so you may need to change the significance threshold as well as the data used. What are the main differences between the two plots? 
+
+### *2.3: Creating a Locuszoom Plot*
+
+Locuszoom plots have the same basic structure as Manhattan plots, however, they are useful in that they include additional information such as gene location, r-squared values, and estimated recombination rates. Once you have generated your logistic association file (the one using the 5 PCs) from Section 2.2 and identified the top SNP from this association, it is very easy to navigate to the Locuszoom website and create the plot.
+
+**Create a locuszoom plot (http://locuszoom.sph.umich.edu/genform.php?type=yourdata) centered on the most highly associated SNP (+/- 500 Kb), using the .logistic file (not the .logistic.adjusted file) from section 2.2 (once again, you'll need to move the file from the cluster to your local environment).  Make sure to click "Set for PLINK data".  Leave the remaining parameters as they are.**
+
+The generated plot should download as a PDF, which you should open and observe. The color of each point indicates the pairwise correlation of that SNP with the focal SNP (which we entered as the most highly associated SNP). Additionally, the blue line in the background demonstrates the estimated recombination rate (cM/Mb) from the much larger HapMap dataset external to our Case-Control dataset. 
+
+*Problem 15*  
+Why do you think many of the SNPs surrounding the focal SNP are colored (i.e. are correlated)? Do you notice any pattern between the color of these points and the background recombination rate?
+
+Just to explore the Locuszoom plot a bit more, let's choose a couple other SNPs to focus on, that may not be statistically significant. **Create another two locuszoom plots with the same data, the first centered on SNP "rs7989384", and the second centered on SNP "rs9574207"**.
+
+*Problem 16*  
+These two plots show major differences in the extent to which the surrounding SNPs correlate with the focal SNP. Describe the difference and come up with an explanation that might explain this phenomenon.  
+
+### *2.4: Assessing multiple association signals in this region*  
+
+Often, you may want to know whether there are other significant association signals conditional upon identification of a highly-associated SNP (such as the one you identified in Section 2.2). **To determine if there are multiple association signals in this region, run the logistic command again using the "--condition rsXXXX"" flag to adjust for the top SNP.**
+
+*Problem 17*  
+Use locuszoom to plot the P-values from the new analysis (using the same parameters as the first locuszoom plot). Show the plots for both the unconditioned (the very first locuszoom plot) and the conditioned files.
+
+*Problem 18*  
+Interpret the results of the two plots by writing 1-2 sentences for each. 
+
+References
+------------------------------------------------
+
+**Purcell S, Neale B, Todd-Brown K, Thomas L, Ferreira MAR, Bender D, Maller J, Sklar P, de Bakker PIW, Daly MJ & Sham PC. (2007)**. PLINK: a toolset for whole-genome association and population-based linkage analysis. *American Journal of Human Genetics*, 81.
+
+**Pruim RJ, Welch RP, Sanna S, Teslovich TM, Chines PS, Gliedt TP, Boehnke M, Abecasis GR, & Willer CJ. (2010)**. LocusZoom: Regional visualization of genome-wide association scan results. *Bioinformatics* 15; 26(18): 2336-2337. 
+
+**Turner, S.D.  (2014)**. qqman: an R package for visualizing GWAS results using Q-Q and manhattan plots. *biorXiv* DOI: 10.1101/005165.
