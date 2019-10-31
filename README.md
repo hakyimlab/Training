@@ -89,9 +89,9 @@ Workflowr integrates R and GitHub to make scientific projects easier, more organ
 ### Lab-Specific Genomics Papers
 The lab is currently working on projects which are very similar to these papers.
 - Gamazon ER, Wheeler HE, Shah KP, Mozaffari SV, Aquino-Michaels K, Carroll RJ, Eyler AE, Denny JC, Nicolae DL, Cox NJ, Im HK: A gene-based association method for mapping traits using reference transcriptome data. Nat Genet 2015:1–10.
-- The GTEx Consortium atlas of genetic regulatory effects across human tissues (https://www.biorxiv.org/content/10.1101/787903v1)[https://www.biorxiv.org/content/10.1101/787903v1]
+- The GTEx Consortium atlas of genetic regulatory effects across human tissues [https://www.biorxiv.org/content/10.1101/787903v1](https://www.biorxiv.org/content/10.1101/787903v1)
 - Enhancing GTEx by bridging the gaps between genotype, gene expression, and disease The eGTEx Project [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6636856/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6636856/)
-- Widespread dose-dependent effects of RNA expression and splicing on complex diseases and traits (https://www.biorxiv.org/content/10.1101/814350v1)[https://www.biorxiv.org/content/10.1101/814350v1]
+- Widespread dose-dependent effects of RNA expression and splicing on complex diseases and traits [https://www.biorxiv.org/content/10.1101/814350v1](https://www.biorxiv.org/content/10.1101/814350v1)
 
 
 ##### Other Useful Reading
