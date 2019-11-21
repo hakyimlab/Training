@@ -176,7 +176,7 @@ Then the command `ssh host_2` should get you right where you want to go.
 
 # Miscellaneous
 
-
+- [This](https://github.com/crazyhottommy/getting-started-with-genomics-tools-and-resources) is another great collection of tools / intros for genomics and computational biology. It's like this training page, but has even more resources.
 - Read [genomic data user code of conduct](https://osp.od.nih.gov/wp-content/uploads/Genomic_Data_User_Code_of_Conduct.pdf)
 - Reproducible Research [link](http://kbroman.org/steps2rr/)	
 - Get CITI training [link](https://www.citiprogram.org)
