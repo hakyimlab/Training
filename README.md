@@ -79,7 +79,6 @@ Workflowr integrates R and GitHub to make scientific projects easier, more organ
 - UCLA Big Bio: intro to genomics videos. These are very helpful to understand the field of genomics at a high level. [link](https://www.big-bio.org/)
 - Genomic Data Science Coursera specialization: [link](https://www.coursera.org/specializations/genomic-data-science)
  	- Introduction to Genomic Technologies [link](https://www.coursera.org/learn/introduction-genomics?specialization=genomic-data-science)
-	- Genomic Data Science with Galaxy [link](https://www.coursera.org/learn/galaxy-project?specialization=genomic-data-science)
 	- Python for Genomic Data Science [link](https://www.coursera.org/learn/python-genomics?specialization=genomic-data-science)
 	- Algorithms for DNA Sequencing [link](https://www.coursera.org/learn/dna-sequencing?specialization=genomic-data-science)
 	- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/learn/genomic-tools)
