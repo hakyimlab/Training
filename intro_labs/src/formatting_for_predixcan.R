@@ -1,11 +1,3 @@
-# To Prepare Inputs for PrediXcan Analysis (Software can be downloaded from https://github.com/hakyimlab/PrediXcan/tree/master/Software) 
-#
-# Author: Yanyu Liang (yanyul@uchicago.edu) 11/26/2019
-#
-# Rscript formatting_for_predixcan.R
-#
-#
-
 library(optparse)
 
 option_list = list(
