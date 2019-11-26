@@ -57,8 +57,8 @@ Some introductory materials give you an introduction to Git, Python, R, and mach
 ##### R Packages 
 - Data Manipulation in R with **dplyr** [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
 - Data Visualization in R with **ggplot2** [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
-- Modeling with data in the **tidyverse** [link](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
-- Interacting with Hadoop via **RHadoop** [link](https://github.com/andrie/RHadoop-tutorial/)
+<!--Text - Modeling with data in the **tidyverse** [link](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)-->
+<!-- - Interacting with Hadoop via **RHadoop** [link](https://github.com/andrie/RHadoop-tutorial/) -->
 - A machine learning package for R, **mlr** [link](https://mlr.mlr-org.com/index.html)
 - **Docker** is not really an R package, but this presentation gives a good overview of use cases for Docker, and how to integrate with R [link](http://dirk.eddelbuettel.com/papers/useR2015_docker.pdf)
 ##### R Cheatsheets
