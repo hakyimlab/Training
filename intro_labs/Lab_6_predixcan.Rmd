@@ -1,13 +1,45 @@
 ---
 title: "Lab 6: using PrediXcan"
 author: Yanyu Liang 
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: textmate
+    number_sections: true
 bibliography: ref.bib
 ---
 
+```{r setup, warning=FALSE, message=FALSE}
+dataset_path = '~/Desktop/introstatgen_labs/labs/lab6/Lab6_materials/datasets'
+# load data.table package so that we can read-in file faster
+library(data.table); options(datatable.fread.datatable = F)
+library(dplyr)
+library(pander)
+panderOptions('table.split.table', Inf)
+trim_dot = function(x) {
+    unlist(lapply(strsplit(x, '\\.'), function(x) { x[1] }))
+}
+quick_cor = function(mat1, mat2) {
+    # mat1 and mat2 should be in the same shape
+    m = dim(mat1)[1]
+    n = dim(mat1)[2]
+    cross = colSums(mat1 * mat2) 
+    sq1 = colSums(mat1 ^ 2) 
+    sq2 = colSums(mat2 ^ 2) 
+    margin1 = colSums(mat1)
+    margin2 = colSums(mat2)
+    sample_cov = (cross - margin1 * margin2 / m) / (m - 1)
+    sample_var1 = (sq1 - margin1 * margin1 / m) / (m - 1)
+    sample_var2 = (sq2 - margin2 * margin2 / m) / (m - 1)
+    pearson_cor = sample_cov / (sqrt(sample_var1) * sqrt(sample_var2)) 
+    pearson_cor
+}
+```
+
 # PrediXcan recap
 
-PrediXcan is a gene-based association method that directly tests the association between predicted molecular traits (*e.g.* gene expression) and phenotype. 
+PrediXcan (@predixcan) is a gene-based association method that directly tests the association between predicted molecular traits (*e.g.* gene expression) and phenotype. 
 As discussed in class, PrediXcan imputes gene expression using individual's genotype data and a set of gene-specific prediction models (trained gene-by-gene using independent training data). 
 And then, PrediXcan tests the association between imputed expression and observed phenotype. 
 
@@ -21,7 +53,7 @@ In this lab, we play with the first utility of PrediXcan.
 For the second utility, there is a summary statistic-version PrediXcan, named as S-PrediXcan, that relies on GWAS summary statistics, prediction models of gene expression, and LD panel matching GWAS population. 
 It by-passes the computationally intensive imputation step and is essentially equivalent to running vanilla PrediXcan on the samples of input GWAS. 
 
-*Problem 1*: 
+**Problem 1**: 
 Why vanilla PrediXcan is computationally intensive when the sample size of GWAS is huge?
 
 # About this lab
@@ -50,57 +82,158 @@ You will find the three files as we've discussed.
     - File name: `gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db`
     - Format: a database file to allow quick and easy query
 
-*Problem 2*: 
-Please provide the bash command to take the first 10 columns and rows of gene expression file and genotype file. How genes are labelled in gene expression file? How variants are labelled in genotype file? 
+**Problem 2**: 
+Please provide the bash command (using `cut` and `head`) to take the first 10 columns and rows of gene expression file and genotype file. How genes are labelled in gene expression file? How variants are labelled in genotype file? 
+
+# Pre-prcessing for PrediXcan
+
+Formatting is (almost) always required and essential. 
+To get started, let's read the [tutorial](https://github.com/hakyimlab/PrediXcan/tree/master/Software#predictingimputing-expression) 
+for PrediXcan. 
+
+**Problem 3**: 
+What is the format of genotype file required for PrediXcan?
+What information is currently missing in `geuvadis.snps.txt.gz`?
 
 
+The missing information can be found in `geuvadis.annot.txt.gz` (annotation file).
+In each row of the file, it provides detailed information of the variant.
 
+Additionally, we need to split genotypes by chromosome so that PrediXcan can read it smoothly. 
+OK, let's format genotype file in `R`.
+Here is an example.
 
+```{r format example, warning=FALSE, message=FALSE}
+# read in first 10 data rows of genotype file and annotation file
+genotype = fread(paste0('zcat < ', dataset_path, '/', 'geuvadis.snps.txt.gz | head -n 11'), header = T)
+annotation = fread(paste0('zcat < ', dataset_path, '/', 'geuvadis.annot.txt.gz | head -n 11'), header = T)
+genotype[1:5, 1:5] %>% pander(caption = 'A quick peak of genotype data.frame')
+annotation[1:5, ] %>% pander(caption = 'A quick peak of annotation data.frame')
+```
 
+**Problem 4**: 
+We'd like to annotate `genotype` data.frame with `annotation` data.frame using `inner_join` in `dplyr` package. 
+Please write down the command you want to use.
 
+The formatting step is implemented as an R script `formatting_for_predixcan.R`. 
+And to format our dataset, you can simply run
 
-<!-- ### *2.1: Pre-processing for PrediXcan* -->
-<!-- Navigate to the /src directory and **run the Rscript for genearting the input files for the PrediXcan analysis.** -->
+```
+$ Rscript src/formatting_for_predixcan.R \
+  --genotype_file ~/Desktop/introstatgen_labs/labs/lab6/Lab6_materials/datasets/geuvadis.snps.txt.gz \
+  --annot_file ~/Desktop/introstatgen_labs/labs/lab6/Lab6_materials/datasets/geuvadis.annot.txt.gz \
+  --annot_columns VariantID,Chr,Pos,Ref_b37,Alt,RSID_dbSNP137 \
+  --output_folder input_for_predixcan
+```
 
-<!-- ```{r, eval = FALSE} -->
-<!-- Rscript prepare_inputs_for_predixcan.r -->
-<!-- ``` -->
+**Problem 5**:
+Examine `formatting_for_predixcan.R` script and the resulting files.
+Why we need an additional file called `samples.txt`. 
+What is the genotype of individual HG00119 for variant rs3094315?
 
-<!-- This script takes the SNP and SNP annotation files (in this lab we're using the same ones as from our Matrix eQTL example above) from the /datasets directory to make new input files (/inputs/for_predixcan directory). -->
+# Running PrediXcan
 
-<!-- *Problem 6* -->
+Now we're ready to run PrediXcan using the following command line. 
 
-<!-- Examining the prepare_inputs_for_predixcan.r script and seeing its resulting files, what do you think the section "# prepare genotype files (split 1 to 22)" is doing? Why might it be important (or at least efficient) to do this? -->
+First, we need to download PrediXcan code and run.
 
-<!-- ### *2.2: Running PrediXcan* -->
-<!-- Now we're going to run PrediXcan using the input files generated in 2.1. We'll **run PrediXcan from the run_predixcan.sh script** that has been provided in the /src directory. However, we first must **load Python** as that bash script utilizes it. -->
+```
+# before running, you should change [path-to-software-folder] to the real path!
+# go to directory for softwares
+$ cd [path-to-software-folder]
+# git clone the repository on GitHub
+$ git clone https://github.com/hakyimlab/PrediXcan.git
+```
 
-<!-- ```{r, eval=FALSE} -->
-<!-- module load python/2.7.12 -->
-<!-- bash run_predixcan.sh -->
-<!-- ``` -->
+And then, we are good to go!
 
-<!-- This script creates predicted gene expression data for our samples in the /results/predixcan_results directory. -->
+```
+# before running, you should change [path-to-dataset] and [path-to-software-folder] to the real path!
+$ mkdir output_for_predixcan
+$ python [path-to-software-folder]/PrediXcan/Software/PrediXcan.py \
+  --predict \
+  --dosages input_for_predixcan/ \
+  --dosages_prefix chr \
+  --samples samples.txt \
+  --weights path-to-dataset/gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db \
+  --output_prefix output_for_predixcan/geuvadis
+```
 
-<!-- *Problem 7* -->
+**Problem 6**:
+What is the output file? 
+Could you provide a commnand line to have us view the first 10 rows and columns of the file?
+Could you tell what each row and column mean in the output?
+How about the file containing observed expression (`GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz`)?
 
-<!-- Examining the run_predixcan bash script, we can see that it calls for the chromosome and sample files that we created in section 2.1. However, it also calls for another file in the /datasets directory called "gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db". Given your knowledge of what the other input files are and of the PrediXcan method in general, what do you think this new file is and why is it important? -->
+# Evaluating prediction performance
 
-<!-- ### *2.2: PrediXcan Correlation* -->
-<!-- Now that we have the predicted gene expression data for our samples, we can compare them to actual transcriptome data that exists for these same individuals. **Run the run_correlation.R script in the /src directory**: -->
+Now that we have the predicted gene expression data for our samples, we can compare them to actual transcriptome data for the same individuals. 
 
-<!-- ```{r, eval=FALSE} -->
-<!-- Rscript run_correlation.r -->
-<!-- ``` -->
+```{r correlation}
+observed_expr = fread(paste0('zcat < ', dataset_path, '/GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz'), header = T)
+predicted_expr = fread(paste0('output_for_predixcan/geuvadis_predicted_expression.txt'), header = T)
+observed_expr[1:3, 1:6] %>% pander(caption = 'Quick peak on observed expression data.frame')
+predicted_expr[1:3, 1:4] %>% pander(caption = 'Quick peak on predicted expression data.frame')
+```
 
-<!-- This script will create correlation plots for each gene as well as a summary document detailing the results of all correlation tests (located at the /results/correlations directory). -->
+First, we'd like to extract genes and individuals showing up in both of the matrices
 
-<!-- *Problem 8* -->
+```{r first}
+gene_in_obs = trim_dot(observed_expr$TargetID)
+gene_in_pred = trim_dot(colnames(predicted_expr)[c(-1, -2)])
+gene_in_both = intersect(gene_in_obs, gene_in_pred)
+indiv_in_obs = colnames(observed_expr)[c(-1, -2, -3, -4)]
+indiv_in_pred = predicted_expr$IID
+indiv_in_both = intersect(indiv_in_obs, indiv_in_pred)
+```
 
-<!-- Similar to our exercise with Matrix eQTL, we are not creating correaltions for all genes in the genome due to time and storage space concerns. What line in the **run_correlation.R** script limits the number of genes we're doing correlations on? How many genes are we observing correlations for in this lab? -->
+Then, we subset and format the two matrices so that they have the matched gene and individual at each entry.
 
-<!-- *Problem 9* -->
+```{r second}
+observed_mat = observed_expr[, c(-1, -2, -3, -4)]
+rownames(observed_mat) = trim_dot(observed_expr$TargetID)
+observed_mat = observed_mat[match(gene_in_both, gene_in_obs), match(indiv_in_both, indiv_in_obs)]
+observed_mat = t(observed_mat)
+predicted_mat = predicted_expr[, c(-1, -2)]
+rownames(predicted_mat) = predicted_expr$IID
+colnames(predicted_mat) = trim_dot(colnames(predicted_mat))
+predicted_mat = predicted_mat[match(indiv_in_both, indiv_in_pred), match(gene_in_both, gene_in_pred)]
+observed_mat[1:3, 1:3] %>% pander(caption = 'Quick peak on observed expression matrix with matched gene/individual entries')
+observed_mat[1:3, 1:3] %>% pander(caption = 'Quick peak on predicted expression matrrix with matched gene/individual entries')
+```
 
-<!-- What gene demonstrates the greatest amount of correlation between observed and predicted gene expression in our sample? Provide the correlation plot for it. -->
+Finally, we can calculate the Pearson's correlation between predicted and observed expression level for each of the gene.
+
+```{r pearson cor}
+pearson_correlation = quick_cor(observed_mat, predicted_mat)
+```
+
+**Problem 7**:
+The function `quick_cor` is suppose to output Pearson's correlation for each pair of columns of input matrices.
+Could you perform sanity check on whether it is reporting the correct number (compare against the output of built-in function `cor` in R)?
+Could you calculate Spearman's correlation and compare with Pearson's correlation? 
+
+**Problem 8**:
+Visualize the observed vs. predicted expression for the best predicted genes (in terms of Pearson's correlation).
+
+### solution to problem 8
+
+```{r solution, warning=FALSE}
+out = list()
+# tmp = data.frame() suboptimal practice
+for(i in 1 : ncol(observed_mat)) {
+    out[[length(out) + 1]] = data.frame(
+        cor_pearson = cor(observed_mat[, i], predicted_mat[, i], method = 'pearson'),
+        cor_spearman = cor(observed_mat[, i], predicted_mat[, i], method = 'spearman')
+    )
+    # tmp = rbind(tmp,  data.frame(
+    #     cor_pearson = cor(observed_mat[, i], predicted_mat[, i], method = 'pearson'),
+    #     cor_spearman = cor(observed_mat[, i], predicted_mat[, i], method = 'spearman')
+    # ))
+}
+out = do.call(rbind, out)
+plot(out$cor_pearson, out$cor_spearman)
+message('Gene ', colnames(predicted_mat)[which.max(out$cor_pearson)], ' has highest Pearson\'s correlation')
+```
 
 # References
