@@ -1,0 +1,106 @@
+---
+title: "Lab 6: using PrediXcan"
+author: Yanyu Liang 
+output: html_document
+bibliography: ref.bib
+---
+
+# PrediXcan recap
+
+PrediXcan is a gene-based association method that directly tests the association between predicted molecular traits (*e.g.* gene expression) and phenotype. 
+As discussed in class, PrediXcan imputes gene expression using individual's genotype data and a set of gene-specific prediction models (trained gene-by-gene using independent training data). 
+And then, PrediXcan tests the association between imputed expression and observed phenotype. 
+
+In short, PrediXcan provides two main utilities 
+
+1. Impute/predict gene expression given genotype 
+2. Obtain gene-level association by correlating imputed expression and observed phenotype
+
+In this lab, we play with the first utility of PrediXcan. 
+
+For the second utility, there is a summary statistic-version PrediXcan, named as S-PrediXcan, that relies on GWAS summary statistics, prediction models of gene expression, and LD panel matching GWAS population. 
+It by-passes the computationally intensive imputation step and is essentially equivalent to running vanilla PrediXcan on the samples of input GWAS. 
+
+*Problem 1*: 
+Why vanilla PrediXcan is computationally intensive when the sample size of GWAS is huge?
+
+# About this lab
+
+We have genotype data and gene expression levels for samples from GEUVADIS consortium @geuvadis.
+We have prediction model built from GTEx v7 @gtexv7 in matched tissue (lymphocytes in this case).
+We'd like to see how well the predicton models trained using GTEx V7 can predict the gene expression level in GEUVADIS samples. 
+To do so, the overall workflow is:
+
+1. Format GEUVADIS genotype data so that it is recognizable by PrediXcan software
+2. Run PrediXcan to impute gene expression for GEUVADIS samples
+3. Compare imputed expression versus observed expression for GEUVADIS samples
+
+# About the data
+
+The input data can be found at [here](todo:add-box-link).
+You will find the three files as we've discussed.
+
+* Observed gene expression level in GEUVADIS: 
+    - File name: `GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz`
+    - Format: each row is a gene, each column is an individual
+* Genotype data in GEUVADIS: 
+    - File name: `geuvadis.snps.txt.gz`
+    - Format: each row is a variant, each column is an individual
+* Prediction models obtained from GTEx V7 lymphocytes:
+    - File name: `gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db`
+    - Format: a database file to allow quick and easy query
+
+*Problem 2*: 
+Please provide the bash command to take the first 10 columns and rows of gene expression file and genotype file. How genes are labelled in gene expression file? How variants are labelled in genotype file? 
+
+
+
+
+
+
+
+<!-- ### *2.1: Pre-processing for PrediXcan* -->
+<!-- Navigate to the /src directory and **run the Rscript for genearting the input files for the PrediXcan analysis.** -->
+
+<!-- ```{r, eval = FALSE} -->
+<!-- Rscript prepare_inputs_for_predixcan.r -->
+<!-- ``` -->
+
+<!-- This script takes the SNP and SNP annotation files (in this lab we're using the same ones as from our Matrix eQTL example above) from the /datasets directory to make new input files (/inputs/for_predixcan directory). -->
+
+<!-- *Problem 6* -->
+
+<!-- Examining the prepare_inputs_for_predixcan.r script and seeing its resulting files, what do you think the section "# prepare genotype files (split 1 to 22)" is doing? Why might it be important (or at least efficient) to do this? -->
+
+<!-- ### *2.2: Running PrediXcan* -->
+<!-- Now we're going to run PrediXcan using the input files generated in 2.1. We'll **run PrediXcan from the run_predixcan.sh script** that has been provided in the /src directory. However, we first must **load Python** as that bash script utilizes it. -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- module load python/2.7.12 -->
+<!-- bash run_predixcan.sh -->
+<!-- ``` -->
+
+<!-- This script creates predicted gene expression data for our samples in the /results/predixcan_results directory. -->
+
+<!-- *Problem 7* -->
+
+<!-- Examining the run_predixcan bash script, we can see that it calls for the chromosome and sample files that we created in section 2.1. However, it also calls for another file in the /datasets directory called "gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db". Given your knowledge of what the other input files are and of the PrediXcan method in general, what do you think this new file is and why is it important? -->
+
+<!-- ### *2.2: PrediXcan Correlation* -->
+<!-- Now that we have the predicted gene expression data for our samples, we can compare them to actual transcriptome data that exists for these same individuals. **Run the run_correlation.R script in the /src directory**: -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- Rscript run_correlation.r -->
+<!-- ``` -->
+
+<!-- This script will create correlation plots for each gene as well as a summary document detailing the results of all correlation tests (located at the /results/correlations directory). -->
+
+<!-- *Problem 8* -->
+
+<!-- Similar to our exercise with Matrix eQTL, we are not creating correaltions for all genes in the genome due to time and storage space concerns. What line in the **run_correlation.R** script limits the number of genes we're doing correlations on? How many genes are we observing correlations for in this lab? -->
+
+<!-- *Problem 9* -->
+
+<!-- What gene demonstrates the greatest amount of correlation between observed and predicted gene expression in our sample? Provide the correlation plot for it. -->
+
+# References
