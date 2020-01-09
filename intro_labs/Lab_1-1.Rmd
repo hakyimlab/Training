@@ -243,10 +243,10 @@ R is used widely for scientific computing, however, the syntax is notably differ
 Although data can be simulated, generated, and analyzed all within R, often we may want to visualize or analyze data from some other source. We can learn R syntax by learning how to import new data. **Use the following commands to set the directory and import the downloaded text file `lab1_r_example_data.txt` as the data object "new_data". Don't forget to set your directory to where you saved it**:
 
 ```{r, eval=FALSE}
-# To change the working directory, you may want to modify and uncomment the following line
-# setwd("path-to-your-working-directory")          
-new_data <- read.table("data/lab1_r_example_data.txt", header=TRUE)
-
+# To change the working directory, you may want to modify and comment/uncomment the following line
+setwd("data")
+# read table
+new_data <- read.table("lab1_r_example_data.txt", header=TRUE)
 ```
 
 
