@@ -242,7 +242,7 @@ R is used widely for scientific computing, however, the syntax is notably differ
 
 Although data can be simulated, generated, and analyzed all within R, often we may want to visualize or analyze data from some other source. We can learn R syntax by learning how to import new data. **Use the following commands to set the directory and import the downloaded text file `lab1_r_example_data.txt` as the data object "new_data". Don't forget to set your directory to where you saved it**:
 
-```{r, eval=FALSE}
+```{r}
 # To change the working directory, you may want to modify and comment/uncomment the following line
 setwd("data")
 # read table
@@ -368,7 +368,7 @@ One important note for plotting is that the syntax is different between data fra
 plot(final_mat[,1],final_mat[,2])
 ```
 
-*Problem 7: You want a quick estimate on how often you will win the dice game craps on the first roll. You do this by constructing 500 random rolls (2 dice/roll) and looking at the results. Use the sample function to sample the numbers 1 to 6 with replacement 1000 times, naming this vector "dice". Take this vector and make it into a matrix named "pairs" with 2 columns and 500 rows, simulating the 500 rolls. Make a new vector summing the first and second rows named "rolls". If 7 and 11 are the two rolls for victory on the first roll, estimate the probability of winning from your 500-roll sample. Hint: The function table might be useful in this problem.*
+*Problem 7: You want a quick estimate on how often you will win the dice game craps on the first roll. You do this by constructing 500 random rolls (2 dice/roll) and looking at the results. Use the sample function to sample the numbers 1 to 6 with replacement 1000 times, naming this vector "dice". Take this vector and make it into a matrix named "pairs" with 2 columns and 500 rows, simulating the 500 rolls. Make a new vector summing the first and second columns named "rolls". If 7 and 11 are the two rolls for victory on the first roll, estimate the probability of winning from your 500-roll sample. Hint: The function table might be useful in this problem.*
 
 ## For-loops
 
