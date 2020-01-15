@@ -110,7 +110,7 @@ module load plink/1.90b6.9     ##Step 3
 ```
 
 
-Sidenote: the Midway2 cluster has a number of other software packages already pre-installed. For future reference, if you want to determine what packages / whether a specific package is already installed on the cluster:
+Sidenote: the midway cluster has a number of other software packages already pre-installed. For future reference, if you want to determine what packages / whether a specific package is already installed on the cluster:
 
 ```{bash, eval=FALSE}
 module avail #to list all packages installed on the cluster 
@@ -241,21 +241,28 @@ Manhattan plots are one of the most common ways of visualizing GWAS results, and
 
 ```{r}
 library(ggplot2)                                             ## Load package
-assoc_QC2 <- read.table("data/assoc_QC2.assoc",header=TRUE)  ## Read in data
+assoc_QC2 <- read.table(                                     ## Read in data
+  "data/assoc_QC2.assoc",
+  header = TRUE, stringsAsFactors = FALSE
+)  
 assoc_QC2 <- subset(assoc_QC2, P != "NA")                    ## Trim data
-assoc_QC2$SNP <- as.character(assoc_QC2$SNP)                 ## Change SNP column to correct format
 
-#Reads appropriate data for plotting into object 'manhattan'
-manhattan <- ggplot(assoc_QC2, aes(BP,-log(P),group=factor(CHR),color=factor(CHR)))  
-
-#Sets the bonferroni-corrected threshold
-bonferroni <- -log(0.05/length(assoc_QC2$P))
 
 #Sets a color scheme for the chromosomes w/ hex codes, these can also be coded with plaintext names (i.e. "red")
 our_colors <- c("#FF0000", "#a6cee3","#0000FF","#1f78b4", "#00FF00","#b2df8a","#33a02c","#fb9a99","#91003f","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928","#d95f0e","#377eb8","#4d4d4d","#999999","#dd1c77","#542788","#c994c7")
 
+#Sets the bonferroni-corrected threshold
+bonferroni <- -log(0.05 / length(assoc_QC2$P))
+
 #Plots the data with all the aesthetic and plotting options
-manhattan + geom_point(aes(size=0.5,alpha=0.05)) + scale_y_continuous(limits=c(0,15)) + geom_hline(yintercept=bonferroni, lty=2) + xlab("SNP Position (Chromosomes Ordered 1-22)") + ylab("Association Significance (-ln(p-value))") + scale_colour_manual(values = our_colors)
+ggplot(assoc_QC2)  + 
+  geom_point(aes(x = BP, y = -log(P), color = factor(CHR)), size = 2, alpha = 0.5) + 
+  scale_y_continuous(limits = c(0,15)) + 
+  geom_hline(yintercept = bonferroni, linetype = 2) + 
+  xlab("SNP Position (Chromosomes Ordered 1-22)") + 
+  ylab("Association Significance (-log(p-value))") + 
+  labs(color = 'Chromosome') +
+  scale_colour_manual(values = our_colors)
 ```
 
 Here we have produced a Manhattan plot, with colors of the dots (SNPs) indicating the appropriate chromosomes. We have also plotted a dotted line which is a threshold for signifance after multiple-testing correction. The multiple-correction procedure we have used here is the **Bonferroni correction**, which is the most conservative in terms of avoiding false positives, which is why none of the SNPs are significant.
@@ -265,21 +272,23 @@ Here we have produced a Manhattan plot, with colors of the dots (SNPs) indicatin
 
 One of the most common uses of GWAS is to explore putative associations for disease. In this section we will practice our skills with PLINK using a dataset with SNPs in a 20Mb region from a case-control GWAS of a binary phenotype (>5,000 cases and controls). The input files have already been downloaded inside the data folder. **It includes small GWAS file set (bed/bim/fam files), as well as the file containing covariates obtained from principal components analysis (PCA)**. For your convenience, you can find these files at `/project2/hgen47100/data/lab2`.
 
+**Throughout this section, you will be asked to run multiple PLINK commands. You will be asked to record them all in one bash script as part of the submission.**
+
 ## Preliminary Quality Control
 
-Your first task is to use PLINK to remove SNPs with low call rates (>5% missingness), deviation from Hardy-Weinberg equilibrium (p < 0.001), and low minor allele frequency (MAF < 0.05). **Create a script to run this analysis using the tools we have learned in Section 1**.
+Your first task is to use PLINK to remove SNPs with low call rates (>5% missingness), deviation from Hardy-Weinberg equilibrium (p < 0.001), and low minor allele frequency (MAF < 0.05). **Please record the command in the bash script**.
 
 *Problem 10*  
 Provide the script you used. How many SNPs, in total, were removed and how many are left? 
 
 ## Logistic Regression
 
-**Test associations for this chromosome using logistic regression (--logistic) using the "--adjust" flag to conduct adjustments for multiple testing**. No phenotype file needs to be specified because case-control status is in the .fam file, **but make sure to add this code to your script file.**  
+**Test associations for this chromosome using logistic regression (--logistic) using the "--adjust" flag to conduct adjustments for multiple testing**. No phenotype file needs to be specified because case-control status is in the .fam file, **Please record the command in the bash script**  
 
 *Problem 11*  
 Look through the most significant SNPs in the logistic association results file. What is the most significant SNP? What is the p-value? (Make sure you look at the *.assoc.logistic.adjusted* file's Bonferroni-corrected value (BONF) as this gives you the corrected significance). 
 
-**Now run the same command adjusting for five principal components (PCs) representing ancestry using the "--covar" flag for the 5 ancestral PC file and the "--hide-covar" flag**. Don't worry too much about correcting for ancestry using PCs, we will get into much more detail on this in a later lab. 
+**Now run the same command adjusting for five principal components (PCs) representing ancestry using the "--covar" flag for the 5 ancestral PC file and the "--hide-covar" flag**. Don't worry too much about correcting for ancestry using PCs, we will get into much more detail on this in a later lab. **Please record the command in the bash script**
 
 *Problem 12*  
 What is the most significant SNP now? What is the p-value?
@@ -303,19 +312,15 @@ After uploading the GWAS results, you will hit button "submit" which will submit
 *Problem 15*  
 Why do you think many of the SNPs surrounding the focal SNP are colored more red-ish (i.e. are more correlated)? Do you notice any pattern between the color of these points and the background recombination rate?
 
-Just to explore the Locuszoom plot a bit more, let's choose a couple other SNPs to focus on, that may not be statistically significant. **Use Batchmode to create another two locuszoom plots with the same data, the first centered around SNP "rs7989384", and the second centered around SNP "rs9574207"**.
+
+## Assessing multiple association signals in this region
+
+Often, you may want to know whether there are other significant association signals conditional upon identification of a highly-associated SNP (such as the one you identified in Section 2.2). **To determine if there are multiple association signals in this region, run the logistic with covariates again using the "--condition rsXXXX"" flag to adjust for the top SNP.** **Please record the command in the bash script**
 
 *Problem 16*  
-These two plots show major differences in the extent to which the surrounding SNPs correlate with the focal SNP. Describe the difference and come up with an explanation that might explain this phenomenon.  
-
-### Assessing multiple association signals in this region
-
-Often, you may want to know whether there are other significant association signals conditional upon identification of a highly-associated SNP (such as the one you identified in Section 2.2). **To determine if there are multiple association signals in this region, run the logistic command again using the "--condition rsXXXX"" flag to adjust for the top SNP.**
+Use locuszoom to plot the -log10 P-values from the new analysis. Show the plots for both the unconditioned (the very first locuszoom plot) and the conditioned files (for region 13:73666628-74166628).
 
 *Problem 17*  
-Use locuszoom to plot the P-values from the new analysis (using the same parameters as the first locuszoom plot). Show the plots for both the unconditioned (the very first locuszoom plot) and the conditioned files.
-
-*Problem 18*  
 Interpret the results of the two plots by writing 1-2 sentences for each. 
 
 
