@@ -10,7 +10,7 @@ output:
 
 *Created by Max Winston, modified by Charles Washington III, Ankeeta Shah, and Yanyu Liang*  
 
-**Before getting started**, please download data from the Box link [here](https://uchicago.box.com/s/2vxmg6mo4kxoporyj5c0g9usakzzalzt). Note that to have access to the data, you may be asked to login as UChicago user. For your convenience, we have a copy of the data folder at `/project2/hgen47100/data/lab2` on midway.
+**Before getting started**, please download data from the Box link [here](https://uchicago.box.com/s/jovkwts3gg7y53rimdvydfq5jtkyjubd). Note that to have access to the data, you may be asked to login as UChicago user. For your convenience, we have a copy of the data folder at `/project2/hgen47100/data/lab2` on midway.
 
 **Tranferring data between midway and local machine**. Unix users are recommended to use `scp` or `rsync`. Windows users can use WinSCP or equivalence. For our purpose, our files are not sensitive and small in general. An alternative approach is to login to midway Desktop using ThinLinc and send the data as an email.
 
@@ -270,7 +270,7 @@ Here we have produced a Manhattan plot, with colors of the dots (SNPs) indicatin
 
 # Running a Case-Control GWAS
 
-One of the most common uses of GWAS is to explore putative associations for disease. In this section we will practice our skills with PLINK using a dataset with SNPs in a 20Mb region from a case-control GWAS of a binary phenotype (>5,000 cases and controls). The input files have already been downloaded inside the data folder. **It includes small GWAS file set (bed/bim/fam files), as well as the file containing covariates obtained from principal components analysis (PCA)**. For your convenience, you can find these files at `/project2/hgen47100/data/lab2`.
+One of the most common uses of GWAS is to explore putative associations for disease. In this section we will practice our skills with PLINK using a dataset with SNPs in a 20Mb region from a case-control GWAS of a binary phenotype (more than 5000 individuals). There is a little readme (`readme_of_GAME_data.txt`) which you may find useful. The input files have already been downloaded inside the data folder. **It includes small GWAS file set (bed/bim/fam files), as well as the file containing covariates obtained from principal components analysis (PCA)**. For your convenience, you can find these files at `/project2/hgen47100/data/lab2`.
 
 **Throughout this section, you will be asked to run multiple PLINK commands. You will be asked to record them all in one bash script as part of the submission.**
 
