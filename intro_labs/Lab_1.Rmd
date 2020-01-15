@@ -1,23 +1,30 @@
 ---
-output: html_document
+title: "Lab 1: Introduction to Stastical Computing Languages"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: textmate
+    number_sections: true
 ---
-Lab 1: Introduction to Stastical Computing Languages
-========================================================
-*Created by Max Winston; modified by Charles Washington III*  
 
-This class is designed to introduce a variety of concepts, methods, and tools utilized in statistical genetics. The majority of tools used to employ these methods and concepts require basic knowledge of computing languages, specifically Unix and R. In today's lab we will cover the basic syntax of these languages, as well as some basic commands necessary for operating statistical genetic programs. By the end of the lab, you should understand how to perform the following: 
+*Created by Max Winston; modified by Charles Washington III, Ankeeta Shah, and Yanyu Liang*  
 
-- **Basic navigation in R and Unix**
+This class is designed to introduce a variety of concepts, methods, and tools utilized in statistical genetics. 
+The majority of tools used to employ these methods and concepts require basic knowledge of computing languages, specifically Unix and R. 
+In today's lab, we will cover the basic syntax of these languages and some basic commands necessary for operating statistical genetics programs. 
+By the end of this lab, you should understand how to perform the following: 
+
+- **Navigate in R and Unix**
 - **Download and install software packages in Unix**
 - **Write looped bash commands to run in Unix**
 - **Manipulate large text files in Unix**
 - **Import data files into R**
 - **Manipulate and visualize files in R**
 
-Section 1: Commonly used commands in Unix
-------------------------------------------------
+# Commonly used commands in Unix
 
-### *1.1: List of Basic Commands*  
+## List of Basic Commands
 
 Command       |       Description
 -----------   |   ---------------------------------------------------------
@@ -26,18 +33,20 @@ Command       |       Description
 **mkdir**     |   Make directory
 **ls**        |   List information about files
 **mv**        |   Moves or renames files or directories
-**rm**        |   Deletes files or directories
+**rm**        |   Deletes files (can remove directories with -rf)
 **cp**        |   Copy a file to a new location (can copy directories with -r)
-**scp**       |   Secure copy a file (for copying one IP address to another)
-**cat**       |   Concatenate and print the content of files
-**sed**       |   Stream editor
+**scp**       |   Secure copy a file (for transferring files between a remote server and local system)
+**cat**       |   Concatenate and print the content of files to screen
+**sed**       |   Stream editor (for searching, finding, and replacing text)
 **"pipe"**         |   Uses the output of one command as the input for another
 **>**         |   Writes output into file (must enter file name after, will overwrite)
 **>>**        |   Writes output into file (must enter file name, will append, not overwrite)
 **curl**      |   Transfer a URL (downloads something from the Internet)
-**tar**       |   Creates tape archives and addds or extracts files
+**wget**      |   Transfer a URL (downloads something from the Internet)
+**tar**       |   Creates tape archives and adds or extracts files
 **ssh**       |   Remote log-in command (Secure Shell client)
 **emacs**     |   Opens emacs text editor
+**vim**       |   Opens vim text editor
 **nano**      |   Opens nano text editor
 **man**       |   Access manual for any command (exit = q)
 **top**       |   Observe computer's tasks
@@ -46,15 +55,19 @@ Command       |       Description
 **tail**      |   Look at the last ten lines of file (useful for large files)
 **./**        |   Existing directory (not a command)
 **../**       |   Directory contaiing existing directory (not a command)
-**qsub**      |   Submits a job to the server (only for networked computers)
-**qstat**     |   Status of a job you've submitted to the server
 **grep**      |   Prints lines matching a pattern (helpful for manipulating large files)
 
-### *1.2: Logging in and moving files*
+SLURM specifics       |       Description
+-------------------   |   ---------------------------------------------------------
+**sbatch**            |   Submits a job to the server 
+**sinterative**       |   Submits an interactive job to the server (Our labs will use it a lot)
+**squeue**            |   Status of a job you've submitted to the server
 
-For the remainder of the document, please notice that steps requiring action will generally be in bold. For example, **Open Terminal**.
+## Logging in and moving files
 
-Each of you should have been assigned a username on the server. You will use a Secure SHell client to log in to your home directory on the server. You can do this by:
+For the remainder of the document, please notice that steps requiring actions will generally be in bold. For example, **Open Terminal** if you are on a Mac.
+
+Each of you should have been assigned a username on the server. You will use a Secure Shell client to log in to your home directory on the server. You can do this by:
 
 ```{r, eval=FALSE}
 
@@ -62,9 +75,14 @@ ssh <username>@midway2.rcc.uchicago.edu
 
 ```
 
-Note that you will be prompted to enter your password. One somewhat counter-intuitive facet of password entry in Unix is that there is no indiciation on-screen of characters being typed in. This is an intentional security feature, in order to prevent onlookers from inferring the length of your password. Type in your password when prompted and you should be in the server!
+Note that you will be prompted to enter your password. 
+One somewhat counter-intuitive facet of password entry in Unix is that there is no indiciation on-screen of characters being typed in. 
+This is an intentional security feature, in order to prevent onlookers from inferring the length of your password. 
+Type in your password when prompted. 
+The midway2 server has recently implemented two-factor authentication, so you will next be prompted to log in with DUO, enter a passcode, or receive a call. 
+After you do one of these three things, you should be on the server.  
 
-Using the commands listed above, do the following: 
+Using the commands listed above, do the following in your home directory: 
 
 - **1) Make your own directory.**
 - **2) Make a second directory.**
@@ -94,7 +112,7 @@ cd Lab_1/                     ##Step 10
 
 ```
 
-### *1.3: Tab-Completion*
+### Tab-Completion
 Tab completion is helpful for both speed and accuracy. The following exercise will demonstrate this:
 
 - 1) **Make a directory with a really long name.**
@@ -110,7 +128,7 @@ Tab completion is helpful for both speed and accuracy. The following exercise wi
 mkdir only_an_idiot_would_ever_create_a_directory_like_this/    ##Step 1
 cd only_a                                                       ##Step 2
 [tab, then enter]                                               ##Step 3
-cd ../                                                          ##Step 4
+cd ..                                                          ##Step 4
 cd olny_a                                                       ##Step 5
 [tab]                                                           ##Step 6
 rm -r only_a                                                    ##Step 7
@@ -118,11 +136,11 @@ rm -r only_a                                                    ##Step 7
 
 ```
 
-### *1.4: Using the manual command to explore other commands*  
+## Using the manual command to explore other commands  
 
-The Unix language has an extensive number of commands, and most of these commands have numerous "options" which can modify these commands. Here we will use the man command to understand some of the helpful options in the previously introduced ls command.
+The Unix language has an extensive number of commands, and most of these commands have numerous "options" which can modify these commands. Here we will use the man command to understand some of the helpful options for the previously introduced ls command.
 
-Generally, the ls command will list everything in the directory you are in, but most of the time you will probably want a lot more information then just the name of the files and directories. Furthermore, you may want ls to order the contents in a particular way, especially if you have many files in a directory. This can be done by using the options, which are letters added after a dash of a command.
+Generally, the ls command will list everything in the directory you are in, but most of the time you will probably want a lot more information then just the name of the files and directories. Furthermore, you may want ls to order the contents in a particular way, especially if you have many files in a directory. This can be done by using the options or flags, which are letters added after a dash which will be typed after the command itself.
 
 - 1) **Use the manual command to explore the options for listing.**
 
@@ -134,7 +152,7 @@ man ls            ##Step 1
 
 *Problem 1: What command would give you a detailed but human-readable list of the files in a directory in reverse-order of when they have last been modified?*
 
-### *1.5 Downloading and unpacking files and programs*
+## Downloading and unpacking files and programs
 
 Frequently, you may need files or programs that are not already installed on your computer or server. Often these files are compressed, and often these files are in 'tarballs', which have the extension .tgz. IMPUTE2 is a program we'll use later in the quarter, so let's download and unpack it:
 
@@ -148,7 +166,7 @@ tar -zxvf impute2.tgz                                                           
 
 Once a program is unpacked, generally there is a README file that you can open with a text editor command (i.e. vim), however, every program is different, and reading the manual is the only sure way to install the program correctly.
 
-### *1.6: Manipulating text files*
+## Manipulating text files
 
 Often you may have a large text file that you want to manipulate in some way. Using a variety of commands in combination is usually the most effective way to do this, and the "pipe" command allows for a more condense syntax where you use the output of one command as the input for the next.
 
@@ -169,7 +187,7 @@ cat example.chr22.map | sort -k2nr | head > top_ten.map       ##Step 2
 *Problem 3: How would you modify this command if you only wanted the top three?*
 
 
-### *1.7: Writing bash scripts*
+## Writing bash scripts
 
 Having the capability to write bash scripts which can be run in the Unix environment is critical, especially for running replicates or collating results from a command-line program. We will write a bash script using the vim text editor, and then run it. Alternatively, feel free to use your own text editor (emacs, textwrangler, etc.) to write the script below. Please start with the following: 
 
@@ -202,9 +220,9 @@ bash test.sh                                                      ##Step 5
 
 *Problem 4: Find the golden nugget! Write a new script named extract.sh where the first line of each of the top_ten replicate files is written into a single file named extract.txt. Note: you may want to refer to Section 1.1 to find a command that can select single lines.*
 
-### *1.8: Storing files on the cluster*
+## Storing files on the cluster
 
-The workspace you've been using thus far for this lab is what's known as "scratch" space. This space is quickly accessed and serves as a good workspace to enter your commands and edit files. However, there is limited storage memory and scratch spaces are wiped by administrators to keep enough working memory for all the users. Long term storage space can be found at the following pathway. **Go to this pathway and create a directory with your name to store any files that you want to keep for the long term**.
+The workspace you've been using thus far for this lab is your 'home' directory. This space is quickly accessed and serves as a good workspace to enter your commands and edit files. However, there is limited storage space here. Long term storage space can be found `/project2/hgen47100/`. **Go to this path and create a directory with your name to store any files that you want to keep for the long term**.
 
 ```{r, eval=FALSE}
 cd /project2/hgen47100/
@@ -212,44 +230,34 @@ cd /project2/hgen47100/
 mkdir <your_folder_name>_Lab/
 chmod 700 <your_folder_name>_Lab/
 
-[to return to your scratch space enter cd /home/<username>]
+[to return to your home directory, enter cd /home/<username>]
 ```
 
 
-Section 2: Basic commands in R
-------------------------------------------------
+# Basic commands in R
 
-R is used widely for scientific computing, however, the syntax is notably different than Unix. Specifically, two of the most visible differences are that variables are usually assigned with the equals operator, and functions are applied using parentheses. While it can be accessed within the Unix environment, it is often preferable to operate R within the graphical user interface (GUI) known as RStudio. Unlike many poorly made GUIs that offer little advantage to a Unix environment, RStudio offers many organizational and functional benefits. **Open RStudio**.
+R is used widely for scientific computing, however, the syntax is notably different than Unix. Specifically, two of the most visible differences are that variables are usually assigned with the assignment operator (<-) operator, and functions are applied using parentheses. While R can be accessed and R scripts can be run within the Unix environment, it is often preferable to operate R within the graphical user interface (GUI) known as RStudio. Unlike many poorly made GUIs that offer little advantage to a Unix environment, RStudio offers many organizational and functional benefits. **Open RStudio**.
 
+## Reading in data files
 
-### *2.1: Reading in data files*  
+Although data can be simulated, generated, and analyzed all within R, often we may want to visualize or analyze data from some other source. We can learn R syntax by learning how to import new data. **Use the following commands to set the directory and import the downloaded text file `lab1_r_example_data.txt` as the data object "new_data". Don't forget to set your directory to where you saved it**:
 
-Although data can be simulated, generated, and analyzed all within R, often we may want to visualize or analyze data from some other source. We can observe the differences in syntax by how we import new data. **Use the following commands to set the directory and import the downloaded text file (located on the Canvas website) as the data object "new_data". Don't forget to set your directory to where you saved the .txt file.**:
-
-```{r, eval}
-
-setwd("C:/users/Charles/Desktop")          
-new_data <- read.table("file.txt",header=TRUE)
-
+```{r}
+# To change the working directory, you may want to modify and comment/uncomment the following line
+setwd("data")
+# read table
+new_data <- read.table("lab1_r_example_data.txt", header=TRUE)
 ```
 
 
-### *2.2: Exploring objects, functions, and packages*  
+## Exploring objects, functions, and packages
 
-```{r, eval=FALSE}
+```{r}
 dim(new_data)
 ```
 
-```{r, eval=FALSE}
-## [1] 16  2
-```
-
-```{r, eval=FALSE}
+```{r}
 class(new_data)
-```
-
-```{r, eval=FALSE}
-## [1] "data.frame"
 ```
 
 Here we can see that the dimensions of new_data are 16 rows and 2 columns, and that it is in data frame format. This is important to know since different functions apply differently to different classes, which may cause errors. While dim and class can be used to explore objects, you may want to explore these functions themselves. This is done by this simple syntax:
@@ -259,12 +267,12 @@ Here we can see that the dimensions of new_data are 16 rows and 2 columns, and t
 ??class
 ```
 
-*Problem 5: What is the difference between using one or two question marks?*
+*Problem 5: What is the difference between using one versus two question marks?*
 
-Let's stick with the output from a simple query (one question mark). Notice that both dim and class are relatively simple functions with few arguments. You probably won't have to read the documentation much for either function, but as you develop your skills using statistical genetics you will spend a lot of time reading documentation for more complicated functions with several arguments (i.e. input) and many values (i.e. output).
+Let's stick with the output from a simple query (one question mark). Notice that both dim and class are relatively simple functions with few arguments. You probably won't have to read the documentation much for either function, but as you develop your skills using statistical genetics, you will spend a lot of time reading documentation for more complicated functions with several arguments (i.e. input) and many values (i.e. output).
 
 
-### *2.3: List of basic classes and functions*  
+## List of basic classes and functions
 
 Class          |       Description
 -----------    |   ---------------------------------------------------------
@@ -305,30 +313,30 @@ Function                |       Description
 **table(x)**            |   Returns summary of frequencies of all values in R object
 
 
-### *2.4: Simple Plotting*
+## Simple Plotting
 
-Sometimes the first thing you want to do is generate a really quick plot of your data before anything else. This is one of the advantages of R, in that visualizing data is very intuitive and easy because it is so object-oriented. For example, if you want to plot the first column versus the second column of data from your object, **type the following command**:
+Sometimes the first thing you want to do is generate a really quick plot of your data before anything else. This is one of the advantages of R, in that visualizing data is very intuitive and easy because it is object-oriented. For example, if you want to plot the first column versus the second column of data from your object, **type the following command**:
 
-```{r}
+```{r, eval=FALSE}
 plot(new_data$Bob,new_data$Steve)
 ```
 
 While we do get to see the data quickly, it's kind of messy. To give the same plot a title and label the axes, you can do this easily by adding the following arguments to the command:
 
-```{r}
+```{r, eval=FALSE}
 plot(new_data$Bob,new_data$Steve,main="Cheeseburgers Eaten",xlab="Bob",ylab="Steve")
 ```
 
-*Problem 6: At first glance the current plot may be a bit misleading because of the differences in scale between the axes. Use the query function learned in Section 2.2 to fix the scale on the axes so that both axis ranges from 0 to 100. Note that the necessary arguments may take vectors.*
+*Problem 6: At first glance the current plot may be a bit misleading because of the differences in scale between the axes. Use the query function learned in Section 2.2 to fix the scale on the axes so that both axis range from 0 to 100. Note that the necessary arguments may take vectors.*
 
-### *2.5: Subsetting and targeting elements of R objects using indices*
+## Subsetting and targeting elements of R objects using indices
 
 Although the function *subset* is useful to subset R objects by particular values, objects of classes *vector,matrix,array, and data frame* are designed for quick manipulation using indices. To illustrate this clearly, **type the following commands to create a 3x4 matrix and look at it**:
 
 ```{r}
+?matrix
 mat <- matrix(1:12,nrow = 3,ncol = 4,byrow=TRUE)
 mat
-
 ```
 
 Notice that above each column R displays the index for that column, and likewise for each row. **Follow the steps below to create a different matrix based on the matrix "mat"**:
@@ -355,51 +363,46 @@ final_mat
 ```
 
 One important note for plotting is that the syntax is different between data frames and matrices. Where data frames use the $ to extract vectors to plot against each other, matrices use the indices used above to create vectors. For example, to plot the first and second columns of our new matrix "final_mat" against each other, **type the following command**:
+
 ```{r}
 plot(final_mat[,1],final_mat[,2])
 ```
 
-*Problem 7: You want a quick estimate on how often you will win the dice game craps on the first roll. You do this by constructing 500 random rolls (2 dice/roll) and looking at the results. Use the sample function to sample the numbers 1 to 6 with replacement 1000 times, naming this vector "dice". Take this vector and make it into a matrix named "pairs" with 2 columns and 500 rows, simulating the 500 rolls. Make a new vector summing the first and second rows named "rolls". If 7 and 11 are the two rolls for victory on the first roll, estimate the probability of winning from your 500-roll sample. Hint: The function table might be useful in this problem.*
+*Problem 7: You want a quick estimate on how often you will win the dice game craps on the first roll. You do this by constructing 500 random rolls (2 dice/roll) and looking at the results. Use the sample function to sample the numbers 1 to 6 with replacement 1000 times, naming this vector "dice". Take this vector and make it into a matrix named "pairs" with 2 columns and 500 rows, simulating the 500 rolls. Make a new vector summing the first and second columns named "rolls". If 7 and 11 are the two rolls for victory on the first roll, estimate the probability of winning from your 500-roll sample. Hint: The function table might be useful in this problem.*
 
-### *2.6: For-loops*
+## For-loops
 
-Often in statistical genetics you may need to repeat something several times. For example, collating results over several replicates may require a for-loop that stores the results in an array. **Follow the steps below to generate two arrays of normally-distributed values with different means**:
+Often in statistical genetics you may need to repeat something several times. For example, collating results over several replicates may require a for-loop that stores the results in an array. 
 
+To illustrate the point, let's consider a simple example. 
+Suppose we'd like to learn how the sample mean ($\bar{X}$) of 50 iid standard normal random variables, $X_1, \cdots, X_{50} \sim N(0, 1)$, behaves by simulation.
+To obtain one sample mean, we need to first draw 50 samples, $X_1, \cdots, X_{50}$, from standard normal, and then calculate the sample mean as $\bar{X} = \frac{1}{n} \sum_i X_i$.
+So, to obtain multiple copies of the sample mean, we need to repeat the above procedure multiple times.
+Let's look at how we could implement it in R using for-loop (here we intent to obtain 1000 copies of sample mean). 
 
-- 1) **Create an empty array of dimensions (50,100) named "mu_zero"**. We will fill this with 100 vectors, each with 50 randomly-generated numbers.
-- 2) **Create an empty array of the same dimensions (50,100) named "mu_one"**. Same as above, except with a different mean.
-- 3) **Fill "mu_zero" with 100 vectors of normally-distributed values with a mu of zero**
-- 4) **Fill "mu_one" with 100 vectors of normally-distributed values with a mu of one**
-- 5) **Create an empty array of dimensions (2,100) named "all_means"**
-- 6) **Fill "all_means" with the means of each replicate for "mu_zero" and "mu_one"**
-- 7) **Look at the first 5 replicates (columns) of the object "all_means"**
+- 1) **Create an empty vector of length 1000 named "sample_means"**. We will fill this with sample means obtained in each replication.
+- 2) **For each replication**
+    - 2.1) **Draw 50 samples**
+    - 2.2) **And calculate sample mean**
+- 3) **Look at "sample_means" using `summary` function**
 
 ```{r}
-mu_zero <- array(NA,dim=c(50,100))         # Step 1
-mu_one <- array(NA,dim=c(50,100))          # Step 2
+nrepeat = 1000
+nsample = 50
+sample_means <- rep(NA, nrepeat)                # Step 1
 
-for (i in 1:100){
-  mu_zero[,i] <- rnorm(50)
-  mu_one[,i] <- rnorm(50, mean = 1)        # Steps 3 & 4
+for (i in 1:nrepeat){
+  samples_i = rnorm(nsample, mean = 0, sd = 1)  # Step 2.1
+  sample_means[i] = mean(samples_i)             # Step 2.2
 }
-
-all_means <- array(NA,dim=c(2,100))        # Step 5
-
-for (i in 1:100){
-  all_means[1,i] <- mean(mu_zero[,i])      # Step 6
-  all_means[2,i] <- mean(mu_one[,i])
-}
-
-all_means[,1:5]                           # Step 7
+summary(sample_means)                           # Step 3
 ```
 
-*Problem 8: In the for-loop that accomplishes Steps 3 & 4, why don't we have to specify the mean when we are filling the object "mean_zero"? What standard deviation did we set for these normally-distributed values?*
+*Problem 8: How would you write a command to take the standard deviation of all elements in "sample_means" vector? Is it close to what you would expect?*
 
-*Problem 9: How would you write a command to take the standard deviation of all the replicate means from the "all_means" array?*
+## Installing and loading packages
 
-### *2.7: Installing and loading packages*
-
-Many of the functions you may need in R may not be pre-installed. Luckily, it is very easy to install and load them, especially in RStudio. One package that is suggested for more aesthetic plotting is *"ggplot2"*. It is easy install and load this package, **first install the package by navigating to the packages tab in the bottom right window of RStudio and click the "Install Packages" button. Then, follow the code below to load the package. Alternately, you can use the install.packages functions with the name of the desired package**:
+Many of the functions you may need in R may not be pre-installed. Luckily, it is very easy to install and load them, especially in RStudio. One package that is suggested for more aesthetic plotting is *"ggplot2"*. It is easy install and load this package, **first install the package by navigating to the packages tab in the bottom right window of RStudio and click the "Install Packages" button. Then, follow the code below to load the package. Alternately, you can use the install.packages function with the name of the desired package**:
 
 ```{r}
 library(ggplot2)
@@ -407,59 +410,47 @@ library(ggplot2)
 
 You can do this with any package and can also look through all of your installed packages in RStudio to see what is loaded and not loaded already. Occasionally, you may need to install "dependencies", which are required packages to run a specific package. Checking the box next to a package in RStudio is equivalent to using the library command.
 
-### *2.8: Introduction to ggplot2*
+## Introduction to ggplot2
 
 Although the standard plotting introduced in Section 2.4 will accomplish all of your plotting needs, many people prefer the aesthetics and functionality of plotting in ggplot2. We will do a *very* basic introduction here, just to demonstrate the syntax.
 
-First, let's create a dataset that we can plot by using the items "mean_zero" and "mean_one". **Follow the commands below to create a dataset with x,y coordinates and a grouping variable named "pts"**:
-
-- 1) **Create matrix "pts_zero" of dimensions (2500,2) filled with data from "mu_zero"**
-- 2) **Create matrix "pts_one" of dimensions (2500,2) filled with data from "mu_one"**
-- 3) **Add an additional column to "pts_zero" matrix for identification**
-- 4) **Add an additional column to "pts_one" matrix for identification**
-- 5) **Combine "pts_zero" and "pts_one" matrices into "pts" matrix**
+Let's use dataset called `iris` available in R.
 
 ```{r}
-pts_zero <- matrix(mu_zero,nrow=2500,ncol=2)     # Step 1
-pts_one <- matrix(mu_one,nrow=2500,ncol=2)       # Step 2
-pts_zero <- cbind(pts_zero,rep(0,2500))          # Step 3
-pts_one <- cbind(pts_one,rep(1,2500))            # Step 4
-pts <- rbind(pts_zero,pts_one)                   # Step 5
+head(iris, 2)
 ```
+In short, it is giving you four measurements in three types of iris. 
+To learn more about the dataset, you can type `?iris` in R console.
 
-Now that we have our dataset "pts", we can use this for our basic introduction to ggplot2. First, let's try to just plot the first two columns (x and y coordinates) using qplot, a function made for very basic plotting in ggplot2. **Follow the following steps to generate plots**:
+Now that we have our dataset "iris", we can use this for our basic introduction to ggplot2. First, let's try to just plot the first two columns (x and y coordinates) using qplot, a function made for very basic plotting in ggplot2. **Follow the following steps to generate plots**:
 
 ```{r}
-all_pts_plot <- qplot(pts[,1],pts[,2])
-all_pts_plot
+plot1 <- ggplot(iris) + geom_point(aes(x = Sepal.Length, y = Petal.Length))
+plot1
 ```
 
 ```{r}
-col_pts_plot <- qplot(pts[,1],pts[,2],col=factor(pts[,3]))
-col_pts_plot
+plot2 <- ggplot(iris) + geom_point(aes(x = Sepal.Length, y = Petal.Length, color = Species))
+plot2
 ```
 
 ```{r}
-col_pts_plot_2 <- qplot(pts[,1],pts[,2],col=factor(pts[,3]),alpha=0.01)
-col_pts_plot_2
+plot3 <- ggplot(iris) + geom_point(aes(x = Sepal.Length, y = Petal.Length, color = Species), alpha = 0.5)
+plot3
 ```
 
-Notice a couple things here. First, to color the points by the third column (identification of mean_one or mean_zero), that is simply added to the function via the col argument. Second, when there are many dots, sometimes it is helpful to make them semi-transparent so that density is easier to see. This is done via the alpha argument, and ranges from 0 (transparent) to 1 (opaque). Finally, notice the coloring is on a spectrum since that is default for numeric. Since it is kind of confusing, we may want to provide characters as factors instead. To do this, **follow these commands**:
+Notice a couple things here. 
+
+1. To color the points by the "third"Species" column, that is simply added to the function via the "color" argument. 
+2. When there are many dots, sometimes it is helpful to make them semi-transparent so that density is easier to see. This is done via the "alpha" argument, and ranges from 0 (transparent) to 1 (opaque). 
+3. Notice the coloring could be on a spectrum if the variable is numeric. For example, **follow the commands below to color by Sepal.Width**:
 
 ```{r}
-m_0 <- rep("mu_zero",2500)
-m_1 <- rep("mu_one",2500)
-Mean <- c(m_0,m_1)
-qplot(pts[,1],pts[,2],col=Mean,alpha=0.01)
+plot4 <- ggplot(iris) + geom_point(aes(x = Sepal.Length, y = Petal.Length, color = Sepal.Width))
+plot4
 ```
 
-
-
-
-
-
-
-
+*Problem 9: Take a look at the help page of geom_boxplot and make a boxplot where "Species" is on x-axis and "Petal.Length" is on y-axis*
 
 
 
