@@ -216,7 +216,7 @@ plink --bfile hapmap1_QC2 --assoc --out assoc_QC2
 Now that we have generated our association file *assoc_QC2*, let's use some of our Unix commands we learned in Lab 1 to manipulate this file. **Follow the command below to list the top ten associated SNPs in our new association file**:
 
 ```{bash, eval=FALSE}
-sort --key=9 -nr assoc_QC2.assoc | head
+sort --key=9 -g assoc_QC2.assoc | head
 ```
 This command should print the top ten SNPs on the screen. 
 
