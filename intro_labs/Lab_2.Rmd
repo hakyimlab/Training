@@ -288,7 +288,7 @@ Provide the script you used. How many SNPs, in total, were removed and how many 
 *Problem 11*  
 Look through the most significant SNPs in the logistic association results file. What is the most significant SNP? What is the p-value? (Make sure you look at the *.assoc.logistic.adjusted* file's Bonferroni-corrected value (BONF) as this gives you the corrected significance). 
 
-**Now run the same command adjusting for five principal components (PCs) representing ancestry using the "--covar" flag for the 5 ancestral PC file and the "--hide-covar" flag**. Don't worry too much about correcting for ancestry using PCs, we will get into much more detail on this in a later lab. **Please record the command in the bash script**
+**Now run the same command adjusting for five principal components (PCs) representing ancestry using the "--covar" flag for the 5 ancestral PC file and the "hide-covar" flag**. Don't worry too much about correcting for ancestry using PCs, we will get into much more detail on this in a later lab. **Please record the command in the bash script**
 
 *Problem 12*  
 What is the most significant SNP now? What is the p-value?
