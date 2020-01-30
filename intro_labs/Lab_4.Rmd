@@ -1,0 +1,176 @@
+---
+title: "Lab 4: Functional Annotation of Genetic Variants with ANNOVAR"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: textmate
+    number_sections: true
+---
+
+*Created by Max Winston; modifications by Charles Washington III, Ankeeta Shah, and Yanyu Liang*
+
+**Tips before getting started**: 
+If you use rmarkdown for your assignment, you may find the markdown cheatsheet somewhat useful ([here is one](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)). 
+Whenever you want to copy/paste some text from terminal to your rmarkdown, you may want to decorate the text as code chunk using "```".
+For instance, 
+
+```
+0	rs4821116	0	20303319
+0	rs861844	0	20336219
+0	rs16989505	0	20344764
+0	rs9941935	0	20345144
+```
+
+Without such decoration, it will end up as
+
+0	rs4821116	0	20303319
+0	rs861844	0	20336219
+0	rs16989505	0	20344764
+0	rs9941935	0	20345144
+
+The reason is that the line break mechanism could be different from what we are used to. 
+Most of the time, two <enter>'s give line break but not one.
+Nonetheless, the rule of thumb is **to take a quick look at the document after compilation**. 
+
+
+---
+
+Functional annotation of genetic variants is a critical step in mapping disease associations. Most frequently, annotation provides the context of genes or regions associated with the discovered variants to better understand putative causal factors underlying the disease of interest. ANNOVAR is an efficient software tool that interfaces with genomic annotation databases across biologically diverse organisms to provide variant annotations (Wang et al., 2010). Given a list of variants with (1) chromosome, (2) start position, (3) end position, (4) reference nucleotides, and (5) observed nucleotides, ANNOVAR can run (i) gene-based, (ii) region-based, and (iii) filter-based annotations. Today, we will become familiar with functional annotation in ANNOVAR. By the end of the lab you should be able to:
+
+- **Understand basic ANNOVAR commands**  
+- **Download necessary information from annotation databases**  
+- **Run gene-based, region-based, and filter-based annotation**  
+
+
+# Basics of ANNOVAR
+
+## Standard ANNOVAR scripts and options
+
+
+Script                        |     Description
+----------                    |   ---------------------------------------------------------
+**annotate_variation.pl**     |   The primary script to run annotations in ANNOVAR.
+**table_annovar.pl**          |   Produces a collated table from several annotations for a set of variants.
+**convert2annovar.pl**        |   Converts several file formats to ANNOVAR format.
+
+
+Similar to previous programs, after you call an executable script (listed above), you must add a number of option flags (listed below).
+
+
+
+Option          |     Description
+----------      |   ---------------------------------------------------------------------------------------------
+**geneanno**    |   Performs gene-based annotation on genetic variants.  
+**regionanno**  |   Performs region-based annotation on genetic variants.
+**filter**      |   Performs filter-based annotation on genetic variants.
+**downdb**      |   Downloads annotation databases [requires internet].
+**buildver**    |   Specifies the build of the genetic variants (Default: hg18, use care with your own data, as your data may be using a more recent build, e.g. hg19).
+
+## Accessing ANNOVAR
+
+Unlike other programs we've used on the cluster, ANNOVAR has restrictions on distrubtion and thus can't be made available through the **module avail** commands. Instead we have a directory with all the files you'll need as well as the perl scripts to conduct the analyses. This directory is called **annovar** and is available at the following path: `/project2/hgen47100/software/annovar/`. **DO NOT WORK IN THIS DIRECTORY AS EVERYONE DEPENDS ON IT**! Instead **COPY IT** into the directory you made for your long term storage, which I suggest you work in for this lab.  
+
+```{bash, eval=FALSE}
+cp -r /project2/hgen47100/software/annovar/ <your working directory>
+cd <your working directory>/annovar/
+```
+
+## Basic ANNOVAR Syntax
+
+The syntax used to run ANNOVAR is similar to other pipelines we have used on the command line. Although the ANNOVAR program is written in PERL, it is designed such that users do not need to interact with these scripts. Annotation is accomplished with the **annotation_variation.pl** script, and the type of annotation you want is passed into this script with an option/flag. For example, the most common use of ANNOVAR is gene-based annotation, which would look like this (assuming you're in the directory with the perl script):   
+
+```{bash, eval=FALSE}
+./annotate_variation.pl -geneanno -buildver hg19 example/ex1.avinput humandb/   
+```
+
+Here, we call the executable **annotation_variation.pl** script, provide the option flag **geneanno** which tells the script we are doing a gene-based annotation. We provide an input file "example/ex1.avinput", information on the build of our input file "-buildver hg19", and the database directory "humandb/".
+
+## ANNOVAR File Formats
+
+### Input File Format
+
+The standard format for ANNOVAR input is text files where each line corresponds to one variant. **Open the "ex1.avinput" file in the "example/" directory to observe the organization**. You should notice that there are six columns: (1) Chromosome, (2) starting position, (3) ending position, (4) major allele, (5) minor allele, (6) pre-existing annotation information (SNP ID, possible disease associations).
+
+*Problem 1*  
+How many variants are in the "ex1.avinput" file?  
+
+*Problem 2*  
+Are most of the variants associated with disease? If there are any, what disease?
+
+### Output File Formats 
+
+Output files are similar to input files in that they each line corresponds to a variant, and that they actually contain *all* the information in the input file. Depending on the output type, there is different additional information added (i.e. annotation).
+
+* **Variant File**
+
+A regular variant output file will have a ".variant_function" extension, and will contain an additional two columns to the input file, which are the first two columns observed. The **first column** gives what kind of region (i.e. UTR , splicing, intronic, intergenic, exonic) the variant is in, and the **second column** gives what gene contains the variant, or in the case of an intergenic variant, relative distance to the nearest genes (assuming gene-based annotation).
+
+* **Exonic Variant File** 
+
+A regular exonic variant output file will have a ".exonic_variant_function" extension, and will also contain an additional 3 columns to the input file, similar to the variant output file, but is in reference to (and a subset of) the variant file. Specifically, the **first column** refers to the line (i.e. variant) in the variant file that matches the remaining information. The exonic variant file is naturally a subset of the variant file, as it only contains exonic variants. The **second column** gives the type of variant described. The **third column** provides detailed annotation information (including NCBI RefSeq #, etc.). 
+
+*Problem 3*  
+What gene has the second most exonic variants in the ".exonic_variant_function" file created from our annotate_variation.pl call on the "ex1.avinput" example? What is it's function?  
+
+*Problem 4*  
+Given your answers to problem 2 and 3, what kind of study (and related to what phenotype) do you think this example may be pulled from? Why (provide 2-3 sentences)?    
+  
+## Downloading Database Files
+
+One of the advantages of ANNOVAR is that it keeps its databases up-to-date and makes it very easy to access this data within the pipeline. With the exception of the example files provided for learning the program, all use of ANNOVAR will require downloading database information for annotation. To download the cytogenetic band annotation database, **enter the following command**:  
+
+```{bash, eval=FALSE}
+./annotate_variation.pl -downdb -buildver hg19 cytoBand humandb/   
+```
+
+Now that we have downloaded the cytogenetic band annotation database, we can run annotation based on these regions instead of the gene-based annotation database that was included in the ANNOVAR package. 
+
+## Running region-based annotation
+
+The command for running region-based annotation is simple and very similar to gene-based annotation. **Run the region-based annotation with the following command**:  
+
+```{bash, eval=FALSE}
+./annotate_variation.pl -regionanno -dbtype cytoBand -buildver hg19 example/ex1.avinput humandb/   
+```
+
+**Open the output from the annotation.** You should notice that this file is essentially the "ex.avinput" file with two additional leading columns. The **first column** just provides the type of region-based association that we are running. The **second column** provides the relevant information for this type of region.
+
+*Problem 5*  
+What band and chromosome has the most discovered variants in this file? (FYI, the naming syntax is {chromosome #}{p or q arm}{band}{sub-band}, e.g. 9q22.11 would be the 11th sub-band of the 22nd band of the q arm of chromosome 9.)
+
+*Problem 6*  
+Doing some research online, are abnormalities in this cytogenetic band associated with any known disorders? How are our variants different from the genetic causes of this putative group of disorders?  
+ 
+## Running filter-based annotation
+
+One major functionality in ANNOVAR is filter-based annotation, which works similar to region-based annotation, with one major difference: Although both annotations work with downloaded databases of different varieties and origin, filter-based annotation accesses databases (such as 1000G) that specifically give nucleotide information, rather than solely genomic location (like region-based).
+
+
+**Use the following commands to download 1000 Genomes data and use these for filter-based annotation** (the first line will take a bit for the data to be downloaded and unzipped):  
+
+```{bash, eval=FALSE}
+./annotate_variation.pl -downdb -buildver hg19 1000g2012apr humandb/
+./annotate_variation.pl -filter -dbtype 1000g2012apr_all -buildver hg19 example/ex1.avinput humandb/
+```
+
+You should notice there are two different files output by this annotation. One will be the variants that have been filtered out ("_filtered") since they were not found in the 1000 Genomes database, and one will be the variants that have been annotated ("_dropped"). The annotated variants have 2 additional columns. The **first column** denotes what database the variants were found in. The **second column** denotes the allele frequencies in the database.  
+
+*Problem 7*  
+How many variants were filtered out? How many were annotated?    
+
+*Problem 8*  
+What annotated variants have the lowest allele frequency?  
+
+*Problem 9*   
+http://annovar.openbioinformatics.org/en/latest/user-guide/download/ provides a list of the additional annotation databases provided by ANNOVAR. Suppose I am in a clinical genetics setting and have found what appears to be a nonsynonymous mitochondrial variant that is shared among 5 individuals carrying an extremely rare disease. Now I'd like to see if the variant is predicted to be pathogenic. What database table should I consider using from annovar to assess if this variant is potentially pathogenic? Please provide an example (you can use dummy path names) of what the command-line call to actually look into this would be, assuming I have already downloaded the database. After making this call, how would you use skills from this lab to determine if the variant is pathogenic?
+
+Suppose you are doing a GWAS for heart disease and find a variant on chromosome 16 position 53809247 (build hg19 coordinates).  The reference allele is G, and its alternative is A.
+
+*Problem 10*  
+What input file you will prepare to run ANNOVAR for this variant (hint: example input for ANNOVAR is `example/ex1.avinput`) 
+
+*Problem 11* 
+Use different types of annotations and databases with ANNOVAR to provide at least 5 facts about the variant that might help you interpret the significance of your finding. No need to show the commands used but list your findings. (Hint: Does it locate in/close to a gene? Is it conserved across species? Allele frequency? Etc)
+
+ 
