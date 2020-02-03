@@ -210,3 +210,8 @@ Then the command `ssh host_2` should get you right where you want to go.
 <!--### Volunteers-->
 
 <!--Forms [link](https://www.dropbox.com/sh/k1qakuofx6pbi91/AAC-e0gnNImYTUlHqGryyXjJa?dl=0)-->
+# Cloning issues
+
+> install git (brew install git) or
+> upgrade git (brew upgrade git)
+> install git-lfs (brew install git-lfs)
