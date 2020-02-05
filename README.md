@@ -3,7 +3,7 @@ Training Resources
 
 # Mandatory Onboarding Steps
 
-- There are a few mandatory onboarding steps for new lab members, and they are listed on the Im Lab Onboarding Document.
+- There are a few mandatory onboarding steps for new lab members, and they are listed on the [Im Lab Onboarding Document](https://docs.google.com/presentation/d/1fzVXgHEkeqY4YGReHJWcQ6Dhy1EOp7PDW2bTNR57C54/edit?usp=sharing)
 
 # Training Resources
 We work with many different tools, on many different projects. So the training resources are organized into functional groups. You may want to skip reading the material in some groups, and it may be worthwhile to spend a long time with other groups. 
@@ -31,30 +31,23 @@ We use GitHub to store and organize our code. There is a introduction [here](htt
 The lab's main GitHub page can be found at [https://github.com/hakyimlab](https://github.com/hakyimlab). If you have been added to `lab-members` and you are logged in, you can see the lab's private repositories as well. 
 
 # Introduction to Data Science
-Some introductory materials give you an introduction to Git, Python, R, and machine learning topics all at once!
-- Basics of Unix, Github, and Python/R [link](https://software-carpentry.org/lessons/)
-- Another data science course [link](https://rafalab.github.io/dsbook/introduction.html)
-- There's even a whole Coursera Data Science track:
-	- The Data Scientist’s Toolbox [link](https://www.coursera.org/course/datascitoolbox)
-	- R Programming [link](https://www.coursera.org/course/rprog)
-	- Getting and Cleaning Data [link](https://www.coursera.org/course/getdata)
-	- Exploratory Data Analysis [link](https://www.coursera.org/course/exdata)
-	- Practical Machine Learning [link](https://www.coursera.org/course/predmachlearn)
-	- Statistical Inference [link](https://www.coursera.org/course/statinference)
-	- Reproducible Research [link](https://www.coursera.org/course/repdata)
+
 ### Machine Learning and Statistics
 - An introduction to machine learning problems and model metrics: [link](https://rafalab.github.io/dsbook/introduction-to-machine-learning.html)
 - We work fairly heavily with the generalized linear model, so it may be good to brush up on it:
     - [Generalized Linear Models](https://towardsdatascience.com/generalized-linear-models-8738ae0fb97d)
     - [Wikipedia](https://en.wikipedia.org/wiki/Generalized_linear_model)
 ### Python
-- This is a python course specifically for genomic data science: [link](https://www.coursera.org/learn/python-genomics?specialization=genomic-data-science)
+- This is a python course for data science, and covers running commands in the shell [link](http://swcarpentry.github.io/python-novice-inflammation/)
 ### R
-- Hands on 4hr intro to R (DataCamp course) [link](https://www.datacamp.com/courses/free-introduction-to-r)
+- Introduction to Data Analysis with R [link](https://rafalab.github.io/dsbook/getting-started.html)
+- Another data science course in R: [link](https://www.analyticsvidhya.com/blog/2016/02/complete-tutorial-learn-data-science-scratch/)
 - R Studio's cheatsheets: [link](https://www.rstudio.com/resources/cheatsheets/)
-- Statistical modeling in R [link](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
 - Hadley's R Style [link](http://adv-r.had.co.nz/Style.html)
+- R tools for reporting data analyses in a reproducible manner [link](http://swcarpentry.github.io/r-novice-gapminder/)
 ##### R Packages 
+- Some basics on [tidyverse](https://rafalab.github.io/dsbook/tidyverse.html) and [ggplot2](https://rafalab.github.io/dsbook/introduction-to-data-visualization.html)
+- This course introduces ggplot2, plyr, dplyr, tidyr, and knitr for data analysis [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
 - Data Manipulation in R with **dplyr** [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
 - Data Visualization in R with **ggplot2** [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
 <!--Text - Modeling with data in the **tidyverse** [link](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)-->
@@ -66,8 +59,9 @@ Some introductory materials give you an introduction to Git, Python, R, and mach
 - R Markdown [download pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 - Data visualization [download pdf](https://www.rstudio.com/wp-content/uploads/2015/11/ggplot2-cheatsheet.pdf)
 ### Unix
-CRI Gardner and most of the Bionimbus virtual machines all run on Linux, so we use the command line a lot.
+CRI Gardner, RCC midway, and most of the Bionimbus virtual machines all run on Linux, so we use the command line a lot.
 - If you haven't used a bash command line before, here is a good place to start: [link](https://programminghistorian.org/en/lessons/intro-to-bash)
+- This lesson covers more commands[link](http://swcarpentry.github.io/shell-novice/05-loop/index.html)
 - This is a great cheatsheet for using the command line and shell scripting, including flow control and function declaration: [link](https://devhints.io/bash)
 - Knowledge of some bash commands can go a long way. Comfort with `grep`, `awk`, `sed`, and `xargs` might go a long way.
 # Workflowr
@@ -77,20 +71,15 @@ Workflowr integrates R and GitHub to make scientific projects easier, more organ
 # Genomics
 ### Introduction to Genomics
 - UCLA Big Bio: intro to genomics videos. These are very helpful to understand the field of genomics at a high level. [link](https://www.big-bio.org/)
-- Genomic Data Science Coursera specialization: [link](https://www.coursera.org/specializations/genomic-data-science)
- 	- Introduction to Genomic Technologies [link](https://www.coursera.org/learn/introduction-genomics?specialization=genomic-data-science)
-	- Python for Genomic Data Science [link](https://www.coursera.org/learn/python-genomics?specialization=genomic-data-science)
-	- Algorithms for DNA Sequencing [link](https://www.coursera.org/learn/dna-sequencing?specialization=genomic-data-science)
-	- Command Line Tools for Genomic Data Science [link](https://www.coursera.org/learn/genomic-tools)
-	- Bioconductor for Genomic Data Science [link](https://www.coursera.org/learn/bioconductor)
-	- Statistics for Genomic Data Science [link](https://www.coursera.org/learn/statistical-genomics) 
 - *The New Genetics* is an NIH publication surveying what we know about the biological mechanisms of genetics. [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
 ### Lab-Specific Genomics Papers
-The lab is currently working on projects which are very similar to these papers.
-- Gamazon ER, Wheeler HE, Shah KP, Mozaffari SV, Aquino-Michaels K, Carroll RJ, Eyler AE, Denny JC, Nicolae DL, Cox NJ, Im HK: A gene-based association method for mapping traits using reference transcriptome data. Nat Genet 2015:1–10.
-- The GTEx Consortium atlas of genetic regulatory effects across human tissues [https://www.biorxiv.org/content/10.1101/787903v1](https://www.biorxiv.org/content/10.1101/787903v1)
-- Enhancing GTEx by bridging the gaps between genotype, gene expression, and disease The eGTEx Project [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6636856/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6636856/)
-- Widespread dose-dependent effects of RNA expression and splicing on complex diseases and traits [https://www.biorxiv.org/content/10.1101/814350v1](https://www.biorxiv.org/content/10.1101/814350v1)
+For more background, the projects the lab is currently working on are similar to the ones in these papers.
+- [The UK Biobank resource with deep phenotyping and genomic data](https://www.nature.com/articles/s41586-018-0579-z)
+- [A gene-based association method for mapping traits using reference transcriptome data](https://www.nature.com/articles/ng.3367)
+- [A brief history of human disease genetics](https://www.nature.com/articles/s41586-019-1879-7)
+- [The GTEx Consortium atlas of genetic regulatory effects across human tissues](https://www.biorxiv.org/content/10.1101/787903v1)
+- [Enhancing GTEx by bridging the gaps between genotype, gene expression, and disease The eGTEx Project](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6636856/)
+- [Widespread dose-dependent effects of RNA expression and splicing on complex diseases and traits](https://www.biorxiv.org/content/10.1101/814350v1)
 
 
 ##### Other Useful Reading
@@ -221,3 +210,8 @@ Then the command `ssh host_2` should get you right where you want to go.
 <!--### Volunteers-->
 
 <!--Forms [link](https://www.dropbox.com/sh/k1qakuofx6pbi91/AAC-e0gnNImYTUlHqGryyXjJa?dl=0)-->
+# Cloning issues
+
+> install git (brew install git) or\
+> upgrade git (brew upgrade git)\
+> install git-lfs (brew install git-lfs)
