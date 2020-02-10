@@ -64,7 +64,7 @@ How many individuals are there in the test dataset?
 GCTA employs a restricted maximum likelihood (REML) method to estimate the proportion of phenotypic data explained by SNP data (Yang et al., 2010). **Run a basic REML analysis on the "test" GRM you created with the following command:**
 
 ```{bash, eval=FALSE}
-gcta --grm test --pheno test.phen --reml --out test
+gcta --grm output/test --pheno Lab5_materials/test.phen --reml --out output/test
 ```
 
 Results can be found in the **test.hsq** file. **Open this file in your preferred text editor.** Recall from lecture that narrow-sense heritability is additive genetic variance over phenotypic variance.
