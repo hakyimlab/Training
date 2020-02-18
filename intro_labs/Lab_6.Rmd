@@ -1,127 +1,181 @@
-Lab 6: Matrix-eQTL and PrediXcan
-========================================================
-  *Created by Charles Washington III & Jiamao Zheng*
-  
-Matrix eQTL was developed to create a computationally less burdensome analysis for eQTL identification, a process important for understanding the biological basis for the effects of genetic variation. Compared to other existing tools for QTL analysis, Matrix eQTL is orders of magnitude faster in analysis due to specific preprocessing and its use of large matrix operations for the computationally difficult aspects of the system. Another boon for Matrix eQTL is that it can be used in R (as a package) and is thus formatted to work easily with many other programs for RNAseq data.
+---
+title: "Lab 6: Tensor-eQTL and S-PrediXcan"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: textmate
+    number_sections: true
+bibliography: ref.bib
+---
 
-PrediXcan is a gene-based association method that directly tests the molecular mechanisms through which genetic variation affects a phenotype. As discussed in class, PrediXcan estimates gene expression data from an individual's genotype data and a reference set (similar in concept to imputation) and can thus correlate this "imputed" gene expression data with specific phenotypes. Like Matrix eQTL, PrediXcan is made efficient through specific preprocessing of data and can be implemented through R (as well as a bash script for this lab).
+*Initial effort by Charles Washington III & Jiamao Zheng and created by Yanyu Liang*
+
+As we know that eQTL analysis needs to test association for each gene in transcriptome against a set of variants.
+Typically, for cis-eQTL analysis, one gene could have thousands of variants to test against. 
+Matrix eQTL @matrixqtl was developed to create a computationally less burdensome analysis for eQTL identification. 
+Compared to other existing tools for QTL analysis, Matrix eQTL is orders of magnitude faster in analysis due to specific preprocessing and its use of large matrix operations for the computationally difficult aspects of the system. 
+
+To compare between genes which habor different LD structures and different number of testing variants, the statistical test underlying cis-eQTL requires permutation.
+So it is computationally intensive even with matrixQTL. 
+To overcome the computational burden of permutation, FastQTL @faastqtl proposed an approximate simulation scheme which is efficient for large-scale transcriptome-wide analysis, *i.e.* Geuvadis & GTEx.
+
+In the past few years, GPU has been widely adpated for many computations. 
+TensorQTL @tensorqtl was recently developed which is capable of running on both CPU and GPU.   
+And when GPU is enabled, it runs 100 times faster than CPU. 
+Today, we will learn to use `tensorqtl` with CPU. (And to run on GPU needs only few more setup steps with the same command!)
+
+PrediXcan @predixcan is a gene-based association method that directly tests the molecular mechanisms through which genetic variation affects a phenotype. 
+It can also run with GWAS summary statistics along with reference LD, which is proposed in @metaxcan with software available at [MetaXcan repo](https://github.com/hakyimlab/MetaXcan).
+In the second part of the lab, we will see how to run S-PrediXcan analysis using GWAS summary statistics. 
 
 By the end of the lab you should be able to:
 
-- **Understand the types of files required for Matrix eQTL and PrediXcan**  
-- **Interpret the results of Matrix eQTL and PrediXcan analysis**  
+- **Understand the types of files required for tensorQTL and MetaXcan**  
+- **Interpret the results of tensorQTL and S-PrediXcan analysis**  
 
-**A few important notes**: As noted above, both Matrix eQTL and PrediXcan can be run in R. Much of this lab involves you running the Rscripts (created by Jiamao Zheng from Haky's group) provided in the Lab6_materials directory on the cluster. Unfortunately, there are a couple of errors that prevent the scripts from being guaranteed to run on each person's computer in their current form. However, we were able to tinker with them enough so that the lab can be run completely on the cluster. If you follow this lab, you should have few, if any, problems. For those of you with more experience in R, you can modify the scripts so they will run directly in R on your computer. Either way some of the files generated from these analyses are quite large. Not only will some scripts take some time to run, but I also suggest you store the output files in your long term storage directories on the cluster (/project2/hgen47100). Lastly, given the size of some of these files and our limited storage on the cluster, I ask that you first remove any unused files from previous labs. Also, please remove the output files for this lab from the cluster once you no longer need them.
 
-Section 1: Matrix eQTL
-------------------------------
+# tensorQTL
 
-### *1.1: Files and Preparing R on cluster*
+## Input files for eQTL analysis
 
-First, you need to **COPY the Lab6_materials.zip file from the /project2/hgen47100 directory to your directory on the cluster and unzip it**. Please don't work in this directory or modify until you have moved it to your directory as it contains files that everyone needs to use. Don't move the files within this directory around as the scripts within depend on the current organization.
+* **Phenotype**: a matrix representing gene expression levels in each individual (gene x individual)
+* **Covariate**: a matrix representing value of covariate values in each individual (covariate x individual)
+* **Genotype**: a matrix representing genotype dosage (effect allele) for each variant and individual (in plink format)
 
-Next, we need to prepare R on the cluster for the scripts we'll be running. This just involves installing packages needed to run our Rscripts.
+Note that we need to know the genomic position of the gene (say the position of transcription start site, TSS) since we test cis-eQTL for nearby variant only. The example data for this lab is at `/project2/hgen47100/data/lab6`:
 
-```{r, eval=FALSE}
-module load R/3.4.3
-R                                    #opens R
-install.packages('data.table')
-install.packages('dplyr')
-install.packages('tidyr')
-install.packages('ggplot2')
-install.packages('ggpmisc')
-install.packages('MatrixEQTL')
-q()                                 #closes R
+* **Phenotype**: `GEUVADIS.chr22.expression.bed.gz`
+* **Covariate**: `GEUVADIS.445_samples.covariates.txt`
+* **Genotype**: `GEUVADIS.hg38.chr22.*`
+
+*Problem 1*: How many covariates in the example data?
+
+## Compute nomial p-value in cis-eQTL analysis
+
+Nominal p-value is the observed p-value under linear model $\tilde{Y} \sim X$, where $\tilde{Y}$ is residual expression level after regressing out covariates and $X$ is the genotype dosage of a variant of interest.
+
+Let's compute nomimal p-value for all cis-eQTL candidates. 
+Here we define cis-window as 100kb surrounding TSS (both side). 
+
+```{bash, eval=FALSE}
+sinteractive  # request a computing node and work interactively
+module load Anaconda3  # load conda
+source activate /project2/hgen47100/software2/conda_env/tensorqtl  # load dependencies for tensorqtl 
+cd [working-directory]
+mkdir output
+python /project2/hgen47100/software2/tensorqtl/tensorqtl/tensorqtl.py \
+  --covariates /project2/hgen47100/data/lab6/GEUVADIS.445_samples.covariates.txt \
+  --window 10000 \
+  --mode cis_nominal \
+  /project2/hgen47100/data/lab6/GEUVADIS.hg38.chr22 \
+  /project2/hgen47100/data/lab6/GEUVADIS.chr22.expression.bed.gz \
+  output/cis_nominal
 ```
-
-### *1.2: Pre-processing for Matrix eQTL*
-Now that R is prepared, navigate to the /src directory where the Rscripts are located. **Run the pre-processing for Matrix eQTL.**
-
-```{r, eval = FALSE}
-Rscript prepare_inputs_for_matrix-eqtl.r
-```
-
-The Rscript above takes the following input files from the /datasets directory: gencode.v12.annotation.gtf.gz (gene annotation file), geuvadis.annot.txt.gz (SNP annotation information), GD462.GeneQuantRPKM.50FN.samplename.resk10.txt.gz (normalized gene expression data), geuvadis.snps.txt.gz (genotype data). Output of this pre-processing is located in the /inputs/for_matrix-eqtl directory.
-
-*Problem 1*
-
-Why are each of the above four input files important for running an analysis with Matrix eQTL? (Hint: What is the goal of Matrix eQTL? Are there categories for the results?)
 
 *Problem 2*
 
-If we were looking at all gene-SNP pairs, this analysis would take about 10 hours to complete. Obviously, that is unfeasible for this lab and we had to limit our scope. We could have either limited the number of genes or the number of SNPs we examine for this lab exercise. Using your knowledge of R (and abilities to search R documentation), describe how you can determine which it was. Did we limit the number of genes or SNPs? (Hint: look at the sections labeled '# snp' and '# gene expression' in the prepare_inputs_for_matrix-eqtl.r file).
+From the logging message of tensorqtl run, how many genes are being analyzed? 
+
+The output contains all variant/gene pairs being test regardless of significance. 
+So, it will be huge amount of data in practice. 
+The output file is in `parquet` format, which is a binary format but it gives better I/O performance as comparing to human-readable text file. 
+We've provided a tiny python script to convert `parquet` file to text table in `txt.gz`.
+
+```{bash, eval=FALSE}
+python /project2/hgen47100/software2/parquet2table.py \
+  --parquet output/cis_nominal.cis_qtl_pairs.chr22.parquet \
+  --output output/cis_nominal.cis_qtl_pairs.chr22.txt.gz
+```
 
 *Problem 3*
 
-Using the output files generated from the script above, how many genes are we examining for our analysis? How many SNPs? What's our sample size?
-
-### *1.3: Running Matrix eQTL*
-With the pre-processing done, we can now run Matrix eQTL. Assuming you previously installed the MatrixEQTL package in R (section 1.1), we simply need to **run the run_matrix-eqtl.r script.**
-
-```{r, eval = FALSE}
-Rscript run_matrix-eqtl.r
-```
-
-This Rscript takes our files created in 1.2 as input and places the resulting output files in the /results/eqtls directory. 
+How many variant/gene pairs are being tested and reported?
 
 *Problem 4*
 
-How many eQTLs were identified for the gene AFAP1L2? Provide the script you used to determine this (consult previous lab commands for assistance with this, if necessary).
+Which genes has the strongest association?
+
+
+
+## Perform cis-eQTL analysis with adaptive permutation
+
+If we'd like to identify eGene (gene that is significantly regulated by genetic variation), like we've mentioned above, we need to perform permutation to obtain gene-level p-value. 
+Here is how it can be done using `tensorqtl`.
+
+```{bash, eval=FALSE}
+python /project2/hgen47100/software2/tensorqtl/tensorqtl/tensorqtl.py \
+  --covariates /project2/hgen47100/data/lab6/GEUVADIS.445_samples.covariates.txt \
+  --window 10000 \
+  --mode cis \
+  /project2/hgen47100/data/lab6/GEUVADIS.hg38.chr22 \
+  /project2/hgen47100/data/lab6/GEUVADIS.chr22.expression.bed.gz \
+  output/cis
+```
+
+
+The output is the gene-level statistics obtained from adaptive permutation where each row is for one gene (in txt.gz format).
+To obtain eGene as FDR 10%, we can collect all genes with `qval` smaller than 0.1. 
+To obtain cis-eQTL for these eGenes, we can collect all variant/gene pairs with `pval_nominal` (reported in `cis_nominal` run) smaller than `pval_nominal_threshold`.
 
 *Problem 5*
 
-Provide the qqplot created from the script. Looking at our output files, how many cis-eQTLs vs trans-eQTLs did we find in our analysis (combined across all genes)? Is this what we might naively expect? What could result in such a high number of QTLs? Hints: 1) Only basic QC has been applied to SNPs used in the analysis (see Plink lab section 1.5.1 for more) & 2) Open up the output files and compare the statstics for groups of QTLs.
-
-
-Section 2: PrediXcan
-------------------------------
-
-### *2.1: Pre-processing for PrediXcan*
-Navigate to the /src directory and **run the Rscript for genearting the input files for the PrediXcan analysis.**
-
-```{r, eval = FALSE}
-Rscript prepare_inputs_for_predixcan.r
-```
-
-This script takes the SNP and SNP annotation files (in this lab we're using the same ones as from our Matrix eQTL example above) from the /datasets directory to make new input files (/inputs/for_predixcan directory).
+Which gene has the most significant q-value?
 
 *Problem 6*
 
-Examining the prepare_inputs_for_predixcan.r script and seeing its resulting files, what do you think the section "# prepare genotype files (split 1 to 22)" is doing? Why might it be important (or at least efficient) to do this?
+Select a gene with q-value < 0.05, visualize its cis-eQTL results by plotting $-\log(p)$
+on y-axis and distance to TSS on x-axis. And put a harizontal line indicating the corresponing `pval_nominal_threshold` of the gene.
 
-### *2.2: Running PrediXcan*
-Now we're going to run PrediXcan using the input files generated in 2.1. We'll **run PrediXcan from the run_predixcan.sh script** that has been provided in the /src directory. However, we first must **load Python** as that bash script utilizes it.
+# S-PrediXcan analysis
 
-```{r, eval=FALSE}
-module load python/2.7.12
-bash run_predixcan.sh
+To recap, S-PrediXcan analysis takes GWAS summary statistics, gene expression prediction models (weights for SNPs), and reference LD and provides gene-level association between predicted expression and trait. 
+So, it requires the following three pieces of data:
+
+* GWAS summary statistics 
+* Expression prediction model (available through [http://predictdb.org/](http://predictdb.org/))
+* Reference LD (also from [http://predictdb.org/](http://predictdb.org/))
+
+The complete analysis workflow is:
+
+1. Pick a expression prediction model (Which dataset, population, tissue?)
+2. Harmonize the GWAS so that it works on the same set of variants as expression prediction model (it may require imputation of GWAS). More details can be found [here](https://github.com/hakyimlab/MetaXcan/wiki/Tutorial:-GTEx-v8-MASH-models-integration-with-a-Coronary-Artery-Disease-GWAS)
+3. Run MetaXcan script
+
+One caveat is that we need to make sure that the GWAS and prediction model are based on the same population. 
+
+Here we provide expression prediction models at `/project2/hgen47100/data/lab6/predictdb_mashr_eqtl/mashr/` with extension `*.db` which were built from GTEx V8 data. 
+And these variants are called and labelled specifically by GTEx V8 data.
+And reference LD is in the same folder with extension `*.txt.gz`.
+Luckily we have GWAS results harmonized to GTEx V8 by Alvaro Barbeira at [here](https://uchicago.box.com/s/tkoya2h769hyvs8e2texokpsw8qqoop3).  
+
+As an example, let's pick tissue "Whole_Blood" and GWAS "UKB_20002_1223_self_reported_type_2_diabetes".
+
+```{bash, eval=FALSE}
+python /project2/hgen47100/software2/MetaXcan/software/MetaXcan.py \
+  --model_db_path /project2/hgen47100/data/lab6/predictdb_mashr_eqtl/mashr/mashr_Whole_Blood.db \
+  --model_db_snp_key varID \
+  --covariance /project2/hgen47100/data/lab6/predictdb_mashr_eqtl/mashr/mashr_Whole_Blood.txt.gz \
+  --gwas_file /project2/hgen47100/data/lab6/UKB_20002_1223_self_reported_type_2_diabetes.txt.gz \
+  --snp_column panel_variant_id \
+  --effect_allele_column effect_allele \
+  --non_effect_allele_column non_effect_allele \
+  --zscore_column zscore \
+  --pvalue_column pvalue \
+  --keep_non_rsid \
+  --output_file output/spredixcan_UKB_20002_1223_self_reported_type_2_diabetes.csv
 ```
 
-This script creates predicted gene expression data for our samples in the /results/predixcan_results directory.
+*Problem 7*: 
 
-*Problem 7*
+Which gene is the most significant?
 
-Examining the run_predixcan bash script, we can see that it calls for the chromosome and sample files that we created in section 2.1. However, it also calls for another file in the /datasets directory called "gtex_v7_Cells_EBV-transformed_lymphocytes_imputed_europeans_tw_0.5_signif.db". Given your knowledge of what the other input files are and of the PrediXcan method in general, what do you think this new file is and why is it important?
+*Problem 8*: 
 
-### *2.2: PrediXcan Correlation*
-Now that we have the predicted gene expression data for our samples, we can compare them to actual transcriptome data that exists for these same individuals. **Run the run_correlation.R script in the /src directory**:
+Repeat the same analysis but with tissue liver. Show your command.
 
-```{r, eval=FALSE}
-Rscript run_correlation.r
-```
+*Problem 9*:
 
-This script will create correlation plots for each gene as well as a summary document detailing the results of all correlation tests (located at the /results/correlations directory).
+Visualize the results from two tissues by QQ-plot. Plot $\log(p)$ where expected p-values on x-axis, and observed p-values on y-axis, and color the two tissues differently.
 
-*Problem 8*
-
-Similar to our exercise with Matrix eQTL, we are not creating correaltions for all genes in the genome due to time and storage space concerns. What line in the **run_correlation.R** script limits the number of genes we're doing correlations on? How many genes are we observing correlations for in this lab?
-
-*Problem 9*
-
-What gene demonstrates the greatest amount of correlation between observed and predicted gene expression in our sample? Provide the correlation plot for it.
-
-References
-----------------------------
-**Andrey A. Shabalin (2012).** Matrix eQTL: ultra fast eQTL analysis via large matrix operations. *Bioinformatics.* 28(10): 1353-8.
-
-**E.R. Gamazon, H.E. Wheeler, K.P. Shah, S.V. Mozaffari, K. Aquino-Michaels, R.J. Carroll, A.E. Eyler, J.C. Denny, GTEx Consortium, D.L. Nicolae, N.J. Cox, H.K. Im (2015).** A gene-based association method for mapping traits using reference trasncriptome data. *Nature Genetics.* 47(9): 1091-8.
+# References
