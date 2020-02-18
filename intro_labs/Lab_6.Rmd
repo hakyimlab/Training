@@ -56,7 +56,7 @@ Note that we need to know the genomic position of the gene (say the position of 
 Nominal p-value is the observed p-value under linear model $\tilde{Y} \sim X$, where $\tilde{Y}$ is residual expression level after regressing out covariates and $X$ is the genotype dosage of a variant of interest.
 
 Let's compute nomimal p-value for all cis-eQTL candidates. 
-Here we define cis-window as 100kb surrounding TSS (both side). 
+Here we define cis-window as 10kb surrounding TSS (both side). 
 
 ```{bash, eval=FALSE}
 sinteractive  # request a computing node and work interactively
