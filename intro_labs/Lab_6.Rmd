@@ -1,5 +1,5 @@
 ---
-title: "Lab 6: Tensor-eQTL and S-PrediXcan"
+title: "Lab 6: TensorQTL and S-PrediXcan"
 output:
   html_document:
     toc: true
