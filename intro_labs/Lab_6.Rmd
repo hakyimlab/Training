@@ -18,7 +18,7 @@ Compared to other existing tools for QTL analysis, Matrix eQTL is orders of magn
 
 To compare between genes which habor different LD structures and different number of testing variants, the statistical test underlying cis-eQTL requires permutation.
 So it is computationally intensive even with matrixQTL. 
-To overcome the computational burden of permutation, FastQTL @faastqtl proposed an approximate simulation scheme which is efficient for large-scale transcriptome-wide analysis, *i.e.* Geuvadis & GTEx.
+To overcome the computational burden of permutation, FastQTL @fastqtl proposed an approximate simulation scheme which is efficient for large-scale transcriptome-wide analysis, *i.e.* Geuvadis & GTEx.
 
 In the past few years, GPU has been widely adpated for many computations. 
 TensorQTL @tensorqtl was recently developed which is capable of running on both CPU and GPU.   
