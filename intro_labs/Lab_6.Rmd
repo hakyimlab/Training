@@ -9,7 +9,7 @@ output:
 bibliography: ref.bib
 ---
 
-*Initial effort by Charles Washington III & Jiamao Zheng and created by Yanyu Liang*
+*Created by Yanyu Liang, with some material adapted from Charles Washington III and Jiamao Zheng's lab 6 from 2018*
 
 As we know that eQTL analysis needs to test association for each gene in transcriptome against a set of variants.
 Typically, for cis-eQTL analysis, one gene could have thousands of variants to test against. 
