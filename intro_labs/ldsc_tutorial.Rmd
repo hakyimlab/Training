@@ -1,0 +1,149 @@
+---
+title: "LDSC regression tutorial"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: textmate
+    number_sections: true
+author: Yanyu Liang
+date: "`r paste0('Last update: ', format(Sys.time(), '%b %d, %Y'))`"  
+bibliography: ref_ldsc.bib  
+---
+
+$$
+\newcommand{\E}{\text{E}}
+$$
+
+# Overview
+
+This is a minial tutorial on using `ldsc` for LDSC regression. 
+Before hands-on stuff, let's take a quick recap on what LDSC regression is doing and what kind of input files are required for a minimal LDSC regression analysis. 
+
+Under polygenic model, @bulik2015ld proposed 
+
+$$\begin{aligned}
+  \E[\chi_j^2 | l_j] = N\frac{h^2}{M} l_j + Na + 1
+\end{aligned}$$
+, where $\chi^2$ is GWAS summary statistics, $N$ is sample size, $h^2$ is heritability, and $M$ is the number of common variants we are considering for contributing to heritability.
+More importantly, this relationship holds for each SNP $j$. 
+And $l_j$ is called LD score for SNP $j$, which is defined as $l_j := \sum_k r_{jk}^2$ where $r_{jk}^2$ is the LD between SNP $j$ and $k$.
+So, we could notice that $l_j$ is population-specific and it does not depend on the trait. 
+
+OK, essentially, to regress $\chi_j^2$ against $l_j$, we need to know:
+
+* $\chi_j^2$ which is available from GWAS summary statistics
+* $N$ GWAS sample size
+* $l_j$ which is typically shared by LDSC developers and you can also compute on your own if you are working with a special population
+
+From here we can conclude a general workflow for LDSC regression:
+
+1. Download or prepare LDSC files
+2. Format your GWAS so that it uses the same SNP ID system as LDSC files 
+3. Run LDSC regression software
+
+As minimal tutorial, we won't touch on how to prepare LDSC files by yourselves. 
+For your interest, you can take a look at [link](https://github.com/bulik/ldsc/wiki/LD-Score-Estimation-Tutorial) for this task.
+
+# Instal LDSC regression software
+
+If you don't have `conda` installed on your machine, please install it from [here](https://docs.conda.io/en/latest/miniconda.html) before proceeding.
+Then, go to [`ldsc` GitHub repository](https://github.com/bulik/ldsc) and follow the [instruction](https://github.com/bulik/ldsc#getting-started).
+
+```
+# assuming you've installed conda
+cd [your-working-dir]
+mkdir software 
+cd software 
+git clone https://github.com/bulik/ldsc.git
+cd ldsc
+conda env create --file environment.yml
+source activate ldsc
+```
+
+# Download LDSC files
+
+LDSC developers pre-computed LD scores for Europeans and East Asians. 
+They are available at [here](https://data.broadinstitute.org/alkesgroup/LDSCORE/).
+For this tutorial, we will work with European GWAS. 
+So, we can simply use the one suggested [here](https://github.com/bulik/ldsc/wiki/Heritability-and-Genetic-Correlation#ld-scores). 
+These LDSC files are obtained from 1000G Europeans with HapMap3 SNPs.
+
+So, we can do
+
+```
+cd [your-working-dir]
+mkdir data
+cd data
+wget https://data.broadinstitute.org/alkesgroup/LDSCORE/eur_w_ld_chr.tar.bz2
+tar -jxvf eur_w_ld_chr.tar.bz2
+```
+
+# Prepare GWAS files
+
+For this tutorial, we select GWAS summary statistics from [link](https://uchicago.box.com/s/tkoya2h769hyvs8e2texokpsw8qqoop3). 
+For illustration, I downloaded `UKB_20022_Birth_weight.txt.gz` and `UKB_21001_Body_mass_index_BMI.txt.gz`. 
+Let's move the downloaded files to `[your-working-dir]/gwas/`.
+
+`ldsc` requires the GWAS summary statistics files follow some format. 
+It is described in details [here](https://github.com/bulik/ldsc/wiki/Summary-Statistics-File-Format).
+
+In short, it requires your file to have the following columns:
+
+1. `SNP` -- SNP identifier (e.g., rs number or other SNP ID matching the LDSC files)
+2. `N` -- sample size (which may vary from SNP to SNP).
+3. `Z` -- z-score. Sign **with respect to A1** (warning, possible gotcha)
+4. `A1` -- first allele (effect allele)
+5. `A2` -- second allele (other allele)
+
+The recommended practice is to use `munge_sumstats.py` script shared with the software for this formatting step.
+For our dataset, we can run
+
+```
+cd [your-working-dir]
+mkdir output
+python software/ldsc/munge_sumstats.py \
+  --sumstats data/gwas/UKB_20022_Birth_weight.txt.gz \
+  --N-col sample_size \
+  --snp variant_id \
+  --a1 effect_allele \
+  --a2 non_effect_allele \
+  --signed-sumstats zscore,0 \
+  --p pvalue \
+  --merge-alleles data/eur_w_ld_chr/w_hm3.snplist \
+  --out output/UKB_20022_Birth_weight
+```
+
+And run similar command for `UKB_21001_Body_mass_index_BMI.txt.gz`.
+
+You may notice that the formatting script also does some quality control and sanity check. 
+So, if possible, we'd prefer perform formatting with this script rather than writing our own.
+
+# Run LDSC regression
+
+OK, it's time to run LDSC regression. 
+
+```
+cd [your-working-dir]
+python software/ldsc/ldsc.py \
+  --h2 output/UKB_20022_Birth_weight.sumstats.gz \
+  --ref-ld-chr data/eur_w_ld_chr/ \
+  --w-ld-chr data/eur_w_ld_chr/ \
+  --out output/ldsc_UKB_20022_Birth_weight
+```
+
+`--ref-ld-chr` is specifying LDSC for the run. 
+`--w-ld-chr` is specifying the weighting scheme in the linear regression (it is more about technical details). 
+
+And we can estiamte genetic correlation under similar framework @bulik2015atlas. 
+
+```
+cd [your-working-dir]
+python software/ldsc/ldsc.py \
+  --rg output/UKB_20022_Birth_weight.sumstats.gz,output/UKB_21001_Body_mass_index_BMI.sumstats.gz \
+  --ref-ld-chr data/eur_w_ld_chr/ \
+  --w-ld-chr data/eur_w_ld_chr/ \
+  --out output/rg_UKB_20022_Birth_weight_x_UKB_21001_Body_mass_index_BMI
+```
+
+# References

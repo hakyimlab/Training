@@ -41,7 +41,7 @@ The lab's main GitHub page can be found at [https://github.com/hakyimlab](https:
 - This is a python course for data science, and covers running commands in the shell [link](http://swcarpentry.github.io/python-novice-inflammation/)
 - SQLite in Python [link](https://www.datacamp.com/community/tutorials/sqlite-in-python)
 ### R
-- Introduction to Data Analysis with R [link](https://rafalab.github.io/dsbook/introduction.html)
+- Introduction to Data Analysis with R [link](https://rafalab.github.io/dsbook/getting-started.html)
 - Another data science course in R: [link](https://www.analyticsvidhya.com/blog/2016/02/complete-tutorial-learn-data-science-scratch/)
 - R Studio's cheatsheets: [link](https://www.rstudio.com/resources/cheatsheets/)
 - Hadley's R Style [link](http://adv-r.had.co.nz/Style.html)
@@ -63,7 +63,7 @@ The lab's main GitHub page can be found at [https://github.com/hakyimlab](https:
 - R Markdown [download pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
 - Data visualization [download pdf](https://www.rstudio.com/wp-content/uploads/2015/11/ggplot2-cheatsheet.pdf)
 ### Unix
-CRI Gardner and most of the Bionimbus virtual machines all run on Linux, so we use the command line a lot.
+CRI Gardner, RCC midway, and most of the Bionimbus virtual machines all run on Linux, so we use the command line a lot.
 - If you haven't used a bash command line before, here is a good place to start: [link](https://programminghistorian.org/en/lessons/intro-to-bash)
 - This lesson covers more commands[link](http://swcarpentry.github.io/shell-novice/05-loop/index.html)
 - This is a great cheatsheet for using the command line and shell scripting, including flow control and function declaration: [link](https://devhints.io/bash)
@@ -214,3 +214,8 @@ Then the command `ssh host_2` should get you right where you want to go.
 <!--### Volunteers-->
 
 <!--Forms [link](https://www.dropbox.com/sh/k1qakuofx6pbi91/AAC-e0gnNImYTUlHqGryyXjJa?dl=0)-->
+# Cloning issues
+
+> install git (brew install git) or\
+> upgrade git (brew upgrade git)\
+> install git-lfs (brew install git-lfs)
