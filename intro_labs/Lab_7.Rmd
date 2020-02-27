@@ -1,0 +1,160 @@
+---
+title: "Lab 7: The Genome Analysis Toolkit: Calling Variants"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    highlight: textmate
+    number_sections: true
+---
+
+*Created by Charles Washington III & Siming Zhao, Modified by Ankeeta Shah and Yanyu Liang. Data was re-built in 2020 by Yanyu Liang (see scripts at `/project2/hgen47100/data/lab7/*.sh`)*
+  
+GATK is a programming framework created to develop easier analysis tools for next-generation DNA sequencing (NGS). One of the most frequent uses of GATK (and the focus of this lab) is to call variants from NGS data. Given how fundamental genetic variation is to statistical genetics, exposure to how variants are called is important. 
+
+By the end of the lab you should be able to:
+
+- **Understand the types of files required for GATK variant calling**  
+- **Interpret the results of variant calling analysis before and after recalibration**  
+
+
+Input SAM/BAM files are available at `/project2/hgen47100/Lab7_materials`. Some other dependent files (genome reference and variant databases) are at `/project2/hgen47100/data/lab7`.
+ 
+# Introduction to Files
+
+The primary file type output from next-generation sequencing is the Sequence Alignment MAP (or SAM) file. SAM files are tab-delimited text-based files that store biological sequences that have been aligned to your reference. Each .sam file is composed of a header section (denoted by lines starting with @) and the alginment section found beneath the header section. Each line of a .sam file's alignment section represents a sequence read and provides detailed information on that sequence's alignment. **Open the sample_chr22_00.sam file and observe its structure.**
+
+*Problem 1*
+
+How many mapped sequences do we have for this file?
+
+*Problem 2*
+
+Searching online, what are first 11 columns of the .sam file's alignment section (ignore columns 12 onward)?
+
+*Problem 3*
+
+What do you notice about the third column for all sequences in our .sam file? Given your online reading and the file's name, what does this mean about our .sam file?
+
+*Problem 4*
+
+What is the interpretation of the entries in the 11th column (i.e. what would be the meaning of the values? How would we compare them to each?)? (Hint: Xin briefly discussed something very similar in his lecture on "Variant Calling from Sequence Data".)
+
+
+As we've seen with many other file types in our lab sessions, it is often efficient to create a more compact file form for ease of computing. For sequence alignment data this file is the Binary Alignment Map (or BAM) file. If you open the corresponding sampleBAM_chr22_00.srt.bam file, you will see that it isn't human-readble. Many analysis tools only take .bam files that have been sorted (by position) and indexed (creation of a .bai file with the same .bam filename): the **sampleBAM_chr22_00.srt.bam** and **sampleBAM_chr22_00.srt.bam.bai** files in the directory. All three of these file types (.bam, .srt.bam, and .srt.bam.bai) are created through the program SAMtools. 
+
+The last important file (and the one missing from this lab) is the .fa file, which is a fasta file that contains the genomic location to which the sequences were mapped. It is important to note that the .fa file used should come from the same genome sequence that was used to map the sequences in the .sam file. Using different genomic build or genomic build version between your alignmnent and .fa files is clearly problematic as variants would not be properly called.
+
+# Calling Variants
+
+To do variant calling, we use GATK which is written in Java. And we do the following to call variant from BAM file (you also need to provide reference genome). 
+
+<!-- The commands are also available at `/project2/hgen47100/Lab7_materials/haplocaller.sh` (created by Siming Zhao from Xin's group) -->
+
+```{bash, eval=FALSE}
+cd [your-working-directory]
+mkdir output  # to place output files
+module load java
+
+dbdir='/project2/hgen47100/data/lab7'
+datadir='/project2/hgen47100/Lab7_materials'
+
+java -jar /software/gatk-3.7-el7-x86_64/GenomeAnalysisTK.jar \
+     -R ${dbdir}/hs37d5_chr22.fa \
+     -T HaplotypeCaller \
+     -I ${datadir}/sampleBAM_chr22_00.srt.bam \
+     -o output/sampleBAM_chr22_00.vcf
+```
+
+The last command is to call variants for us from sequence alignment data. It calls the Java executable `.jar` file by `java -jar *.jar`. And flag `-T` is to define the operation (in this case, calling variants); these two lines are the core of this command
+
+*Problem 5*
+
+Given your experience in our other labs and your understanding of what is needed to call variants from sequence reads, why are other options `-R, -I, -o` important? Hint: the letters in front of the files correspond to those files functions.
+
+The output from the above command is a file in the Variant Call Format (or .vcf file). As the name indicates this file contains information on the variants identified from our sequence data. As in the above files, each line is a separate variant. Examine this information by **running the following script**.
+
+```{r, eval=FALSE}
+cat output/sampleBAM_chr22_00.vcf | grep -v '#' | head
+```
+
+*Problem 6*
+
+What does the above command do? Why run it rather than look at the file directly? How many variants are we looking at from the above command?
+
+*Problem 7*
+
+Searching online, what are the first 8 columns in our .vcf file and what do they represent?
+
+*Problem 8*
+
+Looking at the INFO column, does our sample seem to be heterozygous at any of the variants in our subset from the script above? If yes, how many? Do the same for homozygous for the reference allele and homozygous for the alternative allele. One of these three genotypes should not be present in our file - which one and why?
+
+*Problem 9*
+
+Do the same as in problem 8, but for the entire file (not just our subset from the command above)? How many variants are of each genotype in the entire .vcf file?
+
+*Problem 10*
+
+Rank our subset variants from most confident in calling to least confident. How do we determine this from our .vcf file?
+
+# Recalibrating Variants
+
+The next step in variant calling is to perform Variant Quality Score Recalibration (VQSR). The goal of VQSR is to get a new, better quality score than the QUAL score from section 1.2. This new score is called the variant quality score log-odds (VQSLOD). While the method above examines each variant individually to determine whether it should be called, VQSLOD uses machine learning on known validated resource (reference) datasets to identify the profiles of variants that should be called and those that shouldn't. This garnered information can then inform our dataset, giving a better idea about what variants should be called compared to the standard method of looking at limited information.
+
+<!-- The first step of this process is to create the annotation profiles for the variants to be used in the recalibration. Although we aren't going to focus on this step for this lab, know that takes the .fa, .srt.bam, and .vcf files as inputs and creates a .annot.vcf file for the next step. Recalibration follows this annotation step and is done through the commands belows: -->
+
+Recalibration is done through the commands below: 
+
+```{bash, eval=FALSE}
+module load R  # the following command further need Rscript
+
+java -Xmx4g -jar /software/gatk-3.7-el7-x86_64/GenomeAnalysisTK.jar \
+     -R ${dbdir}/hs37d5_chr22.fa \
+     -T VariantRecalibrator \
+     -input ${datadir}/sampleBAM_chr22_00.vcf \
+     -resource:hapmap,known=false,training=true,truth=true,prior=15.0 ${dbdir}/hapmap_3.3.b37.vcf \
+     -resource:omni,known=false,training=true,truth=false,prior=12.0 ${dbdir}/1000G_omni2.5.b37.vcf \
+     -resource:1000G,known=false,training=true,truth=false,prior=10.0 ${dbdir}/1000G_phase1.snps.high_confidence.b37.vcf \
+     -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 ${dbdir}/dbsnp_138.b37.vcf \
+     -an FS \
+     -an SOR \
+     -an MQ \
+     -an MQRankSum \
+     -an ReadPosRankSum \
+     -mode SNP \
+     -recalFile output/sampleBAM_chr22_00.recal \
+     -tranchesFile output/sampleBAM_chr22_00.tranches \
+     -rscriptFile output/sampleBAM_chr22_00.plots.R
+```
+
+*Problem 11*
+
+What reference datasets were used in the command above for recalibration?
+
+
+Now that the variants have been recalibrated, we can apply the recalibration to get our VQSLODs by using the command below:
+
+```{bash, eval=FALSE}
+java -Xmx4g -jar /software/gatk-3.7-el7-x86_64/GenomeAnalysisTK.jar \
+     -R ${dbdir}/hs37d5_chr22.fa \
+     -T ApplyRecalibration \
+     -input output/sampleBAM_chr22_00.vcf \
+     -mode SNP \
+     --ts_filter_level 99.0 \
+     -recalFile output/sampleBAM_chr22_00.recal \
+     -tranchesFile output/sampleBAM_chr22_00.tranches \
+     -o output/sampleBAM_chr22_00.recal.vcf
+```
+
+Open the output sampleBAM_chr22_00.recal.vcf file with the following script to examine the same subset we observed before:
+
+```{r,eval=FALSE}
+cat output/sampleBAM_chr22_00.recal.vcf | grep -v '#' | head
+```
+
+*Problem 12*
+Aside from the INFO column, what column has had its entries changed compared to the original .vcf file before the recalibration (sampleBAM_chr22_00.vcf)?
+
+*Problem 13*
+Rank our subset of variants from most confident in calling to least confident. How should we determine this now that we've done recalibration? Is the rank the same as when we did this in problem 10?
