@@ -39,6 +39,7 @@ The lab's main GitHub page can be found at [https://github.com/hakyimlab](https:
     - [Wikipedia](https://en.wikipedia.org/wiki/Generalized_linear_model)
 ### Python
 - This is a python course for data science, and covers running commands in the shell [link](http://swcarpentry.github.io/python-novice-inflammation/)
+- SQLite in Python [link](https://www.datacamp.com/community/tutorials/sqlite-in-python)
 ### R
 - Introduction to Data Analysis with R [link](https://rafalab.github.io/dsbook/getting-started.html)
 - Another data science course in R: [link](https://www.analyticsvidhya.com/blog/2016/02/complete-tutorial-learn-data-science-scratch/)
@@ -48,8 +49,11 @@ The lab's main GitHub page can be found at [https://github.com/hakyimlab](https:
 ##### R Packages 
 - Some basics on [tidyverse](https://rafalab.github.io/dsbook/tidyverse.html) and [ggplot2](https://rafalab.github.io/dsbook/introduction-to-data-visualization.html)
 - This course introduces ggplot2, plyr, dplyr, tidyr, and knitr for data analysis [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
+- Our lab does a lot of work with SQLite databases using the RSQLite package  
+  - An intro: [link](https://www.datacamp.com/community/tutorials/sqlite-in-r)
+  - Applying dplyr: [link](https://datacarpentry.org/R-ecology-lesson/05-r-and-databases.html)
 - Data Manipulation in R with **dplyr** [link](https://genomicsclass.github.io/book/pages/dplyr_tutorial.html)
-- Data Visualization in R with **ggplot2** [link](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html)
+- Data Visualization in R with **ggplot2** [link1](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html), [link2](https://ggplot2tutor.com/beginner_tutorial/beginner_tutorial/)
 <!--Text - Modeling with data in the **tidyverse** [link](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)-->
 <!-- - Interacting with Hadoop via **RHadoop** [link](https://github.com/andrie/RHadoop-tutorial/) -->
 - A machine learning package for R, **mlr** [link](https://mlr.mlr-org.com/index.html)
