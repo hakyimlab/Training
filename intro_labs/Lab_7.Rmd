@@ -100,9 +100,24 @@ Rank our subset variants from most confident in calling to least confident. How 
 
 # Recalibrating Variants
 
-The next step in variant calling is to perform Variant Quality Score Recalibration (VQSR). The goal of VQSR is to get a new, better quality score than the QUAL score from section 1.2. This new score is called the variant quality score log-odds (VQSLOD). While the method above examines each variant individually to determine whether it should be called, VQSLOD uses machine learning on known validated resource (reference) datasets to identify the profiles of variants that should be called and those that shouldn't. This garnered information can then inform our dataset, giving a better idea about what variants should be called compared to the standard method of looking at limited information.
+The next step in variant calling is to perform Variant Quality Score Recalibration (VQSR). The goal of VQSR is to get a new, better quality score than the QUAL score from section 1.2. This new score is called the variant quality score log-odds (VQSLOD). While the method above examines each variant individually to determine whether it should be called, VQSLOD uses machine learning on known validated resource (reference) datasets to identify the profiles of variants that should be called and those that shouldn't. This garnered information can then inform our dataset, giving a better idea about what variants should be called compared to the standard method of looking at limited information. More details on VQSR can be found [here](https://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr).
 
 <!-- The first step of this process is to create the annotation profiles for the variants to be used in the recalibration. Although we aren't going to focus on this step for this lab, know that takes the .fa, .srt.bam, and .vcf files as inputs and creates a .annot.vcf file for the next step. Recalibration follows this annotation step and is done through the commands belows: -->
+
+The first step of this process is to create the annotation profiles for the variants to be used in the recalibration.
+
+```{bash, eval=FALSE}
+java -jar /software/gatk-3.7-el7-x86_64/GenomeAnalysisTK.jar \
+     -R ${dbdir}/hs37d5_chr22.fa \
+     -T VariantAnnotator \
+     -I ${datadir}/sampleBAM_chr22_00.srt.bam \
+     -V output/sampleBAM_chr22_00.vcf \
+     -A Coverage \
+     -A QualByDepth \
+     -A FisherStrand \
+     -A StrandOddsRatio \
+     -o output/sampleBAM_chr22_00.annot.vcf
+```
 
 Recalibration is done through the commands below: 
 
@@ -112,7 +127,7 @@ module load R  # the following command further need Rscript
 java -Xmx4g -jar /software/gatk-3.7-el7-x86_64/GenomeAnalysisTK.jar \
      -R ${dbdir}/hs37d5_chr22.fa \
      -T VariantRecalibrator \
-     -input ${datadir}/sampleBAM_chr22_00.vcf \
+     -input output/sampleBAM_chr22_00.annot.vcf \
      -resource:hapmap,known=false,training=true,truth=true,prior=15.0 ${dbdir}/hapmap_3.3.b37.vcf \
      -resource:omni,known=false,training=true,truth=false,prior=12.0 ${dbdir}/1000G_omni2.5.b37.vcf \
      -resource:1000G,known=false,training=true,truth=false,prior=10.0 ${dbdir}/1000G_phase1.snps.high_confidence.b37.vcf \
@@ -139,7 +154,7 @@ Now that the variants have been recalibrated, we can apply the recalibration to 
 java -Xmx4g -jar /software/gatk-3.7-el7-x86_64/GenomeAnalysisTK.jar \
      -R ${dbdir}/hs37d5_chr22.fa \
      -T ApplyRecalibration \
-     -input output/sampleBAM_chr22_00.vcf \
+     -input output/sampleBAM_chr22_00.annot.vcf \
      -mode SNP \
      --ts_filter_level 99.0 \
      -recalFile output/sampleBAM_chr22_00.recal \
