@@ -152,7 +152,7 @@ Luckily we have GWAS results harmonized to GTEx V8 by Alvaro Barbeira at [here](
 As an example, let's pick tissue "Whole_Blood" and GWAS "UKB_20002_1223_self_reported_type_2_diabetes".
 
 ```{bash, eval=FALSE}
-python /project2/hgen47100/software2/MetaXcan/software/MetaXcan.py \
+python /project2/hgen47100/software2/MetaXcan/software/SPrediXcan.py \
   --model_db_path /project2/hgen47100/data/lab6/predictdb_mashr_eqtl/mashr/mashr_Whole_Blood.db \
   --model_db_snp_key varID \
   --covariance /project2/hgen47100/data/lab6/predictdb_mashr_eqtl/mashr/mashr_Whole_Blood.txt.gz \
