@@ -1,7 +1,7 @@
 Training Resources
 -----------------
 
-# Mandatory Onboarding Steps
+# Onboarding Steps
 
 - There are a few mandatory onboarding steps for new lab members, and they are listed on the [Im Lab Onboarding Document](https://docs.google.com/presentation/d/1fzVXgHEkeqY4YGReHJWcQ6Dhy1EOp7PDW2bTNR57C54/edit?usp=sharing)
 
