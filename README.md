@@ -7,7 +7,7 @@ Training Resources
 - The steps are summarized in this [checklist](https://docs.google.com/document/d/1sJCbB0Pc048fPLEsMsiXcV-eAxLSzKxRkJt37mVNNJc/edit#)
 
 # Training Resources
-We work with many different tools, on many different projects. So the training resources are organized into functional groups. You may want to skip reading the material in some groups, and it may be worthwhile to spend a long time with other groups. 
+We work with many different tools on many different projects. So the training resources are organized into functional groups below. You may want to skip reading the material in some groups, and it may be worthwhile to spend a longer time with other groups. 
 - [GitHub](#github)
 - [Introduction to Data Science](#introduction-to-data-science)
     - [Machine Learning and Statistics](#machine-learning-and-statistics)
