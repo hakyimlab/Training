@@ -24,6 +24,7 @@ We work with many different tools on many different projects. So the training re
     - [Easy ssh Access](#easy-ssh-access)
     - [BigQuery](#bigquery)
 - [Miscellaneous](#Miscellaneous)
+- [Hands on training](https://github.com/hakyimlab/Hands-on-Training)
 
 
 # GitHub
