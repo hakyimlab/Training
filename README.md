@@ -14,6 +14,7 @@ We work with many different tools on many different projects. So the training re
     - [Python](#python)
     - [R](#r)
     - [Unix](#unix)
+    - [Sqlite](#sqlite)
 - [Workflowr](#workflowr)
 - [Genomics](#genomics)
     - [Introduction to Genomics](#introduction-to-genomics)
@@ -70,6 +71,8 @@ CRI Gardner, RCC midway, and most of the Bionimbus virtual machines all run on L
 - This lesson covers more commands[link](http://swcarpentry.github.io/shell-novice/05-loop/index.html)
 - This is a great cheatsheet for using the command line and shell scripting, including flow control and function declaration: [link](https://devhints.io/bash)
 - Knowledge of some bash commands can go a long way. Comfort with `grep`, `awk`, `sed`, and `xargs` might go a long way.
+### Sqlite
+Some knowledge of sqlite will be useful. See vignette [here](https://cran.r-project.org/web/packages/RSQLite/vignettes/RSQLite.html)
 # Workflowr
 Workflowr integrates R and GitHub to make scientific projects easier, more organized, and more reproducible.
 - [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
