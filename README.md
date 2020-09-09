@@ -75,7 +75,8 @@ CRI Gardner, RCC midway, and most of the Bionimbus virtual machines all run on L
 ### Sqlite
 Some knowledge of sqlite will be useful. See vignette [here](https://cran.r-project.org/web/packages/RSQLite/vignettes/RSQLite.html)
 ### Databases in R
-On how to use databases in R [here](https://db.rstudio.com/databases/sqlite/)
+- On how to use databases in R [here](https://db.rstudio.com/databases/sqlite/)
+- Using dplyr to query dbs [here](https://db.rstudio.com/getting-started/database-queries)
 # Workflowr
 Workflowr integrates R and GitHub to make scientific projects easier, more organized, and more reproducible.
 - [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
