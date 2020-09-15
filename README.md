@@ -183,24 +183,24 @@ Enter the following
 ```
 Host gardner
  HostName gardner.cri.uchicago.edu
- IdentityFile ~/.ssh/hki_imac
+ IdentityFile ~/.ssh/username
  User yourusername
 Host midway2
  HostName midway2.rcc.uchicago.edu
- IdentityFile ~/.ssh/hki_imac
+ IdentityFile ~/.ssh/username
  User yourusername
 Host bionimbus
  HostName bionimbus-pdc.opensciencedatacloud.org
- IdentityFile ~/.ssh/hki_imac
+ IdentityFile ~/.ssh/username
  User yourusername
 Host argonne
  Hostname login.mcs.anl.gov
  User yourusername
- IdentityFile ~/.ssh/hki_imac
+ IdentityFile ~/.ssh/username
 Host washington
  HostName washington.cels.anl.gov
  User yourusername
- IdentityFile ~/.ssh/hki_imac
+ IdentityFile ~/.ssh/username
  ProxyCommand ssh -q -A argonne -W %h:%p
  ```
  Now you should be able to directly ssh into any of the above hosts.
