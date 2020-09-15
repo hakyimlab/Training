@@ -148,28 +148,63 @@ Bionimbus Protected Data Cloud is a storage/computation resource where the lab i
 ### Easy ssh Access
 For both Gardner and Bionimbus, you'll be working through ssh tunnels a good deal, so it will pay off to configure your ssh settings once and not have to fill in passwords all the time.
 
-First, to avoid having to enter a password at each login, generate and forward an ssh keypair. The forwarding part often requires cutting and pasting your public key into the file at `~/.ssh/authorized_keys` on the host you are trying to access. To get this to work, you may have to add keys to the [ssh-agent](https://en.wikipedia.org/wiki/Ssh-agent) on your machine. 
+First, to avoid having to enter a password at each login, generate and forward an ssh keypair. 
+To create a RSA keypair, open terminal and type
 
-If you work on Bionimbus, you will likely have to ssh into one host, and then perform another ssh into the virtual machine from there. This can be performed in one command via the `~/.ssh/config` file. You'll probably have to do something like this:
 ```
-$ ssh username@host_1
-username@host_1 $ ssh username@host_2
-username@host_2 $ 
+$ ssh-keygen -t rsa
 ```
-In that case, then on your local machine, in the `~/.ssh/config` file, you want to add 
-```
-Host host_1
- HostName host_1
- User username
- IdentityFile <absolute path to secret key>
+Press enter when you are prompted to ```Enter a file in which to save the key```
+Type and enter a password
 
-Host host_2
- HostName host_2
- User username
- IdentityFile <absolute path to secret key>
- ProxyCommand ssh -q -A host_1 -W %h:%p
+Your private key will be generated using the default filename (for example, id_rsa) or the filename you specified, and stored on your computer in a .ssh directory off your home directory (for example, ~/.ssh/id_rsa ).
+
+Your public key will be generated using the same filename (but with a .pub extension added) and stored in the same location (for example, ~/.ssh/id_rsa.pub). Do not share your private key only your public one.
+
+Once you have your RSA keypair, you will copy and paste your public key into  `~/.ssh/authorized_keys` on the host you are trying to access. 
+
+If your account  doesn't already contain a `~/.ssh/authorized_keys` file, create one
 ```
-Then the command `ssh host_2` should get you right where you want to go.
+mkdir -p ~/.ssh
+touch ~/.ssh/authorized_keys
+```
+Copy and paste your public id (for example, ~/id_rsa.pub), using
+```
+cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
+```
+Create and configure your SSH config file
+```
+touch ~/.ssh/config
+chmod 600 ~/.ssh/config
+emacs ~/.ssh/config
+```
+Enter the following
+
+```
+Host gardner
+ HostName gardner.cri.uchicago.edu
+ IdentityFile ~/.ssh/hki_imac
+ User yourusername
+Host midway2
+ HostName midway2.rcc.uchicago.edu
+ IdentityFile ~/.ssh/hki_imac
+ User yourusername
+Host bionimbus
+ HostName bionimbus-pdc.opensciencedatacloud.org
+ IdentityFile ~/.ssh/hki_imac
+ User yourusername
+Host argonne
+ Hostname login.mcs.anl.gov
+ User yourusername
+ IdentityFile ~/.ssh/hki_imac
+Host washington
+ HostName washington.cels.anl.gov
+ User yourusername
+ IdentityFile ~/.ssh/hki_imac
+ ProxyCommand ssh -q -A argonne -W %h:%p
+ ```
+ Now you should be able to directly ssh into any of the above hosts.
+
 ### BigQuery
 - BigQuery tutorials [link](https://cloud.google.com/bigquery/docs/tutorials)
 - Google Cloud training document [link](https://docs.google.com/document/d/1z35R9uZ2iDo-Fp1ImUMBIKvcUunBTUp1ZmAXZF2Hf48/edit?usp=sharing)
