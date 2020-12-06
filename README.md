@@ -204,6 +204,14 @@ Host washington
  ProxyCommand ssh -q -A argonne -W %h:%p
  ```
  Now you should be able to directly ssh into any of the above hosts.
+ 
+ If you want to be able to log in with your rsa key pair instead of password, you need to add your public key to the authorized_keys file in the remote host.
+ For example, if you want to log in directly to gardner, go to
+ ```
+ cd ~/.ssh
+ vi authorized_keys
+ ```
+and paste in your public key. 
 
 ### BigQuery
 - BigQuery tutorials [link](https://cloud.google.com/bigquery/docs/tutorials)
