@@ -274,23 +274,4 @@ and paste in your public key.
 > 
 
 # Heather Wheeler's tutorials
-## Unix/Shell
-Unix Tutorial for Beginners - http://www.ee.surrey.ac.uk/Teaching/Unix/
-## R
-Swirl: an R “choose your own adventure” tutorial http://swirlstats.com/students.html Helpful for installing R and RStudio, and learning the basics
-[ggplot2 tutorial](https://hwheeler01.github.io/CompBio/ggplot_tutorial.html)
-## Package specific tutorials - you can always google for more:
-- dplyr: [tutorial](http://genomicsclass.github.io/book/pages/dplyr_tutorial.html) and [cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/source/pdfs/data-transformation-cheatsheet.pdf)
-- [ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
-- R markdown: tutorial and cheatsheet
-- glmnet: tutorial
-## Python
-- Enroll in the lab's ROSALIND class here. Doing the problems in order is a great introduction to Python.
-- Python for Biologists is an online book that goes into much more detail than ROSALIND. It's great for new programmers.
-- Data Science in Python tutorial gives a quick overview of useful libraries that you can study in more detail.
-- When you're ready: Advanced Python for Biologists
-## Github
-Intro to Git and GitHub
-## Human Genomics
-- GWAS Workshop
-- Big Bio @ UCLA Tutorials: http://www.big-bio.org/video-tutorials/ This site is a work in progress, but all the topics are relevant to our work. Filling in the worksheets while you watch the videos will help you learn the basics of human genetics/genomics.
+https://www.notion.so/Heather-Wheeler-s-tutorials-f2e3a612d3d040a08db1becc139449b4 
