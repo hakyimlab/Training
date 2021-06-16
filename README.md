@@ -6,6 +6,24 @@ Training Resources
 - There are a few steps for incoming lab members, and they are listed here on the [Im Lab Onboarding Document](https://docs.google.com/presentation/d/1fzVXgHEkeqY4YGReHJWcQ6Dhy1EOp7PDW2bTNR57C54/edit?usp=sharing)
 - The steps are summarized in this [checklist](https://docs.google.com/document/d/1sJCbB0Pc048fPLEsMsiXcV-eAxLSzKxRkJt37mVNNJc/edit#)
 
+# Crash course into the lab
+
+- Go through the RStudio primers 1 to 6 (skip if they are too basic for you except for the reproducibility section)
+	- [The Basics](https://rstudio.cloud/learn/primers/1) 
+	- [Work with Data](https://rstudio.cloud/learn/primers/2)
+	- [Visualize Data](https://rstudio.cloud/learn/primers/3)
+	- [Tidy Your Data](https://rstudio.cloud/learn/primers/4)
+	- [Iterate](https://rstudio.cloud/learn/primers/5)
+	- [Write Functions](https://rstudio.cloud/learn/primers/6)
+	- [Report Reproducibility](https://rmarkdown.rstudio.com/lesson-1.html?_ga=2.256091406.462777523.1623799913-1502736688.1623692213)
+	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99) after finishing the 7 tutorials above
+- Github intro [click here](http://kbroman.org/github_tutorial/)
+	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99)
+- [ ] TODO: create a brief tutorial for Blogdown using material from [here](https://bookdown.org/yihui/blogdown/a-quick-example.html)
+
+
+
+
 # Training Resources
 We work with many different tools on many different projects. So the training resources are organized into functional groups below. You may want to skip reading the material in some groups, and it may be worthwhile to spend a longer time with other groups. 
 - [GitHub](#github)
