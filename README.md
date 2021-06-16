@@ -19,7 +19,7 @@ Training Resources
 	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99) after finishing the 7 tutorials above
 - Github intro [click here](http://kbroman.org/github_tutorial/)
 	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99)
-- [ ] TODO: create a brief tutorial for Blogdown using material from [here](https://bookdown.org/yihui/blogdown/a-quick-example.html)
+- [ ] TODO: post your first note following the instructions [here](https://lab-notes.hakyimlab.org/post/2021/06/16/creating-a-new-post/)
 
 
 
