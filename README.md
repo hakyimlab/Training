@@ -16,7 +16,7 @@ We work with many different tools on many different projects. So the training re
     - [Unix](#unix)
     - [Sqlite](#sqlite)
     - [Databases in R](#databases-in-r)
-- [Workflowr](#workflowr)
+- [Blogdown](#blogdown)
 - [Genomics](#genomics)
     - [Introduction to Genomics](#introduction-to-genomics)
     - [Lab-Specific Genomics Papers](#lab-specific-genomics-papers)
