@@ -20,7 +20,13 @@ Training Resources
 - Github intro [click here](http://kbroman.org/github_tutorial/)
 	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99)
 - [ ] TODO: post your first note following the instructions [here](https://lab-notes.hakyimlab.org/post/2021/06/16/creating-a-new-post/)
-
+- [ ] TODO: run your first GWAS, QC included, [following these instructions](https://bios25328.hakyimlab.org/post/2021/04/09/lab-2-gwas-in-practice/)
+- [ ] TODO: run imputed transcriptome association, colocalization, and Mendelian Randomization following [this lab]()
+- [ ] TODO: read and write a short post for the in the internal-notes.hakyimlab.org with a graphical summary of the following papers
+	- [ ] A brief history of human disease genetics [link](https://paperpile.com/app/p/5d238e0d-2a0f-0bc5-97b9-9edcc511c205)
+	- [ ] PrediXcan paper [link](https://paperpile.com/app/p/104a657a-2440-07bb-9b7d-6bf4c68d0070)
+	- [ ] GTEx GWAS paper [link](https://paperpile.com/app/p/1f05bce9-a6c8-08e6-9158-d62fbd976968)
+	- [ ] S-PrediXcan [link](https://paperpile.com/app/p/4244eb85-c2f6-00ec-a040-fed97e194e7f)
 
 
 
