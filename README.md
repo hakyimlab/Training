@@ -9,6 +9,7 @@ Training Resources
 # Crash course into the lab
 
 - Go through the RStudio primers 1 to 6 (skip if they are too basic for you except for the reproducibility section)
+ 	- After finishing each of the following tutorials, fill out [this form](https://forms.gle/1BCgrensE1NdWPT99).
 	- [The Basics](https://rstudio.cloud/learn/primers/1) 
 	- [Work with Data](https://rstudio.cloud/learn/primers/2)
 	- [Visualize Data](https://rstudio.cloud/learn/primers/3)
@@ -16,7 +17,6 @@ Training Resources
 	- [Iterate](https://rstudio.cloud/learn/primers/5)
 	- [Write Functions](https://rstudio.cloud/learn/primers/6)
 	- [Report Reproducibility](https://rmarkdown.rstudio.com/lesson-1.html?_ga=2.256091406.462777523.1623799913-1502736688.1623692213)
-	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99) after finishing the 7 tutorials above
 - Github intro [click here](http://kbroman.org/github_tutorial/)
 	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99)
 - [ ] TODO: post your first note following the instructions [here](https://lab-notes.hakyimlab.org/post/2021/06/16/creating-a-new-post/)
