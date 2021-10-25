@@ -8,7 +8,7 @@ Training Resources
 
 # Crash course into the lab
 
-- Go through the RStudio primers 1 to 6 (skip if they are too basic for you except for the reproducibility section)
+- Go through the RStudio primers 1 to 6 (if they are too basic, skip all except for the reproducibility section)
  	- After finishing each of the following tutorials, fill out [this form](https://forms.gle/1BCgrensE1NdWPT99).
 	- [The Basics](https://rstudio.cloud/learn/primers/1) 
 	- [Work with Data](https://rstudio.cloud/learn/primers/2)
@@ -31,7 +31,7 @@ Training Resources
 
 
 # Training Resources
-We work with many different tools on many different projects. So the training resources are organized into functional groups below. You may want to skip reading the material in some groups, and it may be worthwhile to spend a longer time with other groups. 
+We work with many different tools on many different projects. The training resources are organized into functional groups below. You may want to skip reading the material in some groups, and it may be worthwhile to spend a longer time with other groups. 
 - [GitHub](#github)
 - [Introduction to Data Science](#introduction-to-data-science)
     - [Machine Learning and Statistics](#machine-learning-and-statistics)
@@ -143,8 +143,8 @@ Visscher PM: Human Complex Trait Genetics in the 21st Century. Genetics 2016, 20
 
 # Computational Resources
 ### CRI Gardner
-Gardner is a large high-performance computing cluster and data storage system. We use it to run computation and store data. The lab's group folder is located at `/gpfs/data/im-lab/`
-- UChicago CRI Workshop Tutorials: CRI does a seminar series each academic year. Here you can find the schedule: [link](https://cri.uchicago.edu/seminar-series/)
+Gardner is a large, high-performance computing cluster and data storage system. We use it to run computations and store data. The lab's group folder is located at `/gpfs/data/im-lab/`
+- UChicago CRI Workshop Tutorials: CRI does a seminar series each academic year. You can find the schedule here: [link](https://cri.uchicago.edu/seminar-series/)
 - Intro to Gardner: this is a good explanation of what Gardner does, and why a high-performance computing cluster is important to bioinformatics: [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
 ##### Job submission and management
 - Gardner uses [Torque](https://en.wikipedia.org/wiki/TORQUE) as its job scheduler, which means that the submission types are [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) files.
@@ -183,7 +183,7 @@ Type and enter a password
 
 Your private key will be generated using the default filename (for example, id_rsa) or the filename you specified, and stored on your computer in a .ssh directory off your home directory (for example, ~/.ssh/id_rsa ).
 
-Your public key will be generated using the same filename (but with a .pub extension added) and stored in the same location (for example, ~/.ssh/id_rsa.pub). Do not share your private key only your public one.
+Your public key will be generated using the same filename (but with a .pub extension added) and stored in the same location (for example, ~/.ssh/id_rsa.pub). Do not share your private key. Only share your public one.
 
 Once you have your RSA keypair, you will copy and paste your public key into  `~/.ssh/authorized_keys` on the host you are trying to access. 
 
