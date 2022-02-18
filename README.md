@@ -18,6 +18,7 @@ Training Resources
 	- [Write Functions](https://rstudio.cloud/learn/primers/6)
 	- [Report Reproducibility](https://rmarkdown.rstudio.com/lesson-1.html?_ga=2.256091406.462777523.1623799913-1502736688.1623692213)
 - Github intro [click here](http://kbroman.org/github_tutorial/)
+	- When going through the tutorial skip the setting up ssh section
 	- Fill out [this form](https://forms.gle/1BCgrensE1NdWPT99)
 - [ ] TODO: post your first note following the instructions [here](https://lab-notes.hakyimlab.org/post/2021/06/16/creating-a-new-post/)
 - [ ] TODO: run your first GWAS, QC included, [following these instructions](https://bios25328.hakyimlab.org/post/2021/04/09/lab-2-gwas-in-practice/)
@@ -101,14 +102,11 @@ Some knowledge of sqlite will be useful. See vignette [here](https://cran.r-proj
 ### Databases in R
 - On how to use databases in R [here](https://db.rstudio.com/databases/sqlite/)
 - Using dplyr to query dbs [here](https://db.rstudio.com/getting-started/database-queries)
-# Workflowr
-Workflowr integrates R and GitHub to make scientific projects easier, more organized, and more reproducible.
-- [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html)
 
 # Genomics
 ### Introduction to Genomics
-- UCLA Big Bio: intro to genomics videos. These are very helpful to understand the field of genomics at a high level. [link](https://www.big-bio.org/)
-- *The New Genetics* is an NIH publication surveying what we know about the biological mechanisms of genetics. [link](http://publications.nigms.nih.gov/thenewgenetics/index.html)
+- UCLA Big Bio: intro to genomics videos. These are very helpful to understand the field of genomics at a high level. 
+- *The New Genetics* is an NIH publication surveying what we know about the biological mechanisms of genetics. 
 ### Lab-Specific Genomics Papers
 For more background, the projects the lab is currently working on are similar to the ones in these papers.
 - [The UK Biobank resource with deep phenotyping and genomic data](https://www.nature.com/articles/s41586-018-0579-z)
@@ -148,7 +146,6 @@ Gardner is a large, high-performance computing cluster and data storage system. 
 - Intro to Gardner: this is a good explanation of what Gardner does, and why a high-performance computing cluster is important to bioinformatics: [link](http://cri.uchicago.edu/wp-content/uploads/2017/04/Gardner-Part-1.pdf)
 ##### Job submission and management
 - Gardner uses [Torque](https://en.wikipedia.org/wiki/TORQUE) as its job scheduler, which means that the submission types are [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System) files.
-- Here's a [cheatsheet](https://www.weizmann.ac.il/chemistry/sites/chemistry/files/uploads/pbs-professional-cheat-sheet.pdf) for PBS commands.
 - A short, incomplete list of commands that may help when using PBS:
     - To submit a job, `qsub <path to whatever job file>`. It will print to the console the `job_id`, which is often useful for searching the queue and finding logs.
     - To view the status of your jobs, `qstat`
@@ -254,7 +251,6 @@ and paste in your public key.
 	- Basics of Information Security
 	- Conflict of Interest
 - [Enloc-coloc comparison](https://hakyimlab.github.io/gtex-gwas-hki/enloc-coloc-comparison-2.html)
-- [Karl Broman's Tutorials](http://kbroman.org/pages/tutorials.html)
 - [Jeff Leek's Github page](https://github.com/jtleek)
 
 <!--- High Performance Computing Cluster at the UoC [link](https://rcc.uchicago.edu/resources/high-performance-computing)-->
