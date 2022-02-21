@@ -8,6 +8,11 @@ Training Resources
 
 # Crash course into the lab
 
+- Subscribe to the lab calendar. This is where all meetings and events are organized. To do so, select [this link](https://calendar.google.com/calendar/embed?src=6kvis55dg3q02uujbg4f2dmae8%40group.calendar.google.com&ctz=America%2FChicago) then, subscribe by either:
+	- Selecting the + Google Calendar button at the bottom of the Im Lab Calendar, which will take you to your own Google Calendar and ask if you would like to add it. Or,
+	- Log into your Google Calendar. On the left side, select Add Calendar, and then From URL. Copy and paste the URL from the Im Lab Calendar.
+
+
 - Go through the RStudio primers 1 to 6 (if they are too basic, skip all except for the reproducibility section)
  	- After finishing each of the following tutorials, fill out [this form](https://forms.gle/1BCgrensE1NdWPT99).
 	- [The Basics](https://rstudio.cloud/learn/primers/1) 
