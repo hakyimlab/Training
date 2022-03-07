@@ -3,10 +3,10 @@ Training Resources
 
 # Onboarding Steps
 
-- There are a few steps for incoming lab members, and they are listed here on the [Im Lab Onboarding Document](https://docs.google.com/presentation/d/1fzVXgHEkeqY4YGReHJWcQ6Dhy1EOp7PDW2bTNR57C54/edit?usp=sharing)
-- The steps are summarized in this [checklist](https://docs.google.com/document/d/1sJCbB0Pc048fPLEsMsiXcV-eAxLSzKxRkJt37mVNNJc/edit#)
+- There are a few steps for incoming lab members, If you are a full time lab member be sure to run through this [checklist](https://www.notion.so/hakyimlab/Onboarding-draft-f5608dd5fdc44ecb8ac8961f098b1005)
+- If you are a part-time member and/or student follow this [checklist](https://www.notion.so/hakyimlab/Welcome-to-the-Lab-419d6e36fb534505adcad599e3a58a23)
 
-# Crash course into the lab
+# Crash course into the lab 
 
 - Subscribe to the lab calendar. This is where all meetings and events are organized. To do so, select [this link](https://calendar.google.com/calendar/embed?src=6kvis55dg3q02uujbg4f2dmae8%40group.calendar.google.com&ctz=America%2FChicago) then, subscribe by either:
 	- Selecting the + Google Calendar button at the bottom of the Im Lab Calendar, which will take you to your own Google Calendar and ask if you would like to add it. Or,
@@ -67,6 +67,8 @@ We use GitHub to store and organize our code. There is a introduction [here](htt
 
 The lab's main GitHub page can be found at [https://github.com/hakyimlab](https://github.com/hakyimlab). If you have been added to `lab-members` and you are logged in, you can see the lab's private repositories as well. 
 
+GitHub has stoped useing passwords in the terminal and Rstudio be sure to set up your token. Instructions on how to do so [here](https://hakyimlab.notion.site/Getting-started-with-Github-c440f77267f0425d8f8e04a9bc09ef28)
+
 # Introduction to Data Science
 
 ### Machine Learning and Statistics
@@ -113,7 +115,7 @@ Some knowledge of sqlite will be useful. See vignette [here](https://cran.r-proj
 
 # Genomics
 ### Introduction to Genomics
-- UCLA Big Bio: intro to genomics videos. These are very helpful to understand the field of genomics at a high level. 
+- [UCLA Big Bio](https://compmed.ucla.edu/news/bigbio-tutorials-computational-genetics-ucla-grad-students-and-postdocs): intro to genomics videos. These are very helpful to understand the field of genomics at a high level. 
 - *The New Genetics* is an NIH publication surveying what we know about the biological mechanisms of genetics. 
 ### Lab-Specific Genomics Papers
 For more background, the projects the lab is currently working on are similar to the ones in these papers.
