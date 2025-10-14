@@ -23,7 +23,7 @@ Your responsibilities are to
 - participate in weekly lab meetings
 - present progress in work-in-progress lab meetings
 - meet regularly to discuss progress (at least weekly)
-- keep track of short, medium, and long term goals (trello boards are helpful for short/medium term)
+- keep track of short, medium, and long term goals
 - ensure quality and reproducibility of research (maintain github repository of pipelines and scripts)
 - write and submit manuscripts
 - proof-read manuscripts from other lab members
